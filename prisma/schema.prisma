@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  //provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  email     String   @unique
+  password  String?
+  age       Int?
+  createdAt DateTime @default(now())
+  roles     Role[]   @default([USER])
+}
+
+enum Role {
+  ADMIN
+  USER
+  //EDITOR // 可扩展更多角色
+}
+
+//普通商品分类表
+model NormalProductCategory {
+  id             String          @id @default(uuid())
+  name           String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  normalProducts NormalProduct[]
+}
+
+//普通商品表
+model NormalProduct {
+  id          String                @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  stock       Int
+  imageUrl    String?
+  categoryId  String
+  category    NormalProductCategory @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+}
+
+//课程分类表
+model CourseCategory {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courses   Course[]
+}
+
+//课程表
+model Course {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  categoryId  String
+  category    CourseCategory @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}

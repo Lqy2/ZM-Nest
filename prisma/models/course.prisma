@@ -1,0 +1,10 @@
+model Course {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  categoryId  String
+  category    CourseCategory @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
