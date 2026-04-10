@@ -27,7 +27,7 @@
 // }
 
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '../generated/prisma/client';
+import { PrismaClient } from '../generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class PrismaService extends PrismaClient {
       // 全局查询排除敏感字段
       omit: {
         user: {
-          password: true,
+          passwordHash: true,
         },
       },
     });

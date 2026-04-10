@@ -121,13 +121,26 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 });
 
 exports.Prisma.UserScalarFieldEnum = {
+  username: 'username',
   id: 'id',
   name: 'name',
+  phone: 'phone',
+  roles: 'roles',
+  status: 'status',
+  rejectReason: 'rejectReason',
+  avatarUrl: 'avatarUrl',
   email: 'email',
-  password: 'password',
-  age: 'age',
+  gender: 'gender',
+  idType: 'idType',
+  idNumber: 'idNumber',
+  entity: 'entity',
+  entityAddress: 'entityAddress',
+  cityScope: 'cityScope',
+  competitionScopes: 'competitionScopes',
+  passwordHash: 'passwordHash',
+  powerOfAttorney: 'powerOfAttorney',
   createdAt: 'createdAt',
-  roles: 'roles'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.NormalProductCategoryScalarFieldEnum = {
@@ -142,8 +155,11 @@ exports.Prisma.NormalProductScalarFieldEnum = {
   name: 'name',
   description: 'description',
   price: 'price',
+  discountPrice: 'discountPrice',
   stock: 'stock',
   imageUrl: 'imageUrl',
+  galleryImages: 'galleryImages',
+  detailImages: 'detailImages',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -166,9 +182,79 @@ exports.Prisma.CourseScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VerificationCodeScalarFieldEnum = {
+  id: 'id',
+  phone: 'phone',
+  code: 'code',
+  expireAt: 'expireAt',
+  hourCount: 'hourCount',
+  dayCount: 'dayCount',
+  createdAt: 'createdAt',
+  type: 'type'
+};
+
+exports.Prisma.TempFileScalarFieldEnum = {
+  id: 'id',
+  fileKey: 'fileKey',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  orderNo: 'orderNo',
+  userId: 'userId',
+  totalAmount: 'totalAmount',
+  payAmount: 'payAmount',
+  status: 'status',
+  receiverName: 'receiverName',
+  receiverPhone: 'receiverPhone',
+  receiverAddress: 'receiverAddress',
+  paidAt: 'paidAt',
+  shippedAt: 'shippedAt',
+  completedAt: 'completedAt',
+  remark: 'remark',
+  trackingNo: 'trackingNo',
+  logisticsCompany: 'logisticsCompany',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  productId: 'productId',
+  productName: 'productName',
+  productImage: 'productImage',
+  price: 'price',
+  quantity: 'quantity',
+  subtotal: 'subtotal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserAddressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  phone: 'phone',
+  province: 'province',
+  city: 'city',
+  district: 'district',
+  detail: 'detail',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -176,13 +262,35 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.UserStatus = exports.$Enums.UserStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  DISABLED: 'DISABLED'
+};
+
 exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN',
   USER: 'USER'
+};
+
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  SHIPPED: 'SHIPPED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED'
 };
 
 exports.Prisma.ModelName = {
@@ -190,7 +298,12 @@ exports.Prisma.ModelName = {
   NormalProductCategory: 'NormalProductCategory',
   NormalProduct: 'NormalProduct',
   CourseCategory: 'CourseCategory',
-  Course: 'Course'
+  Course: 'Course',
+  VerificationCode: 'VerificationCode',
+  TempFile: 'TempFile',
+  Order: 'Order',
+  OrderItem: 'OrderItem',
+  UserAddress: 'UserAddress'
 };
 
 /**

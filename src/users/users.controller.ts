@@ -1,14 +1,14 @@
 import {
   Controller,
   Get,
-  Post,
+  // Post,
   Body,
   Put,
   Param,
   Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from '@prisma/client';
+import type { User } from '../generated/prisma';
 import { Public } from '../auth/public.decorator';
 
 // import { CreateUserDto } from './dto/create-user.dto';
@@ -19,12 +19,12 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   // 创建用户 POST /users
-  @Post()
-  async create(
-    @Body() createUserDto: { name: string; email: string; age?: number },
-  ): Promise<User> {
-    return this.usersService.createUser(createUserDto);
-  }
+  // @Post()
+  // async create(
+  //   @Body() createUserDto: { name: string; email: string; age?: number },
+  // ): Promise<User> {
+  //   return this.usersService.createUser(createUserDto);
+  // }
 
   // 查询所有用户 GET /users
   @Public()
@@ -34,23 +34,23 @@ export class UsersController {
   }
 
   // 查询单个用户 GET /users/:id
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User | null> {
-    return this.usersService.findUserById(+id); // 转换为数字
+  @Get(':phone')
+  async findOne(@Param('phone') phone: string): Promise<{ id: string; phone: string; passwordHash: string | null } | null > {
+    return this.usersService.findOne(phone);
   }
 
   // 更新用户 PUT /users/:id
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateUserDto: { name?: string; email?: string; age?: number },
+    @Body() updateUserDto: { name?: string; email?: string },
   ): Promise<User> {
-    return this.usersService.updateUser(+id, updateUserDto);
+    return this.usersService.updateUser(id, updateUserDto);
   }
 
   // 删除用户 DELETE /users/:id
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<User> {
-    return this.usersService.deleteUser(+id);
+    return this.usersService.deleteUser(id);
   }
 }

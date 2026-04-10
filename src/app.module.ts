@@ -22,6 +22,10 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { ProductModule } from './product/product.module';
 import { TransformInterceptor } from './cats/transform.interceptor';
+import { UploadModule } from './upload/upload.module';
+import { OrderModule } from './order/order.module';
+import configuration from './config/configuration';
+
 
 @Module({
   imports: [
@@ -29,7 +33,7 @@ import { TransformInterceptor } from './cats/transform.interceptor';
     CatsModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      // load: [configuration],
+      load: [configuration],
       envFilePath: [`.env.${process.env.NODE_ENV || 'development'}`, '.env'],
       cache: true, // 缓存环境变量
     }),
@@ -39,6 +43,8 @@ import { TransformInterceptor } from './cats/transform.interceptor';
     UsersModule,
     ProductCategoryModule,
     ProductModule,
+    UploadModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [

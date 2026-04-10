@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 // import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 // import { Prisma, User } from '@custom/prisma';
-import { Prisma, User } from '@prisma/client';
+import type { Prisma, User } from '../generated/prisma';
 @Injectable()
 export class UserService {
   // 注入 Prisma 服务
@@ -20,14 +20,14 @@ export class UserService {
   }
 
   // 根据 ID 查询用户
-  async findUserById(id: number): Promise<User | null> {
+  async findUserById(id: string): Promise<User | null> {
     return this.prismaService.user.findUnique({
       where: { id },
     });
   }
 
   // 更新用户
-  async updateUser(id: number, data: Prisma.UserUpdateInput): Promise<User> {
+  async updateUser(id: string, data: Prisma.UserUpdateInput): Promise<User> {
     return this.prismaService.user.update({
       where: { id },
       data,
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   // 删除用户
-  async deleteUser(id: number): Promise<User> {
+  async deleteUser(id: string): Promise<User> {
     return this.prismaService.user.delete({
       where: { id },
     });

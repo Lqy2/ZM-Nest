@@ -4,6 +4,7 @@ import { Injectable, UnauthorizedException, Scope } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ModuleRef, ContextIdFactory } from '@nestjs/core';
 import { Request } from 'express';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -11,23 +12,24 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     private authService: AuthService,
     private moduleRef: ModuleRef,
   ) {
-    super({ usernameField: 'name', passReqToCallback: true });
+    super({ usernameField: 'phone', passReqToCallback: true });
   }
 
   async validate(
     request: Request,
-    name: string,
+    phone: string,
     password: string,
   ): Promise<any> {
-    const contextId = ContextIdFactory.getByRequest(request as any);
+    const contextId = ContextIdFactory.getByRequest(request);
     // "AuthService" is a request-scoped provider
     const authService = await this.moduleRef.resolve(AuthService, contextId);
 
-    const user = await this.authService.validateUser(name, password);
+    const user = await this.authService.validateUser(phone, password);
+    
     if (!user) {
       throw new UnauthorizedException();
     }
-
+    
     return user;
   }
 }

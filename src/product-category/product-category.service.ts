@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { NormalProductCategory } from '../generated/prisma';
+import type { NormalProductCategory } from '../generated/prisma';
 
 @Injectable()
 export class ProductCategoryService {
@@ -39,6 +39,20 @@ export class ProductCategoryService {
   remove(id: string): Promise<NormalProductCategory> {
     return this.prismaService.normalProductCategory.delete({
       where: { id },
+    });
+  }
+
+  findSearchCategory(name: string): Promise<NormalProductCategory[]> {
+    const keyword = name?.trim();
+    if (!keyword) {
+      throw new BadRequestException('请输入分类名称');
+    }
+    return this.prismaService.normalProductCategory.findMany({
+      where: {
+        name: {
+          contains: keyword,
+        },
+      },
     });
   }
 }

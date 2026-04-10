@@ -10,7 +10,7 @@ import {
 import { UserService } from './user.service';
 // import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '@prisma/client';
+import type { User } from '../generated/prisma';
 import { Public } from '../auth/public.decorator';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../auth/role.enum';
@@ -22,7 +22,14 @@ export class UserController {
   // 创建用户 POST /users
   @Post()
   async create(
-    @Body() createUserDto: { name: string; email: string; age?: number },
+    @Body()
+    createUserDto: {
+      username: string;
+      name: string;
+      phone: string;
+      email?: string;
+      passwordHash?: string;
+    },
   ): Promise<User> {
     return this.userService.createUser(createUserDto);
   }
@@ -38,21 +45,28 @@ export class UserController {
   @Get(':id')
   @Roles(Role.ADMIN)
   async findOne(@Param('id') id: string): Promise<User | null> {
-    return this.userService.findUserById(+id); // 转换为数字
+    return this.userService.findUserById(id);
   }
 
   // 更新用户 PUT /users/:id
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateUserDto: { name?: string; email?: string; age?: number },
+    @Body()
+    updateUserDto: {
+      username?: string;
+      name?: string;
+      phone?: string;
+      email?: string;
+      passwordHash?: string;
+    },
   ): Promise<User> {
-    return this.userService.updateUser(+id, updateUserDto);
+    return this.userService.updateUser(id, updateUserDto);
   }
 
   // 删除用户 DELETE /users/:id
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<User> {
-    return this.userService.deleteUser(+id);
+    return this.userService.deleteUser(id);
   }
 }

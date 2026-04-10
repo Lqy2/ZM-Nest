@@ -6,6 +6,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
+import { AuthController } from './auth.controller';
+import { PrismaModule } from '../prisma/prisma.module';
 // import { JwtAuthGuard } from './jwt-auth.guard';
 // import { RolesGuard } from './roles.guard';
 // import { APP_GUARD } from '@nestjs/core';
@@ -13,6 +15,7 @@ import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports: [
     UsersModule,
+    PrismaModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
@@ -40,5 +43,6 @@ import { JwtStrategy } from './jwt.strategy';
     // RolesGuard,
     JwtModule,
   ],
+  controllers: [AuthController],
 })
 export class AuthModule {}
