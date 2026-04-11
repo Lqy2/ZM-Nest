@@ -7,6 +7,8 @@ import {
   Body,
   UseGuards,
   UseInterceptors,
+  UseFilters,
+  ForbiddenException,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
@@ -15,6 +17,8 @@ import { RolesGuard } from './roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../auth/role.enum';
 import { LoggingInterceptor } from './logging.interceptor';
+import { Public } from '../auth/public.decorator';
+import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 
 @Controller('cats')
 @UseGuards(RolesGuard)
@@ -22,13 +26,11 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Get()
-  @Roles(Role.ADMIN)
   findAll(): Cat[] {
     return this.catsService.findAll();
   }
 
   @Get('async')
-  @UseInterceptors(new LoggingInterceptor())
   async findAllAsync() {
     throw new HttpException(
       {
@@ -42,5 +44,11 @@ export class CatsController {
   @Post()
   async create(@Body() createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
+  }
+
+  @Public()
+  @Get('error-filter')
+  async filter(@Body() createCatDto: CreateCatDto) {
+    throw new ForbiddenException();
   }
 }

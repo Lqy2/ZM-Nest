@@ -10,7 +10,7 @@ import { YModule } from './y/y.module';
 import { CatsService } from './cats/cats.service';
 import { LoggerMiddleware } from './logger.middleware';
 import { CatsModule } from './cats/cats.module';
-import { responseFormatMiddleware } from './middleware/response-format.middleware';
+// import { responseFormatMiddleware } from './middleware/response-format.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
 import { UserModule } from './user/user.module';
@@ -21,11 +21,10 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { ProductModule } from './product/product.module';
-import { TransformInterceptor } from './cats/transform.interceptor';
+// import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { UploadModule } from './upload/upload.module';
 import { OrderModule } from './order/order.module';
 import configuration from './config/configuration';
-
 
 @Module({
   imports: [
@@ -55,16 +54,17 @@ import configuration from './config/configuration';
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TransformInterceptor,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: TransformInterceptor,
+    // },
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware, responseFormatMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
-}
+// export class AppModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer
+//       .apply(LoggerMiddleware, responseFormatMiddleware)
+//       .forRoutes({ path: '*', method: RequestMethod.ALL });
+//   }
+// }
+export class AppModule {}
