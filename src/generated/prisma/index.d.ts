@@ -86,6 +86,14 @@ export const UserStatus: {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
+export const CourseType: {
+  FREE: 'FREE',
+  PAID: 'PAID'
+};
+
+export type CourseType = (typeof CourseType)[keyof typeof CourseType]
+
+
 export const OrderStatus: {
   PENDING: 'PENDING',
   PAID: 'PAID',
@@ -106,6 +114,10 @@ export const Role: typeof $Enums.Role
 export type UserStatus = $Enums.UserStatus
 
 export const UserStatus: typeof $Enums.UserStatus
+
+export type CourseType = $Enums.CourseType
+
+export const CourseType: typeof $Enums.CourseType
 
 export type OrderStatus = $Enums.OrderStatus
 
@@ -2234,7 +2246,7 @@ export namespace Prisma {
        */
       username: string
       /**
-       * 主键，使用 cuid 生成
+       * 主键，使用 cuid
        */
       id: string
       /**
@@ -3215,6 +3227,7 @@ export namespace Prisma {
   export type NormalProductCategoryMinAggregateOutputType = {
     id: string | null
     name: string | null
+    isEnabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3222,6 +3235,7 @@ export namespace Prisma {
   export type NormalProductCategoryMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    isEnabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3229,6 +3243,7 @@ export namespace Prisma {
   export type NormalProductCategoryCountAggregateOutputType = {
     id: number
     name: number
+    isEnabled: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3238,6 +3253,7 @@ export namespace Prisma {
   export type NormalProductCategoryMinAggregateInputType = {
     id?: true
     name?: true
+    isEnabled?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3245,6 +3261,7 @@ export namespace Prisma {
   export type NormalProductCategoryMaxAggregateInputType = {
     id?: true
     name?: true
+    isEnabled?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3252,6 +3269,7 @@ export namespace Prisma {
   export type NormalProductCategoryCountAggregateInputType = {
     id?: true
     name?: true
+    isEnabled?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3332,6 +3350,7 @@ export namespace Prisma {
   export type NormalProductCategoryGroupByOutputType = {
     id: string
     name: string
+    isEnabled: boolean
     createdAt: Date
     updatedAt: Date
     _count: NormalProductCategoryCountAggregateOutputType | null
@@ -3356,6 +3375,7 @@ export namespace Prisma {
   export type NormalProductCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     normalProducts?: boolean | NormalProductCategory$normalProductsArgs<ExtArgs>
@@ -3365,6 +3385,7 @@ export namespace Prisma {
   export type NormalProductCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["normalProductCategory"]>
@@ -3372,6 +3393,7 @@ export namespace Prisma {
   export type NormalProductCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["normalProductCategory"]>
@@ -3379,11 +3401,12 @@ export namespace Prisma {
   export type NormalProductCategorySelectScalar = {
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type NormalProductCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["normalProductCategory"]>
+  export type NormalProductCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "isEnabled" | "createdAt" | "updatedAt", ExtArgs["result"]["normalProductCategory"]>
   export type NormalProductCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     normalProducts?: boolean | NormalProductCategory$normalProductsArgs<ExtArgs>
     _count?: boolean | NormalProductCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -3399,6 +3422,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      /**
+       * 是否启用
+       */
+      isEnabled: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["normalProductCategory"]>
@@ -3827,6 +3854,7 @@ export namespace Prisma {
   interface NormalProductCategoryFieldRefs {
     readonly id: FieldRef<"NormalProductCategory", 'String'>
     readonly name: FieldRef<"NormalProductCategory", 'String'>
+    readonly isEnabled: FieldRef<"NormalProductCategory", 'Boolean'>
     readonly createdAt: FieldRef<"NormalProductCategory", 'DateTime'>
     readonly updatedAt: FieldRef<"NormalProductCategory", 'DateTime'>
   }
@@ -5494,6 +5522,7 @@ export namespace Prisma {
   export type CourseCategoryMinAggregateOutputType = {
     id: string | null
     name: string | null
+    isEnabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5501,6 +5530,7 @@ export namespace Prisma {
   export type CourseCategoryMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    isEnabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5508,6 +5538,7 @@ export namespace Prisma {
   export type CourseCategoryCountAggregateOutputType = {
     id: number
     name: number
+    isEnabled: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5517,6 +5548,7 @@ export namespace Prisma {
   export type CourseCategoryMinAggregateInputType = {
     id?: true
     name?: true
+    isEnabled?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5524,6 +5556,7 @@ export namespace Prisma {
   export type CourseCategoryMaxAggregateInputType = {
     id?: true
     name?: true
+    isEnabled?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5531,6 +5564,7 @@ export namespace Prisma {
   export type CourseCategoryCountAggregateInputType = {
     id?: true
     name?: true
+    isEnabled?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5611,6 +5645,7 @@ export namespace Prisma {
   export type CourseCategoryGroupByOutputType = {
     id: string
     name: string
+    isEnabled: boolean
     createdAt: Date
     updatedAt: Date
     _count: CourseCategoryCountAggregateOutputType | null
@@ -5635,6 +5670,7 @@ export namespace Prisma {
   export type CourseCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     courses?: boolean | CourseCategory$coursesArgs<ExtArgs>
@@ -5644,6 +5680,7 @@ export namespace Prisma {
   export type CourseCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["courseCategory"]>
@@ -5651,6 +5688,7 @@ export namespace Prisma {
   export type CourseCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["courseCategory"]>
@@ -5658,11 +5696,12 @@ export namespace Prisma {
   export type CourseCategorySelectScalar = {
     id?: boolean
     name?: boolean
+    isEnabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CourseCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["courseCategory"]>
+  export type CourseCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "isEnabled" | "createdAt" | "updatedAt", ExtArgs["result"]["courseCategory"]>
   export type CourseCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     courses?: boolean | CourseCategory$coursesArgs<ExtArgs>
     _count?: boolean | CourseCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -5678,6 +5717,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      /**
+       * 是否启用
+       */
+      isEnabled: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["courseCategory"]>
@@ -6106,6 +6149,7 @@ export namespace Prisma {
   interface CourseCategoryFieldRefs {
     readonly id: FieldRef<"CourseCategory", 'String'>
     readonly name: FieldRef<"CourseCategory", 'String'>
+    readonly isEnabled: FieldRef<"CourseCategory", 'Boolean'>
     readonly createdAt: FieldRef<"CourseCategory", 'DateTime'>
     readonly updatedAt: FieldRef<"CourseCategory", 'DateTime'>
   }
@@ -6552,17 +6596,30 @@ export namespace Prisma {
 
   export type CourseAvgAggregateOutputType = {
     price: number | null
+    previewDuration: number | null
+    duration: number | null
+    studentCount: number | null
   }
 
   export type CourseSumAggregateOutputType = {
     price: number | null
+    previewDuration: number | null
+    duration: number | null
+    studentCount: number | null
   }
 
   export type CourseMinAggregateOutputType = {
     id: string | null
     name: string | null
+    coverImage: string | null
     description: string | null
     price: number | null
+    type: $Enums.CourseType | null
+    videoUrl: string | null
+    previewDuration: number | null
+    duration: number | null
+    studentCount: number | null
+    isPublished: boolean | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6571,8 +6628,15 @@ export namespace Prisma {
   export type CourseMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    coverImage: string | null
     description: string | null
     price: number | null
+    type: $Enums.CourseType | null
+    videoUrl: string | null
+    previewDuration: number | null
+    duration: number | null
+    studentCount: number | null
+    isPublished: boolean | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6581,8 +6645,15 @@ export namespace Prisma {
   export type CourseCountAggregateOutputType = {
     id: number
     name: number
+    coverImage: number
     description: number
     price: number
+    type: number
+    videoUrl: number
+    previewDuration: number
+    duration: number
+    studentCount: number
+    isPublished: number
     categoryId: number
     createdAt: number
     updatedAt: number
@@ -6592,17 +6663,30 @@ export namespace Prisma {
 
   export type CourseAvgAggregateInputType = {
     price?: true
+    previewDuration?: true
+    duration?: true
+    studentCount?: true
   }
 
   export type CourseSumAggregateInputType = {
     price?: true
+    previewDuration?: true
+    duration?: true
+    studentCount?: true
   }
 
   export type CourseMinAggregateInputType = {
     id?: true
     name?: true
+    coverImage?: true
     description?: true
     price?: true
+    type?: true
+    videoUrl?: true
+    previewDuration?: true
+    duration?: true
+    studentCount?: true
+    isPublished?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -6611,8 +6695,15 @@ export namespace Prisma {
   export type CourseMaxAggregateInputType = {
     id?: true
     name?: true
+    coverImage?: true
     description?: true
     price?: true
+    type?: true
+    videoUrl?: true
+    previewDuration?: true
+    duration?: true
+    studentCount?: true
+    isPublished?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -6621,8 +6712,15 @@ export namespace Prisma {
   export type CourseCountAggregateInputType = {
     id?: true
     name?: true
+    coverImage?: true
     description?: true
     price?: true
+    type?: true
+    videoUrl?: true
+    previewDuration?: true
+    duration?: true
+    studentCount?: true
+    isPublished?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -6718,8 +6816,15 @@ export namespace Prisma {
   export type CourseGroupByOutputType = {
     id: string
     name: string
+    coverImage: string
     description: string | null
     price: number
+    type: $Enums.CourseType
+    videoUrl: string
+    previewDuration: number
+    duration: number
+    studentCount: number
+    isPublished: boolean
     categoryId: string
     createdAt: Date
     updatedAt: Date
@@ -6747,8 +6852,15 @@ export namespace Prisma {
   export type CourseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    coverImage?: boolean
     description?: boolean
     price?: boolean
+    type?: boolean
+    videoUrl?: boolean
+    previewDuration?: boolean
+    duration?: boolean
+    studentCount?: boolean
+    isPublished?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6758,8 +6870,15 @@ export namespace Prisma {
   export type CourseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    coverImage?: boolean
     description?: boolean
     price?: boolean
+    type?: boolean
+    videoUrl?: boolean
+    previewDuration?: boolean
+    duration?: boolean
+    studentCount?: boolean
+    isPublished?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6769,8 +6888,15 @@ export namespace Prisma {
   export type CourseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    coverImage?: boolean
     description?: boolean
     price?: boolean
+    type?: boolean
+    videoUrl?: boolean
+    previewDuration?: boolean
+    duration?: boolean
+    studentCount?: boolean
+    isPublished?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6780,14 +6906,21 @@ export namespace Prisma {
   export type CourseSelectScalar = {
     id?: boolean
     name?: boolean
+    coverImage?: boolean
     description?: boolean
     price?: boolean
+    type?: boolean
+    videoUrl?: boolean
+    previewDuration?: boolean
+    duration?: boolean
+    studentCount?: boolean
+    isPublished?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "coverImage" | "description" | "price" | "type" | "videoUrl" | "previewDuration" | "duration" | "studentCount" | "isPublished" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }
@@ -6801,15 +6934,67 @@ export namespace Prisma {
   export type $CoursePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Course"
     objects: {
+      /**
+       * 关联分类
+       */
       category: Prisma.$CourseCategoryPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      /**
+       * 课程ID
+       */
       id: string
+      /**
+       * 课程名称
+       */
       name: string
+      /**
+       * 封面图OSS地址
+       */
+      coverImage: string
+      /**
+       * 课程简介
+       */
       description: string | null
+      /**
+       * 课程价格（元）
+       */
       price: number
+      /**
+       * 课程类型
+       */
+      type: $Enums.CourseType
+      /**
+       * 完整视频OSS地址
+       */
+      videoUrl: string
+      /**
+       * 试看时长（秒），默认5分钟
+       */
+      previewDuration: number
+      /**
+       * 视频总时长（秒）
+       */
+      duration: number
+      /**
+       * 学习人数
+       */
+      studentCount: number
+      /**
+       * 是否上架
+       */
+      isPublished: boolean
+      /**
+       * 分类ID
+       */
       categoryId: string
+      /**
+       * 创建时间
+       */
       createdAt: Date
+      /**
+       * 更新时间
+       */
       updatedAt: Date
     }, ExtArgs["result"]["course"]>
     composites: {}
@@ -7237,8 +7422,15 @@ export namespace Prisma {
   interface CourseFieldRefs {
     readonly id: FieldRef<"Course", 'String'>
     readonly name: FieldRef<"Course", 'String'>
+    readonly coverImage: FieldRef<"Course", 'String'>
     readonly description: FieldRef<"Course", 'String'>
     readonly price: FieldRef<"Course", 'Float'>
+    readonly type: FieldRef<"Course", 'CourseType'>
+    readonly videoUrl: FieldRef<"Course", 'String'>
+    readonly previewDuration: FieldRef<"Course", 'Int'>
+    readonly duration: FieldRef<"Course", 'Int'>
+    readonly studentCount: FieldRef<"Course", 'Int'>
+    readonly isPublished: FieldRef<"Course", 'Boolean'>
     readonly categoryId: FieldRef<"Course", 'String'>
     readonly createdAt: FieldRef<"Course", 'DateTime'>
     readonly updatedAt: FieldRef<"Course", 'DateTime'>
@@ -13475,6 +13667,7 @@ export namespace Prisma {
   export const NormalProductCategoryScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    isEnabled: 'isEnabled',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13503,6 +13696,7 @@ export namespace Prisma {
   export const CourseCategoryScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    isEnabled: 'isEnabled',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13513,8 +13707,15 @@ export namespace Prisma {
   export const CourseScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    coverImage: 'coverImage',
     description: 'description',
     price: 'price',
+    type: 'type',
+    videoUrl: 'videoUrl',
+    previewDuration: 'previewDuration',
+    duration: 'duration',
+    studentCount: 'studentCount',
+    isPublished: 'isPublished',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -13720,6 +13921,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -13748,6 +13956,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'CourseType'
+   */
+  export type EnumCourseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CourseType'>
+    
+
+
+  /**
+   * Reference to a field of type 'CourseType[]'
+   */
+  export type ListEnumCourseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CourseType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'OrderStatus'
    */
   export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
@@ -13758,13 +13980,6 @@ export namespace Prisma {
    * Reference to a field of type 'OrderStatus[]'
    */
   export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
   /**
    * Deep Input Types
@@ -13910,6 +14125,7 @@ export namespace Prisma {
     NOT?: NormalProductCategoryWhereInput | NormalProductCategoryWhereInput[]
     id?: StringFilter<"NormalProductCategory"> | string
     name?: StringFilter<"NormalProductCategory"> | string
+    isEnabled?: BoolFilter<"NormalProductCategory"> | boolean
     createdAt?: DateTimeFilter<"NormalProductCategory"> | Date | string
     updatedAt?: DateTimeFilter<"NormalProductCategory"> | Date | string
     normalProducts?: NormalProductListRelationFilter
@@ -13918,6 +14134,7 @@ export namespace Prisma {
   export type NormalProductCategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     normalProducts?: NormalProductOrderByRelationAggregateInput
@@ -13929,6 +14146,7 @@ export namespace Prisma {
     OR?: NormalProductCategoryWhereInput[]
     NOT?: NormalProductCategoryWhereInput | NormalProductCategoryWhereInput[]
     name?: StringFilter<"NormalProductCategory"> | string
+    isEnabled?: BoolFilter<"NormalProductCategory"> | boolean
     createdAt?: DateTimeFilter<"NormalProductCategory"> | Date | string
     updatedAt?: DateTimeFilter<"NormalProductCategory"> | Date | string
     normalProducts?: NormalProductListRelationFilter
@@ -13937,6 +14155,7 @@ export namespace Prisma {
   export type NormalProductCategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: NormalProductCategoryCountOrderByAggregateInput
@@ -13950,6 +14169,7 @@ export namespace Prisma {
     NOT?: NormalProductCategoryScalarWhereWithAggregatesInput | NormalProductCategoryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"NormalProductCategory"> | string
     name?: StringWithAggregatesFilter<"NormalProductCategory"> | string
+    isEnabled?: BoolWithAggregatesFilter<"NormalProductCategory"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"NormalProductCategory"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"NormalProductCategory"> | Date | string
   }
@@ -14052,6 +14272,7 @@ export namespace Prisma {
     NOT?: CourseCategoryWhereInput | CourseCategoryWhereInput[]
     id?: StringFilter<"CourseCategory"> | string
     name?: StringFilter<"CourseCategory"> | string
+    isEnabled?: BoolFilter<"CourseCategory"> | boolean
     createdAt?: DateTimeFilter<"CourseCategory"> | Date | string
     updatedAt?: DateTimeFilter<"CourseCategory"> | Date | string
     courses?: CourseListRelationFilter
@@ -14060,6 +14281,7 @@ export namespace Prisma {
   export type CourseCategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     courses?: CourseOrderByRelationAggregateInput
@@ -14071,6 +14293,7 @@ export namespace Prisma {
     OR?: CourseCategoryWhereInput[]
     NOT?: CourseCategoryWhereInput | CourseCategoryWhereInput[]
     name?: StringFilter<"CourseCategory"> | string
+    isEnabled?: BoolFilter<"CourseCategory"> | boolean
     createdAt?: DateTimeFilter<"CourseCategory"> | Date | string
     updatedAt?: DateTimeFilter<"CourseCategory"> | Date | string
     courses?: CourseListRelationFilter
@@ -14079,6 +14302,7 @@ export namespace Prisma {
   export type CourseCategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CourseCategoryCountOrderByAggregateInput
@@ -14092,6 +14316,7 @@ export namespace Prisma {
     NOT?: CourseCategoryScalarWhereWithAggregatesInput | CourseCategoryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"CourseCategory"> | string
     name?: StringWithAggregatesFilter<"CourseCategory"> | string
+    isEnabled?: BoolWithAggregatesFilter<"CourseCategory"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"CourseCategory"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CourseCategory"> | Date | string
   }
@@ -14102,8 +14327,15 @@ export namespace Prisma {
     NOT?: CourseWhereInput | CourseWhereInput[]
     id?: StringFilter<"Course"> | string
     name?: StringFilter<"Course"> | string
+    coverImage?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     price?: FloatFilter<"Course"> | number
+    type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
+    videoUrl?: StringFilter<"Course"> | string
+    previewDuration?: IntFilter<"Course"> | number
+    duration?: IntFilter<"Course"> | number
+    studentCount?: IntFilter<"Course"> | number
+    isPublished?: BoolFilter<"Course"> | boolean
     categoryId?: StringFilter<"Course"> | string
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
@@ -14113,8 +14345,15 @@ export namespace Prisma {
   export type CourseOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    coverImage?: SortOrder
     description?: SortOrderInput | SortOrder
     price?: SortOrder
+    type?: SortOrder
+    videoUrl?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
+    isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14127,8 +14366,15 @@ export namespace Prisma {
     OR?: CourseWhereInput[]
     NOT?: CourseWhereInput | CourseWhereInput[]
     name?: StringFilter<"Course"> | string
+    coverImage?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     price?: FloatFilter<"Course"> | number
+    type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
+    videoUrl?: StringFilter<"Course"> | string
+    previewDuration?: IntFilter<"Course"> | number
+    duration?: IntFilter<"Course"> | number
+    studentCount?: IntFilter<"Course"> | number
+    isPublished?: BoolFilter<"Course"> | boolean
     categoryId?: StringFilter<"Course"> | string
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
@@ -14138,8 +14384,15 @@ export namespace Prisma {
   export type CourseOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    coverImage?: SortOrder
     description?: SortOrderInput | SortOrder
     price?: SortOrder
+    type?: SortOrder
+    videoUrl?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
+    isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14156,8 +14409,15 @@ export namespace Prisma {
     NOT?: CourseScalarWhereWithAggregatesInput | CourseScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Course"> | string
     name?: StringWithAggregatesFilter<"Course"> | string
+    coverImage?: StringWithAggregatesFilter<"Course"> | string
     description?: StringNullableWithAggregatesFilter<"Course"> | string | null
     price?: FloatWithAggregatesFilter<"Course"> | number
+    type?: EnumCourseTypeWithAggregatesFilter<"Course"> | $Enums.CourseType
+    videoUrl?: StringWithAggregatesFilter<"Course"> | string
+    previewDuration?: IntWithAggregatesFilter<"Course"> | number
+    duration?: IntWithAggregatesFilter<"Course"> | number
+    studentCount?: IntWithAggregatesFilter<"Course"> | number
+    isPublished?: BoolWithAggregatesFilter<"Course"> | boolean
     categoryId?: StringWithAggregatesFilter<"Course"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
@@ -14740,6 +15000,7 @@ export namespace Prisma {
   export type NormalProductCategoryCreateInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     normalProducts?: NormalProductCreateNestedManyWithoutCategoryInput
@@ -14748,6 +15009,7 @@ export namespace Prisma {
   export type NormalProductCategoryUncheckedCreateInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     normalProducts?: NormalProductUncheckedCreateNestedManyWithoutCategoryInput
@@ -14756,6 +15018,7 @@ export namespace Prisma {
   export type NormalProductCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     normalProducts?: NormalProductUpdateManyWithoutCategoryNestedInput
@@ -14764,6 +15027,7 @@ export namespace Prisma {
   export type NormalProductCategoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     normalProducts?: NormalProductUncheckedUpdateManyWithoutCategoryNestedInput
@@ -14772,6 +15036,7 @@ export namespace Prisma {
   export type NormalProductCategoryCreateManyInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14779,6 +15044,7 @@ export namespace Prisma {
   export type NormalProductCategoryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14786,6 +15052,7 @@ export namespace Prisma {
   export type NormalProductCategoryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14897,6 +15164,7 @@ export namespace Prisma {
   export type CourseCategoryCreateInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     courses?: CourseCreateNestedManyWithoutCategoryInput
@@ -14905,6 +15173,7 @@ export namespace Prisma {
   export type CourseCategoryUncheckedCreateInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     courses?: CourseUncheckedCreateNestedManyWithoutCategoryInput
@@ -14913,6 +15182,7 @@ export namespace Prisma {
   export type CourseCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courses?: CourseUpdateManyWithoutCategoryNestedInput
@@ -14921,6 +15191,7 @@ export namespace Prisma {
   export type CourseCategoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courses?: CourseUncheckedUpdateManyWithoutCategoryNestedInput
@@ -14929,6 +15200,7 @@ export namespace Prisma {
   export type CourseCategoryCreateManyInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14936,6 +15208,7 @@ export namespace Prisma {
   export type CourseCategoryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14943,6 +15216,7 @@ export namespace Prisma {
   export type CourseCategoryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14950,8 +15224,15 @@ export namespace Prisma {
   export type CourseCreateInput = {
     id?: string
     name: string
+    coverImage: string
     description?: string | null
     price: number
+    type?: $Enums.CourseType
+    videoUrl: string
+    previewDuration?: number
+    duration: number
+    studentCount?: number
+    isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CourseCategoryCreateNestedOneWithoutCoursesInput
@@ -14960,8 +15241,15 @@ export namespace Prisma {
   export type CourseUncheckedCreateInput = {
     id?: string
     name: string
+    coverImage: string
     description?: string | null
     price: number
+    type?: $Enums.CourseType
+    videoUrl: string
+    previewDuration?: number
+    duration: number
+    studentCount?: number
+    isPublished?: boolean
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14970,8 +15258,15 @@ export namespace Prisma {
   export type CourseUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
@@ -14980,8 +15275,15 @@ export namespace Prisma {
   export type CourseUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14990,8 +15292,15 @@ export namespace Prisma {
   export type CourseCreateManyInput = {
     id?: string
     name: string
+    coverImage: string
     description?: string | null
     price: number
+    type?: $Enums.CourseType
+    videoUrl: string
+    previewDuration?: number
+    duration: number
+    studentCount?: number
+    isPublished?: boolean
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15000,8 +15309,15 @@ export namespace Prisma {
   export type CourseUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15009,8 +15325,15 @@ export namespace Prisma {
   export type CourseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15730,6 +16053,11 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NormalProductListRelationFilter = {
     every?: NormalProductWhereInput
     some?: NormalProductWhereInput
@@ -15743,6 +16071,7 @@ export namespace Prisma {
   export type NormalProductCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15750,6 +16079,7 @@ export namespace Prisma {
   export type NormalProductCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15757,8 +16087,17 @@ export namespace Prisma {
   export type NormalProductCategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -15913,6 +16252,7 @@ export namespace Prisma {
   export type CourseCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15920,6 +16260,7 @@ export namespace Prisma {
   export type CourseCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15927,8 +16268,16 @@ export namespace Prisma {
   export type CourseCategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    isEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumCourseTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.CourseType | EnumCourseTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCourseTypeFilter<$PrismaModel> | $Enums.CourseType
   }
 
   export type CourseCategoryScalarRelationFilter = {
@@ -15939,8 +16288,15 @@ export namespace Prisma {
   export type CourseCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    coverImage?: SortOrder
     description?: SortOrder
     price?: SortOrder
+    type?: SortOrder
+    videoUrl?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
+    isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15948,13 +16304,23 @@ export namespace Prisma {
 
   export type CourseAvgOrderByAggregateInput = {
     price?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
   }
 
   export type CourseMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    coverImage?: SortOrder
     description?: SortOrder
     price?: SortOrder
+    type?: SortOrder
+    videoUrl?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
+    isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15963,8 +16329,15 @@ export namespace Prisma {
   export type CourseMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    coverImage?: SortOrder
     description?: SortOrder
     price?: SortOrder
+    type?: SortOrder
+    videoUrl?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
+    isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15972,6 +16345,19 @@ export namespace Prisma {
 
   export type CourseSumOrderByAggregateInput = {
     price?: SortOrder
+    previewDuration?: SortOrder
+    duration?: SortOrder
+    studentCount?: SortOrder
+  }
+
+  export type EnumCourseTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CourseType | EnumCourseTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCourseTypeWithAggregatesFilter<$PrismaModel> | $Enums.CourseType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCourseTypeFilter<$PrismaModel>
+    _max?: NestedEnumCourseTypeFilter<$PrismaModel>
   }
 
   export type VerificationCodeCountOrderByAggregateInput = {
@@ -16229,11 +16615,6 @@ export namespace Prisma {
     subtotal?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type UserAddressCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -16274,14 +16655,6 @@ export namespace Prisma {
     isDefault?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserCreaterolesInput = {
@@ -16416,6 +16789,10 @@ export namespace Prisma {
     connect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type NormalProductUpdateManyWithoutCategoryNestedInput = {
     create?: XOR<NormalProductCreateWithoutCategoryInput, NormalProductUncheckedCreateWithoutCategoryInput> | NormalProductCreateWithoutCategoryInput[] | NormalProductUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: NormalProductCreateOrConnectWithoutCategoryInput | NormalProductCreateOrConnectWithoutCategoryInput[]
@@ -16548,6 +16925,10 @@ export namespace Prisma {
     connect?: CourseCategoryWhereUniqueInput
   }
 
+  export type EnumCourseTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CourseType
+  }
+
   export type CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput = {
     create?: XOR<CourseCategoryCreateWithoutCoursesInput, CourseCategoryUncheckedCreateWithoutCoursesInput>
     connectOrCreate?: CourseCategoryCreateOrConnectWithoutCoursesInput
@@ -16638,10 +17019,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutAddressesInput, UserUncheckedCreateWithoutAddressesInput>
     connectOrCreate?: UserCreateOrConnectWithoutAddressesInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutAddressesNestedInput = {
@@ -16801,6 +17178,19 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -16871,6 +17261,23 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type NestedEnumCourseTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.CourseType | EnumCourseTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCourseTypeFilter<$PrismaModel> | $Enums.CourseType
+  }
+
+  export type NestedEnumCourseTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CourseType | EnumCourseTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCourseTypeWithAggregatesFilter<$PrismaModel> | $Enums.CourseType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCourseTypeFilter<$PrismaModel>
+    _max?: NestedEnumCourseTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
@@ -16911,19 +17318,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type OrderCreateWithoutUserInput = {
@@ -17159,6 +17553,7 @@ export namespace Prisma {
   export type NormalProductCategoryCreateWithoutNormalProductsInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17166,6 +17561,7 @@ export namespace Prisma {
   export type NormalProductCategoryUncheckedCreateWithoutNormalProductsInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17189,6 +17585,7 @@ export namespace Prisma {
   export type NormalProductCategoryUpdateWithoutNormalProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17196,6 +17593,7 @@ export namespace Prisma {
   export type NormalProductCategoryUncheckedUpdateWithoutNormalProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17203,8 +17601,15 @@ export namespace Prisma {
   export type CourseCreateWithoutCategoryInput = {
     id?: string
     name: string
+    coverImage: string
     description?: string | null
     price: number
+    type?: $Enums.CourseType
+    videoUrl: string
+    previewDuration?: number
+    duration: number
+    studentCount?: number
+    isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17212,8 +17617,15 @@ export namespace Prisma {
   export type CourseUncheckedCreateWithoutCategoryInput = {
     id?: string
     name: string
+    coverImage: string
     description?: string | null
     price: number
+    type?: $Enums.CourseType
+    videoUrl: string
+    previewDuration?: number
+    duration: number
+    studentCount?: number
+    isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17250,8 +17662,15 @@ export namespace Prisma {
     NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
     id?: StringFilter<"Course"> | string
     name?: StringFilter<"Course"> | string
+    coverImage?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     price?: FloatFilter<"Course"> | number
+    type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
+    videoUrl?: StringFilter<"Course"> | string
+    previewDuration?: IntFilter<"Course"> | number
+    duration?: IntFilter<"Course"> | number
+    studentCount?: IntFilter<"Course"> | number
+    isPublished?: BoolFilter<"Course"> | boolean
     categoryId?: StringFilter<"Course"> | string
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
@@ -17260,6 +17679,7 @@ export namespace Prisma {
   export type CourseCategoryCreateWithoutCoursesInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17267,6 +17687,7 @@ export namespace Prisma {
   export type CourseCategoryUncheckedCreateWithoutCoursesInput = {
     id?: string
     name: string
+    isEnabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17290,6 +17711,7 @@ export namespace Prisma {
   export type CourseCategoryUpdateWithoutCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17297,6 +17719,7 @@ export namespace Prisma {
   export type CourseCategoryUncheckedUpdateWithoutCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17876,8 +18299,15 @@ export namespace Prisma {
   export type CourseCreateManyCategoryInput = {
     id?: string
     name: string
+    coverImage: string
     description?: string | null
     price: number
+    type?: $Enums.CourseType
+    videoUrl: string
+    previewDuration?: number
+    duration: number
+    studentCount?: number
+    isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17885,8 +18315,15 @@ export namespace Prisma {
   export type CourseUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17894,8 +18331,15 @@ export namespace Prisma {
   export type CourseUncheckedUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17903,8 +18347,15 @@ export namespace Prisma {
   export type CourseUncheckedUpdateManyWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    studentCount?: IntFieldUpdateOperationsInput | number
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

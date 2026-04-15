@@ -146,6 +146,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.NormalProductCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  isEnabled: 'isEnabled',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -168,6 +169,7 @@ exports.Prisma.NormalProductScalarFieldEnum = {
 exports.Prisma.CourseCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  isEnabled: 'isEnabled',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -175,8 +177,15 @@ exports.Prisma.CourseCategoryScalarFieldEnum = {
 exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  coverImage: 'coverImage',
   description: 'description',
   price: 'price',
+  type: 'type',
+  videoUrl: 'videoUrl',
+  previewDuration: 'previewDuration',
+  duration: 'duration',
+  studentCount: 'studentCount',
+  isPublished: 'isPublished',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -282,6 +291,11 @@ exports.UserStatus = exports.$Enums.UserStatus = {
 exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN',
   USER: 'USER'
+};
+
+exports.CourseType = exports.$Enums.CourseType = {
+  FREE: 'FREE',
+  PAID: 'PAID'
 };
 
 exports.OrderStatus = exports.$Enums.OrderStatus = {

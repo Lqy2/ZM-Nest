@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider     = "prisma-client-js"
   //provider     = "prisma-client"
   output       = "../src/generated/prisma"
   moduleFormat = "cjs"
@@ -15,52 +15,51 @@ datasource db {
   provider = "postgresql"
 }
 
-
 //用户表
 model User {
   /// 用户名（唯一，用于用户名登录）
-  username      String   @unique
-  /// 主键，使用 cuid 生成
-  id            String   @id @default(cuid())
+  username          String     @unique
+  /// 主键，使用 cuid
+  id                String     @id @default(cuid())
   /// 姓名
-  name          String
+  name              String
   /// 手机号（唯一，作为主要登录标识）
-  phone         String   @unique
+  phone             String     @unique
   /// 角色列表，例如：admin、leader、teacher、player 等
-  roles         Role[] @default([USER])
-  status        UserStatus   @default(APPROVED)
-  rejectReason  String?
+  roles             Role[]     @default([USER])
+  status            UserStatus @default(APPROVED)
+  rejectReason      String?
   /// 头像地址
-  avatarUrl     String?
+  avatarUrl         String?
   /// 邮箱
-  email         String?
+  email             String?
   /// 性别
-  gender        String?
+  gender            String?
   /// 证件类型（如身份证、护照）
-  idType        String?
+  idType            String?
   /// 证件号码
-  idNumber      String?
+  idNumber          String?
   /// 所属单位/组织名称
-  entity        String?
+  entity            String?
   /// 单位地址
-  entityAddress String?
+  entityAddress     String?
   /// 市级负责人查看范围（设区市）
-  cityScope     String?
+  cityScope         String?
   /// 赛项负责人查看范围（赛项ID列表）
   competitionScopes String[]
   /// 密码哈希（如使用 bcrypt）
-  passwordHash  String?
+  passwordHash      String?
   /// 授权委托书（JSON 格式存储相关信息）
-  powerOfAttorney Json?
+  powerOfAttorney   Json?
   /// 创建时间
-  createdAt     DateTime @default(now())
+  createdAt         DateTime   @default(now())
   /// 更新时间（由数据库自动更新）
-  updatedAt     DateTime @updatedAt
+  updatedAt         DateTime   @updatedAt
 
   /// 用户订单列表
-  orders        Order[]
+  orders    Order[]
   //用户收货地址表
-  addresses     UserAddress[]
+  addresses UserAddress[]
 
   /// 保留管理员与学校负责人登录；不再关联队伍/选手
 }
@@ -87,6 +86,8 @@ enum UserStatus {
 model NormalProductCategory {
   id             String          @id @default(uuid())
   name           String
+  /// 是否启用
+  isEnabled      Boolean         @default(true)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   normalProducts NormalProduct[]
@@ -95,55 +96,85 @@ model NormalProductCategory {
 //普通商品表
 model NormalProduct {
   /// 主键，使用 uuid
-  id          String                @id @default(uuid())
+  id            String                @id @default(uuid())
   /// 商品名称
-  name        String
+  name          String
   /// 商品简介
-  description String?
+  description   String?
   /// 价格
-  price       Float
+  price         Float
   /// 优惠价
   discountPrice Float?
   /// 库存
-  stock       Int
+  stock         Int
   /// 商品封面图
-  imageUrl    String?
+  imageUrl      String?
   /// 商品图集（列表页/轮播）
-  galleryImages String[]            @default([])
+  galleryImages String[]              @default([])
   /// 商品详情图集（详情页长图）
-  detailImages  String[]            @default([])
+  detailImages  String[]              @default([])
   /// 分类 ID
-  categoryId  String
+  categoryId    String
   /// 分类关联
-  category    NormalProductCategory @relation(fields: [categoryId], references: [id])
+  category      NormalProductCategory @relation(fields: [categoryId], references: [id])
   /// 创建时间
-  createdAt   DateTime              @default(now())
+  createdAt     DateTime              @default(now())
   /// 更新时间
-  updatedAt   DateTime              @updatedAt
+  updatedAt     DateTime              @updatedAt
 }
 
 //课程分类表
 model CourseCategory {
   id        String   @id @default(uuid())
   name      String
+  /// 是否启用
+  isEnabled      Boolean         @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courses   Course[]
 }
 
-//课程表
-model Course {
-  id          String         @id @default(uuid())
-  name        String
-  description String?
-  price       Float
-  categoryId  String
-  category    CourseCategory @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+//课程类型枚举
+enum CourseType {
+  /// 免费课程
+  FREE
+  /// 付费课程（可试看）
+  PAID
 }
 
-
+//课程表
+model Course {
+  /// 课程ID
+  id              String         @id @default(uuid())
+  /// 课程名称
+  name            String
+  /// 封面图OSS地址
+  coverImage      String
+  /// 课程简介
+  description     String?
+  /// 课程价格（元）
+  price           Float
+  /// 课程类型
+  type            CourseType     @default(PAID)
+  /// 完整视频OSS地址
+  videoUrl        String
+  /// 试看时长（秒），默认5分钟
+  previewDuration Int            @default(300)
+  /// 视频总时长（秒）
+  duration        Int
+  /// 学习人数
+  studentCount    Int            @default(0)
+  /// 是否上架
+  isPublished     Boolean        @default(false)
+  /// 分类ID
+  categoryId      String
+  /// 关联分类
+  category        CourseCategory @relation(fields: [categoryId], references: [id])
+  /// 创建时间
+  createdAt       DateTime       @default(now())
+  /// 更新时间
+  updatedAt       DateTime       @updatedAt
+}
 
 /// 短信验证码表：登录/注册/重置密码等场景使用
 model VerificationCode {
@@ -163,11 +194,11 @@ model VerificationCode {
   createdAt DateTime @default(now())
 
   //验证码类型
-  type String   @default("LOGIN")
+  type String @default("LOGIN")
+
   /// 手机号索引
   @@index([phone])
 }
-
 
 // 临时文件模型 - 用于存储临时上传的文件信息
 model TempFile {
@@ -210,8 +241,8 @@ model Order {
   status      OrderStatus @default(PENDING)
 
   /// 收货人信息
-  receiverName  String
-  receiverPhone String
+  receiverName    String
+  receiverPhone   String
   receiverAddress String
 
   /// 支付时间
@@ -222,17 +253,17 @@ model Order {
   completedAt DateTime?
 
   /// 订单备注
-  remark      String?
+  remark           String?
   /// 物流单号
-  trackingNo  String?
+  trackingNo       String?
   /// 物流公司
   logisticsCompany String?
 
   /// 订单项
-  items       OrderItem[]
+  items OrderItem[]
 
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// 索引优化
   @@index([userId])
@@ -242,54 +273,53 @@ model Order {
 
 // 订单项表（一个订单包含多个商品）
 model OrderItem {
-  id          String      @id @default(uuid())
+  id      String @id @default(uuid())
   /// 订单ID
-  orderId     String
+  orderId String
   /// 关联订单
-  order       Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   /// 商品ID（下单时快照）
-  productId   String
+  productId    String
   /// 商品名称（下单时快照，防止商品后续改名）
-  productName String
+  productName  String
   /// 商品图片快照
   productImage String?
 
   /// 购买时单价
-  price       Float
+  price    Float
   /// 购买数量
-  quantity    Int
+  quantity Int
   /// 该商品小计
-  subtotal    Float
+  subtotal Float
 
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
 
 // 用户收货地址表
 model UserAddress {
-  id            String   @id @default(uuid())
+  id     String @id @default(uuid())
   /// 关联用户
-  userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// 收货人
-  name          String
+  name     String
   /// 手机号
-  phone         String
+  phone    String
   /// 省市区
-  province      String
-  city          String
-  district      String
+  province String
+  city     String
+  district String
   /// 详细地址
-  detail        String
+  detail   String
 
   /// 是否默认地址
-  isDefault     Boolean  @default(false)
+  isDefault Boolean @default(false)
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
 }

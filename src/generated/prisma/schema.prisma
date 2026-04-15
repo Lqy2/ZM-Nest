@@ -19,7 +19,7 @@ datasource db {
 model User {
   /// 用户名（唯一，用于用户名登录）
   username          String     @unique
-  /// 主键，使用 cuid 生成
+  /// 主键，使用 cuid
   id                String     @id @default(cuid())
   /// 姓名
   name              String
@@ -86,6 +86,8 @@ enum UserStatus {
 model NormalProductCategory {
   id             String          @id @default(uuid())
   name           String
+  /// 是否启用
+  isEnabled      Boolean         @default(true)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   normalProducts NormalProduct[]
@@ -125,21 +127,53 @@ model NormalProduct {
 model CourseCategory {
   id        String   @id @default(uuid())
   name      String
+  /// 是否启用
+  isEnabled Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courses   Course[]
 }
 
+//课程类型枚举
+enum CourseType {
+  /// 免费课程
+  FREE
+  /// 付费课程（可试看）
+  PAID
+}
+
 //课程表
 model Course {
-  id          String         @id @default(uuid())
-  name        String
-  description String?
-  price       Float
-  categoryId  String
-  category    CourseCategory @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  /// 课程ID
+  id              String         @id @default(uuid())
+  /// 课程名称
+  name            String
+  /// 封面图OSS地址
+  coverImage      String
+  /// 课程简介
+  description     String?
+  /// 课程价格（元）
+  price           Float
+  /// 课程类型
+  type            CourseType     @default(PAID)
+  /// 完整视频OSS地址
+  videoUrl        String
+  /// 试看时长（秒），默认5分钟
+  previewDuration Int            @default(300)
+  /// 视频总时长（秒）
+  duration        Int
+  /// 学习人数
+  studentCount    Int            @default(0)
+  /// 是否上架
+  isPublished     Boolean        @default(false)
+  /// 分类ID
+  categoryId      String
+  /// 关联分类
+  category        CourseCategory @relation(fields: [categoryId], references: [id])
+  /// 创建时间
+  createdAt       DateTime       @default(now())
+  /// 更新时间
+  updatedAt       DateTime       @updatedAt
 }
 
 /// 短信验证码表：登录/注册/重置密码等场景使用
