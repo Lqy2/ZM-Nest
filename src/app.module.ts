@@ -24,6 +24,7 @@ import { ProductModule } from './product/product.module';
 // import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { UploadModule } from './upload/upload.module';
 import { OrderModule } from './order/order.module';
+import { CourseCategoryModule } from './course-category/course-category.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -44,6 +45,7 @@ import configuration from './config/configuration';
     ProductModule,
     UploadModule,
     OrderModule,
+    CourseCategoryModule,
   ],
   controllers: [AppController],
   providers: [

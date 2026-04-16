@@ -19,6 +19,13 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   app.setGlobalPrefix('api');
+  // 启用全局参数验证
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
   // 全局管道管道
   app.useGlobalPipes(new ValidationPipe());
   // 全局异常过滤器

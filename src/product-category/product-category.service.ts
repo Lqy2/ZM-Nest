@@ -3,21 +3,47 @@ import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import type { NormalProductCategory } from '../generated/prisma';
+import { FilterProductCategoryDto } from './dto/filter-category.dto';
+import { Prisma } from '../generated/prisma/client';
+import { ResponseHelper } from '../common/utils/response.helper';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class ProductCategoryService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(
-    createProductCategoryDto: CreateProductCategoryDto,
-  ): Promise<NormalProductCategory> {
+  // 创建商品分类
+  create(createProductCategoryDto: CreateProductCategoryDto) {
     return this.prismaService.normalProductCategory.create({
       data: createProductCategoryDto,
     });
   }
 
-  findAll(): Promise<NormalProductCategory[]> {
-    return this.prismaService.normalProductCategory.findMany();
+  // 查询商品分类列表
+  async findAll(filterProductCategoryDto: FilterProductCategoryDto) {
+    const { name, isEnabled, current, pageSize, skip, take } = filterProductCategoryDto;
+    // console.log(skip, take);
+    // 构建查询条件
+    const where: Prisma.NormalProductCategoryWhereInput = {};
+    if (name) {
+      where.name = {
+        contains: name,
+      };
+    }
+    if (isEnabled !== undefined ) {
+      where.isEnabled = isEnabled === 'true';
+    }
+
+    const [list, total] = await Promise.all([
+      this.prismaService.normalProductCategory.findMany({
+        where,
+        skip,
+        take,
+        orderBy: { createdAt: 'asc' },
+      }),
+      this.prismaService.normalProductCategory.count({ where }),
+    ]);
+    return ResponseHelper.buildListData(list, total, current!, pageSize!);
   }
 
   findOne(id: string): Promise<NormalProductCategory> {
@@ -26,17 +52,17 @@ export class ProductCategoryService {
     });
   }
 
-  update(
+  async update(
     id: string,
     updateProductCategoryDto: UpdateProductCategoryDto,
-  ): Promise<NormalProductCategory> {
-    return this.prismaService.normalProductCategory.update({
+  ) {
+    await this.prismaService.normalProductCategory.update({
       where: { id },
       data: updateProductCategoryDto,
     });
   }
 
-  remove(id: string): Promise<NormalProductCategory> {
+  remove(id: string) {
     return this.prismaService.normalProductCategory.delete({
       where: { id },
     });

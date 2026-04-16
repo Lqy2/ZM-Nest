@@ -13,6 +13,7 @@ import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import type { NormalProductCategory } from '../generated/prisma';
 import { Public } from '../auth/public.decorator';
+import { FilterProductCategoryDto } from './dto/filter-category.dto';
 
 @Controller('product-category')
 export class ProductCategoryController {
@@ -26,10 +27,11 @@ export class ProductCategoryController {
     return this.productCategoryService.create(createProductCategoryDto);
   }
 
+  // 获取商品分类列表
   @Get()
   @Public()
-  findAll() {
-    return this.productCategoryService.findAll();
+  findAll(@Query() filterProductCategoryDto: FilterProductCategoryDto) {
+    return this.productCategoryService.findAll(filterProductCategoryDto);
   }
 
   // 搜索商品分类
