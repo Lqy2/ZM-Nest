@@ -39,7 +39,7 @@ export class ProductCategoryService {
         where,
         skip,
         take,
-        orderBy: { createdAt: 'asc' },
+        orderBy: { createdAt: 'desc' },
       }),
       this.prismaService.normalProductCategory.count({ where }),
     ]);

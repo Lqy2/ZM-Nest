@@ -38,7 +38,7 @@ export class UploadService {
     });
   }
 
-  //
+  // 获取预签名上传URL
   async create(createUploadDto: CreateUploadDto) {
     console.log(createUploadDto);
     const a1 = createUploadDto.fileName.split('.');
@@ -79,6 +79,14 @@ export class UploadService {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return uploadUrl;
+  }
+
+  // 获取文件下载URL
+  getSignedUrl(objectKey: string, expires = 600): string {
+    return this.client.signatureUrl(objectKey, {
+      method: 'GET',
+      expires,
+    });
   }
 
   findAll() {

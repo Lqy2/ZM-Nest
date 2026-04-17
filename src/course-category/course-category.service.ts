@@ -36,7 +36,7 @@ export class CourseCategoryService {
         where,
         skip,
         take,
-        orderBy: { createdAt: 'asc' },
+        orderBy: { createdAt: 'desc' },
       }),
       this.prismaService.courseCategory.count({ where }),
     ]);

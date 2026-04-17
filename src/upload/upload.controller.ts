@@ -17,39 +17,25 @@ import { Public } from '../auth/public.decorator';
 export class UploadController {
   constructor(private readonly uploadService: UploadService) { }
 
+  // 获取预签名上传URL
   @Public()
   @Post('presign')
   create(@Body() createUploadDto: CreateUploadDto) {
     return this.uploadService.create(createUploadDto);
   }
 
+
+  // 获取文件下载URL
   @Post('get-download-url')
   getDownloadUrl(@Body() getDownloadUrlDto: getDownloadUrlDto) {
     // 直接拼接域名和文件键
     const cdnDomain = 'zmcdn.yqlts.com';
     return {
-      // downloadUrl: this.ossService.getSignedUrl(getDownloadUrlDto.fileKey),
-      downloadUrl: `https://${cdnDomain}/${getDownloadUrlDto.fileKey}`,
+      downloadUrl: this.uploadService.getSignedUrl(getDownloadUrlDto.fileKey),
+      // downloadUrl: `https://${cdnDomain}/${getDownloadUrlDto.fileKey}`,
     };
   }
 
-  @Get()
-  findAll() {
-    return this.uploadService.findAll();
-  }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.uploadService.findOne(+id);
-  }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUploadDto: UpdateUploadDto) {
-    return this.uploadService.update(+id, updateUploadDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.uploadService.remove(+id);
-  }
 }
