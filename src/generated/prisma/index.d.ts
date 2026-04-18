@@ -29,6 +29,11 @@ export type NormalProductCategory = $Result.DefaultSelection<Prisma.$NormalProdu
  */
 export type NormalProduct = $Result.DefaultSelection<Prisma.$NormalProductPayload>
 /**
+ * Model File
+ * 
+ */
+export type File = $Result.DefaultSelection<Prisma.$FilePayload>
+/**
  * Model CourseCategory
  * 
  */
@@ -273,6 +278,16 @@ export class PrismaClient<
     * ```
     */
   get normalProduct(): Prisma.NormalProductDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.file`: Exposes CRUD operations for the **File** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Files
+    * const files = await prisma.file.findMany()
+    * ```
+    */
+  get file(): Prisma.FileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.courseCategory`: Exposes CRUD operations for the **CourseCategory** model.
@@ -780,6 +795,7 @@ export namespace Prisma {
     User: 'User',
     NormalProductCategory: 'NormalProductCategory',
     NormalProduct: 'NormalProduct',
+    File: 'File',
     CourseCategory: 'CourseCategory',
     Course: 'Course',
     VerificationCode: 'VerificationCode',
@@ -802,7 +818,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "normalProductCategory" | "normalProduct" | "courseCategory" | "course" | "verificationCode" | "tempFile" | "order" | "orderItem" | "userAddress"
+      modelProps: "user" | "normalProductCategory" | "normalProduct" | "file" | "courseCategory" | "course" | "verificationCode" | "tempFile" | "order" | "orderItem" | "userAddress"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1025,6 +1041,80 @@ export namespace Prisma {
           count: {
             args: Prisma.NormalProductCountArgs<ExtArgs>
             result: $Utils.Optional<NormalProductCountAggregateOutputType> | number
+          }
+        }
+      }
+      File: {
+        payload: Prisma.$FilePayload<ExtArgs>
+        fields: Prisma.FileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          findFirst: {
+            args: Prisma.FileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          findMany: {
+            args: Prisma.FileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          create: {
+            args: Prisma.FileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          createMany: {
+            args: Prisma.FileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          delete: {
+            args: Prisma.FileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          update: {
+            args: Prisma.FileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          deleteMany: {
+            args: Prisma.FileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          upsert: {
+            args: Prisma.FileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          aggregate: {
+            args: Prisma.FileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFile>
+          }
+          groupBy: {
+            args: Prisma.FileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FileCountArgs<ExtArgs>
+            result: $Utils.Optional<FileCountAggregateOutputType> | number
           }
         }
       }
@@ -1657,6 +1747,7 @@ export namespace Prisma {
     user?: UserOmit
     normalProductCategory?: NormalProductCategoryOmit
     normalProduct?: NormalProductOmit
+    file?: FileOmit
     courseCategory?: CourseCategoryOmit
     course?: CourseOmit
     verificationCode?: VerificationCodeOmit
@@ -1811,6 +1902,77 @@ export namespace Prisma {
 
 
   /**
+   * Count Type NormalProductCountOutputType
+   */
+
+  export type NormalProductCountOutputType = {
+    galleryImages: number
+  }
+
+  export type NormalProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    galleryImages?: boolean | NormalProductCountOutputTypeCountGalleryImagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * NormalProductCountOutputType without action
+   */
+  export type NormalProductCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NormalProductCountOutputType
+     */
+    select?: NormalProductCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * NormalProductCountOutputType without action
+   */
+  export type NormalProductCountOutputTypeCountGalleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
+  }
+
+
+  /**
+   * Count Type FileCountOutputType
+   */
+
+  export type FileCountOutputType = {
+    avatarUrl: number
+    galleryImages: number
+  }
+
+  export type FileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    avatarUrl?: boolean | FileCountOutputTypeCountAvatarUrlArgs
+    galleryImages?: boolean | FileCountOutputTypeCountGalleryImagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FileCountOutputType without action
+   */
+  export type FileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileCountOutputType
+     */
+    select?: FileCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FileCountOutputType without action
+   */
+  export type FileCountOutputTypeCountAvatarUrlArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+  /**
+   * FileCountOutputType without action
+   */
+  export type FileCountOutputTypeCountGalleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NormalProductWhereInput
+  }
+
+
+  /**
    * Count Type CourseCategoryCountOutputType
    */
 
@@ -1882,8 +2044,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    avatarFileId: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    avatarFileId: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1893,7 +2065,7 @@ export namespace Prisma {
     phone: string | null
     status: $Enums.UserStatus | null
     rejectReason: string | null
-    avatarUrl: string | null
+    avatarFileId: number | null
     email: string | null
     gender: string | null
     idType: string | null
@@ -1913,7 +2085,7 @@ export namespace Prisma {
     phone: string | null
     status: $Enums.UserStatus | null
     rejectReason: string | null
-    avatarUrl: string | null
+    avatarFileId: number | null
     email: string | null
     gender: string | null
     idType: string | null
@@ -1934,7 +2106,7 @@ export namespace Prisma {
     roles: number
     status: number
     rejectReason: number
-    avatarUrl: number
+    avatarFileId: number
     email: number
     gender: number
     idType: number
@@ -1951,6 +2123,14 @@ export namespace Prisma {
   }
 
 
+  export type UserAvgAggregateInputType = {
+    avatarFileId?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    avatarFileId?: true
+  }
+
   export type UserMinAggregateInputType = {
     username?: true
     id?: true
@@ -1958,7 +2138,7 @@ export namespace Prisma {
     phone?: true
     status?: true
     rejectReason?: true
-    avatarUrl?: true
+    avatarFileId?: true
     email?: true
     gender?: true
     idType?: true
@@ -1978,7 +2158,7 @@ export namespace Prisma {
     phone?: true
     status?: true
     rejectReason?: true
-    avatarUrl?: true
+    avatarFileId?: true
     email?: true
     gender?: true
     idType?: true
@@ -1999,7 +2179,7 @@ export namespace Prisma {
     roles?: true
     status?: true
     rejectReason?: true
-    avatarUrl?: true
+    avatarFileId?: true
     email?: true
     gender?: true
     idType?: true
@@ -2053,6 +2233,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -2083,6 +2275,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -2095,7 +2289,7 @@ export namespace Prisma {
     roles: $Enums.Role[]
     status: $Enums.UserStatus
     rejectReason: string | null
-    avatarUrl: string | null
+    avatarFileId: number | null
     email: string | null
     gender: string | null
     idType: string | null
@@ -2109,6 +2303,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -2135,7 +2331,7 @@ export namespace Prisma {
     roles?: boolean
     status?: boolean
     rejectReason?: boolean
-    avatarUrl?: boolean
+    avatarFileId?: boolean
     email?: boolean
     gender?: boolean
     idType?: boolean
@@ -2148,6 +2344,7 @@ export namespace Prisma {
     powerOfAttorney?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    avatarUrl?: boolean | User$avatarUrlArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     addresses?: boolean | User$addressesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2161,7 +2358,7 @@ export namespace Prisma {
     roles?: boolean
     status?: boolean
     rejectReason?: boolean
-    avatarUrl?: boolean
+    avatarFileId?: boolean
     email?: boolean
     gender?: boolean
     idType?: boolean
@@ -2174,6 +2371,7 @@ export namespace Prisma {
     powerOfAttorney?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    avatarUrl?: boolean | User$avatarUrlArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2184,7 +2382,7 @@ export namespace Prisma {
     roles?: boolean
     status?: boolean
     rejectReason?: boolean
-    avatarUrl?: boolean
+    avatarFileId?: boolean
     email?: boolean
     gender?: boolean
     idType?: boolean
@@ -2197,6 +2395,7 @@ export namespace Prisma {
     powerOfAttorney?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    avatarUrl?: boolean | User$avatarUrlArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2207,7 +2406,7 @@ export namespace Prisma {
     roles?: boolean
     status?: boolean
     rejectReason?: boolean
-    avatarUrl?: boolean
+    avatarFileId?: boolean
     email?: boolean
     gender?: boolean
     idType?: boolean
@@ -2222,18 +2421,27 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"username" | "id" | "name" | "phone" | "roles" | "status" | "rejectReason" | "avatarUrl" | "email" | "gender" | "idType" | "idNumber" | "entity" | "entityAddress" | "cityScope" | "competitionScopes" | "passwordHash" | "powerOfAttorney" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"username" | "id" | "name" | "phone" | "roles" | "status" | "rejectReason" | "avatarFileId" | "email" | "gender" | "idType" | "idNumber" | "entity" | "entityAddress" | "cityScope" | "competitionScopes" | "passwordHash" | "powerOfAttorney" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    avatarUrl?: boolean | User$avatarUrlArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     addresses?: boolean | User$addressesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    avatarUrl?: boolean | User$avatarUrlArgs<ExtArgs>
+  }
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    avatarUrl?: boolean | User$avatarUrlArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      /**
+       * 头像地址
+       */
+      avatarUrl: Prisma.$FilePayload<ExtArgs> | null
       /**
        * 用户订单列表
        */
@@ -2264,9 +2472,9 @@ export namespace Prisma {
       status: $Enums.UserStatus
       rejectReason: string | null
       /**
-       * 头像地址
+       * 头像文件ID
        */
-      avatarUrl: string | null
+      avatarFileId: number | null
       /**
        * 邮箱
        */
@@ -2709,6 +2917,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    avatarUrl<T extends User$avatarUrlArgs<ExtArgs> = {}>(args?: Subset<T, User$avatarUrlArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     orders<T extends User$ordersArgs<ExtArgs> = {}>(args?: Subset<T, User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     addresses<T extends User$addressesArgs<ExtArgs> = {}>(args?: Subset<T, User$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -2747,7 +2956,7 @@ export namespace Prisma {
     readonly roles: FieldRef<"User", 'Role[]'>
     readonly status: FieldRef<"User", 'UserStatus'>
     readonly rejectReason: FieldRef<"User", 'String'>
-    readonly avatarUrl: FieldRef<"User", 'String'>
+    readonly avatarFileId: FieldRef<"User", 'Int'>
     readonly email: FieldRef<"User", 'String'>
     readonly gender: FieldRef<"User", 'String'>
     readonly idType: FieldRef<"User", 'String'>
@@ -3009,6 +3218,10 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3079,6 +3292,10 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3145,6 +3362,25 @@ export namespace Prisma {
      * Limit how many Users to delete.
      */
     limit?: number
+  }
+
+  /**
+   * User.avatarUrl
+   */
+  export type User$avatarUrlArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
   }
 
   /**
@@ -4303,12 +4539,14 @@ export namespace Prisma {
     price: number | null
     discountPrice: number | null
     stock: number | null
+    detailImageId: number | null
   }
 
   export type NormalProductSumAggregateOutputType = {
     price: number | null
     discountPrice: number | null
     stock: number | null
+    detailImageId: number | null
   }
 
   export type NormalProductMinAggregateOutputType = {
@@ -4318,7 +4556,7 @@ export namespace Prisma {
     price: number | null
     discountPrice: number | null
     stock: number | null
-    imageUrl: string | null
+    detailImageId: number | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4331,7 +4569,7 @@ export namespace Prisma {
     price: number | null
     discountPrice: number | null
     stock: number | null
-    imageUrl: string | null
+    detailImageId: number | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4344,9 +4582,7 @@ export namespace Prisma {
     price: number
     discountPrice: number
     stock: number
-    imageUrl: number
-    galleryImages: number
-    detailImages: number
+    detailImageId: number
     categoryId: number
     createdAt: number
     updatedAt: number
@@ -4358,12 +4594,14 @@ export namespace Prisma {
     price?: true
     discountPrice?: true
     stock?: true
+    detailImageId?: true
   }
 
   export type NormalProductSumAggregateInputType = {
     price?: true
     discountPrice?: true
     stock?: true
+    detailImageId?: true
   }
 
   export type NormalProductMinAggregateInputType = {
@@ -4373,7 +4611,7 @@ export namespace Prisma {
     price?: true
     discountPrice?: true
     stock?: true
-    imageUrl?: true
+    detailImageId?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -4386,7 +4624,7 @@ export namespace Prisma {
     price?: true
     discountPrice?: true
     stock?: true
-    imageUrl?: true
+    detailImageId?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -4399,9 +4637,7 @@ export namespace Prisma {
     price?: true
     discountPrice?: true
     stock?: true
-    imageUrl?: true
-    galleryImages?: true
-    detailImages?: true
+    detailImageId?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -4501,9 +4737,7 @@ export namespace Prisma {
     price: number
     discountPrice: number | null
     stock: number
-    imageUrl: string | null
-    galleryImages: string[]
-    detailImages: string[]
+    detailImageId: number | null
     categoryId: string
     createdAt: Date
     updatedAt: Date
@@ -4535,13 +4769,14 @@ export namespace Prisma {
     price?: boolean
     discountPrice?: boolean
     stock?: boolean
-    imageUrl?: boolean
-    galleryImages?: boolean
-    detailImages?: boolean
+    detailImageId?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    galleryImages?: boolean | NormalProduct$galleryImagesArgs<ExtArgs>
+    detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
+    _count?: boolean | NormalProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["normalProduct"]>
 
   export type NormalProductSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4551,12 +4786,11 @@ export namespace Prisma {
     price?: boolean
     discountPrice?: boolean
     stock?: boolean
-    imageUrl?: boolean
-    galleryImages?: boolean
-    detailImages?: boolean
+    detailImageId?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["normalProduct"]>
 
@@ -4567,12 +4801,11 @@ export namespace Prisma {
     price?: boolean
     discountPrice?: boolean
     stock?: boolean
-    imageUrl?: boolean
-    galleryImages?: boolean
-    detailImages?: boolean
+    detailImageId?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["normalProduct"]>
 
@@ -4583,28 +4816,39 @@ export namespace Prisma {
     price?: boolean
     discountPrice?: boolean
     stock?: boolean
-    imageUrl?: boolean
-    galleryImages?: boolean
-    detailImages?: boolean
+    detailImageId?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type NormalProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "discountPrice" | "stock" | "imageUrl" | "galleryImages" | "detailImages" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["normalProduct"]>
+  export type NormalProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "discountPrice" | "stock" | "detailImageId" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["normalProduct"]>
   export type NormalProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    galleryImages?: boolean | NormalProduct$galleryImagesArgs<ExtArgs>
+    detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
+    _count?: boolean | NormalProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type NormalProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
   }
   export type NormalProductIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
   }
 
   export type $NormalProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "NormalProduct"
     objects: {
+      /**
+       * 商品图集（列表页/轮播）
+       */
+      galleryImages: Prisma.$FilePayload<ExtArgs>[]
+      /**
+       * 详情图关联
+       */
+      detailImage: Prisma.$FilePayload<ExtArgs> | null
       /**
        * 分类关联
        */
@@ -4636,17 +4880,9 @@ export namespace Prisma {
        */
       stock: number
       /**
-       * 商品封面图
+       * 详情图ID（外键）
        */
-      imageUrl: string | null
-      /**
-       * 商品图集（列表页/轮播）
-       */
-      galleryImages: string[]
-      /**
-       * 商品详情图集（详情页长图）
-       */
-      detailImages: string[]
+      detailImageId: number | null
       /**
        * 分类 ID
        */
@@ -5053,6 +5289,8 @@ export namespace Prisma {
    */
   export interface Prisma__NormalProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    galleryImages<T extends NormalProduct$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, NormalProduct$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    detailImage<T extends NormalProduct$detailImageArgs<ExtArgs> = {}>(args?: Subset<T, NormalProduct$detailImageArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     category<T extends NormalProductCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NormalProductCategoryDefaultArgs<ExtArgs>>): Prisma__NormalProductCategoryClient<$Result.GetResult<Prisma.$NormalProductCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5089,9 +5327,7 @@ export namespace Prisma {
     readonly price: FieldRef<"NormalProduct", 'Float'>
     readonly discountPrice: FieldRef<"NormalProduct", 'Float'>
     readonly stock: FieldRef<"NormalProduct", 'Int'>
-    readonly imageUrl: FieldRef<"NormalProduct", 'String'>
-    readonly galleryImages: FieldRef<"NormalProduct", 'String[]'>
-    readonly detailImages: FieldRef<"NormalProduct", 'String[]'>
+    readonly detailImageId: FieldRef<"NormalProduct", 'Int'>
     readonly categoryId: FieldRef<"NormalProduct", 'String'>
     readonly createdAt: FieldRef<"NormalProduct", 'DateTime'>
     readonly updatedAt: FieldRef<"NormalProduct", 'DateTime'>
@@ -5491,6 +5727,49 @@ export namespace Prisma {
   }
 
   /**
+   * NormalProduct.galleryImages
+   */
+  export type NormalProduct$galleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    cursor?: FileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * NormalProduct.detailImage
+   */
+  export type NormalProduct$detailImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+  }
+
+  /**
    * NormalProduct without action
    */
   export type NormalProductDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5506,6 +5785,1213 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: NormalProductInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model File
+   */
+
+  export type AggregateFile = {
+    _count: FileCountAggregateOutputType | null
+    _avg: FileAvgAggregateOutputType | null
+    _sum: FileSumAggregateOutputType | null
+    _min: FileMinAggregateOutputType | null
+    _max: FileMaxAggregateOutputType | null
+  }
+
+  export type FileAvgAggregateOutputType = {
+    id: number | null
+    fileSize: number | null
+  }
+
+  export type FileSumAggregateOutputType = {
+    id: number | null
+    fileSize: number | null
+  }
+
+  export type FileMinAggregateOutputType = {
+    id: number | null
+    fileKey: string | null
+    fileName: string | null
+    fileSize: number | null
+    mimeType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    deletedAt: Date | null
+  }
+
+  export type FileMaxAggregateOutputType = {
+    id: number | null
+    fileKey: string | null
+    fileName: string | null
+    fileSize: number | null
+    mimeType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    deletedAt: Date | null
+  }
+
+  export type FileCountAggregateOutputType = {
+    id: number
+    fileKey: number
+    fileName: number
+    fileSize: number
+    mimeType: number
+    createdAt: number
+    updatedAt: number
+    deletedAt: number
+    meta: number
+    _all: number
+  }
+
+
+  export type FileAvgAggregateInputType = {
+    id?: true
+    fileSize?: true
+  }
+
+  export type FileSumAggregateInputType = {
+    id?: true
+    fileSize?: true
+  }
+
+  export type FileMinAggregateInputType = {
+    id?: true
+    fileKey?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    createdAt?: true
+    updatedAt?: true
+    deletedAt?: true
+  }
+
+  export type FileMaxAggregateInputType = {
+    id?: true
+    fileKey?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    createdAt?: true
+    updatedAt?: true
+    deletedAt?: true
+  }
+
+  export type FileCountAggregateInputType = {
+    id?: true
+    fileKey?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    createdAt?: true
+    updatedAt?: true
+    deletedAt?: true
+    meta?: true
+    _all?: true
+  }
+
+  export type FileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which File to aggregate.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Files
+    **/
+    _count?: true | FileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FileMaxAggregateInputType
+  }
+
+  export type GetFileAggregateType<T extends FileAggregateArgs> = {
+        [P in keyof T & keyof AggregateFile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFile[P]>
+      : GetScalarType<T[P], AggregateFile[P]>
+  }
+
+
+
+
+  export type FileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithAggregationInput | FileOrderByWithAggregationInput[]
+    by: FileScalarFieldEnum[] | FileScalarFieldEnum
+    having?: FileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FileCountAggregateInputType | true
+    _avg?: FileAvgAggregateInputType
+    _sum?: FileSumAggregateInputType
+    _min?: FileMinAggregateInputType
+    _max?: FileMaxAggregateInputType
+  }
+
+  export type FileGroupByOutputType = {
+    id: number
+    fileKey: string
+    fileName: string | null
+    fileSize: number
+    mimeType: string
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
+    meta: JsonValue | null
+    _count: FileCountAggregateOutputType | null
+    _avg: FileAvgAggregateOutputType | null
+    _sum: FileSumAggregateOutputType | null
+    _min: FileMinAggregateOutputType | null
+    _max: FileMaxAggregateOutputType | null
+  }
+
+  type GetFileGroupByPayload<T extends FileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FileGroupByOutputType[P]>
+            : GetScalarType<T[P], FileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fileKey?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    deletedAt?: boolean
+    meta?: boolean
+    avatarUrl?: boolean | File$avatarUrlArgs<ExtArgs>
+    galleryImages?: boolean | File$galleryImagesArgs<ExtArgs>
+    detailImage?: boolean | File$detailImageArgs<ExtArgs>
+    _count?: boolean | FileCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fileKey?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    deletedAt?: boolean
+    meta?: boolean
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fileKey?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    deletedAt?: boolean
+    meta?: boolean
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectScalar = {
+    id?: boolean
+    fileKey?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    deletedAt?: boolean
+    meta?: boolean
+  }
+
+  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fileKey" | "fileName" | "fileSize" | "mimeType" | "createdAt" | "updatedAt" | "deletedAt" | "meta", ExtArgs["result"]["file"]>
+  export type FileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    avatarUrl?: boolean | File$avatarUrlArgs<ExtArgs>
+    galleryImages?: boolean | File$galleryImagesArgs<ExtArgs>
+    detailImage?: boolean | File$detailImageArgs<ExtArgs>
+    _count?: boolean | FileCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $FilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "File"
+    objects: {
+      avatarUrl: Prisma.$UserPayload<ExtArgs>[]
+      galleryImages: Prisma.$NormalProductPayload<ExtArgs>[]
+      detailImage: Prisma.$NormalProductPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      fileKey: string
+      fileName: string | null
+      fileSize: number
+      mimeType: string
+      createdAt: Date
+      updatedAt: Date
+      deletedAt: Date | null
+      meta: Prisma.JsonValue | null
+    }, ExtArgs["result"]["file"]>
+    composites: {}
+  }
+
+  type FileGetPayload<S extends boolean | null | undefined | FileDefaultArgs> = $Result.GetResult<Prisma.$FilePayload, S>
+
+  type FileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FileCountAggregateInputType | true
+    }
+
+  export interface FileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['File'], meta: { name: 'File' } }
+    /**
+     * Find zero or one File that matches the filter.
+     * @param {FileFindUniqueArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FileFindUniqueArgs>(args: SelectSubset<T, FileFindUniqueArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one File that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FileFindUniqueOrThrowArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FileFindUniqueOrThrowArgs>(args: SelectSubset<T, FileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first File that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindFirstArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FileFindFirstArgs>(args?: SelectSubset<T, FileFindFirstArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first File that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindFirstOrThrowArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FileFindFirstOrThrowArgs>(args?: SelectSubset<T, FileFindFirstOrThrowArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Files that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Files
+     * const files = await prisma.file.findMany()
+     * 
+     * // Get first 10 Files
+     * const files = await prisma.file.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fileWithIdOnly = await prisma.file.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FileFindManyArgs>(args?: SelectSubset<T, FileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a File.
+     * @param {FileCreateArgs} args - Arguments to create a File.
+     * @example
+     * // Create one File
+     * const File = await prisma.file.create({
+     *   data: {
+     *     // ... data to create a File
+     *   }
+     * })
+     * 
+     */
+    create<T extends FileCreateArgs>(args: SelectSubset<T, FileCreateArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Files.
+     * @param {FileCreateManyArgs} args - Arguments to create many Files.
+     * @example
+     * // Create many Files
+     * const file = await prisma.file.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FileCreateManyArgs>(args?: SelectSubset<T, FileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Files and returns the data saved in the database.
+     * @param {FileCreateManyAndReturnArgs} args - Arguments to create many Files.
+     * @example
+     * // Create many Files
+     * const file = await prisma.file.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Files and only return the `id`
+     * const fileWithIdOnly = await prisma.file.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FileCreateManyAndReturnArgs>(args?: SelectSubset<T, FileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a File.
+     * @param {FileDeleteArgs} args - Arguments to delete one File.
+     * @example
+     * // Delete one File
+     * const File = await prisma.file.delete({
+     *   where: {
+     *     // ... filter to delete one File
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FileDeleteArgs>(args: SelectSubset<T, FileDeleteArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one File.
+     * @param {FileUpdateArgs} args - Arguments to update one File.
+     * @example
+     * // Update one File
+     * const file = await prisma.file.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FileUpdateArgs>(args: SelectSubset<T, FileUpdateArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Files.
+     * @param {FileDeleteManyArgs} args - Arguments to filter Files to delete.
+     * @example
+     * // Delete a few Files
+     * const { count } = await prisma.file.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FileDeleteManyArgs>(args?: SelectSubset<T, FileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Files.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Files
+     * const file = await prisma.file.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FileUpdateManyArgs>(args: SelectSubset<T, FileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Files and returns the data updated in the database.
+     * @param {FileUpdateManyAndReturnArgs} args - Arguments to update many Files.
+     * @example
+     * // Update many Files
+     * const file = await prisma.file.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Files and only return the `id`
+     * const fileWithIdOnly = await prisma.file.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FileUpdateManyAndReturnArgs>(args: SelectSubset<T, FileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one File.
+     * @param {FileUpsertArgs} args - Arguments to update or create a File.
+     * @example
+     * // Update or create a File
+     * const file = await prisma.file.upsert({
+     *   create: {
+     *     // ... data to create a File
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the File we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FileUpsertArgs>(args: SelectSubset<T, FileUpsertArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Files.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileCountArgs} args - Arguments to filter Files to count.
+     * @example
+     * // Count the number of Files
+     * const count = await prisma.file.count({
+     *   where: {
+     *     // ... the filter for the Files we want to count
+     *   }
+     * })
+    **/
+    count<T extends FileCountArgs>(
+      args?: Subset<T, FileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a File.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FileAggregateArgs>(args: Subset<T, FileAggregateArgs>): Prisma.PrismaPromise<GetFileAggregateType<T>>
+
+    /**
+     * Group by File.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FileGroupByArgs['orderBy'] }
+        : { orderBy?: FileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the File model
+   */
+  readonly fields: FileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for File.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    avatarUrl<T extends File$avatarUrlArgs<ExtArgs> = {}>(args?: Subset<T, File$avatarUrlArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    galleryImages<T extends File$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, File$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NormalProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    detailImage<T extends File$detailImageArgs<ExtArgs> = {}>(args?: Subset<T, File$detailImageArgs<ExtArgs>>): Prisma__NormalProductClient<$Result.GetResult<Prisma.$NormalProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the File model
+   */
+  interface FileFieldRefs {
+    readonly id: FieldRef<"File", 'Int'>
+    readonly fileKey: FieldRef<"File", 'String'>
+    readonly fileName: FieldRef<"File", 'String'>
+    readonly fileSize: FieldRef<"File", 'Int'>
+    readonly mimeType: FieldRef<"File", 'String'>
+    readonly createdAt: FieldRef<"File", 'DateTime'>
+    readonly updatedAt: FieldRef<"File", 'DateTime'>
+    readonly deletedAt: FieldRef<"File", 'DateTime'>
+    readonly meta: FieldRef<"File", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * File findUnique
+   */
+  export type FileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File findUniqueOrThrow
+   */
+  export type FileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File findFirst
+   */
+  export type FileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Files.
+     */
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File findFirstOrThrow
+   */
+  export type FileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Files.
+     */
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File findMany
+   */
+  export type FileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which Files to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File create
+   */
+  export type FileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a File.
+     */
+    data: XOR<FileCreateInput, FileUncheckedCreateInput>
+  }
+
+  /**
+   * File createMany
+   */
+  export type FileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Files.
+     */
+    data: FileCreateManyInput | FileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * File createManyAndReturn
+   */
+  export type FileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * The data used to create many Files.
+     */
+    data: FileCreateManyInput | FileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * File update
+   */
+  export type FileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a File.
+     */
+    data: XOR<FileUpdateInput, FileUncheckedUpdateInput>
+    /**
+     * Choose, which File to update.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File updateMany
+   */
+  export type FileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Files.
+     */
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyInput>
+    /**
+     * Filter which Files to update
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * File updateManyAndReturn
+   */
+  export type FileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * The data used to update Files.
+     */
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyInput>
+    /**
+     * Filter which Files to update
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * File upsert
+   */
+  export type FileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the File to update in case it exists.
+     */
+    where: FileWhereUniqueInput
+    /**
+     * In case the File found by the `where` argument doesn't exist, create a new File with this data.
+     */
+    create: XOR<FileCreateInput, FileUncheckedCreateInput>
+    /**
+     * In case the File was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FileUpdateInput, FileUncheckedUpdateInput>
+  }
+
+  /**
+   * File delete
+   */
+  export type FileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter which File to delete.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File deleteMany
+   */
+  export type FileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Files to delete
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * File.avatarUrl
+   */
+  export type File$avatarUrlArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * File.galleryImages
+   */
+  export type File$galleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NormalProduct
+     */
+    select?: NormalProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NormalProduct
+     */
+    omit?: NormalProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NormalProductInclude<ExtArgs> | null
+    where?: NormalProductWhereInput
+    orderBy?: NormalProductOrderByWithRelationInput | NormalProductOrderByWithRelationInput[]
+    cursor?: NormalProductWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NormalProductScalarFieldEnum | NormalProductScalarFieldEnum[]
+  }
+
+  /**
+   * File.detailImage
+   */
+  export type File$detailImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NormalProduct
+     */
+    select?: NormalProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NormalProduct
+     */
+    omit?: NormalProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NormalProductInclude<ExtArgs> | null
+    where?: NormalProductWhereInput
+  }
+
+  /**
+   * File without action
+   */
+  export type FileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
   }
 
 
@@ -13646,7 +15132,7 @@ export namespace Prisma {
     roles: 'roles',
     status: 'status',
     rejectReason: 'rejectReason',
-    avatarUrl: 'avatarUrl',
+    avatarFileId: 'avatarFileId',
     email: 'email',
     gender: 'gender',
     idType: 'idType',
@@ -13682,15 +15168,28 @@ export namespace Prisma {
     price: 'price',
     discountPrice: 'discountPrice',
     stock: 'stock',
-    imageUrl: 'imageUrl',
-    galleryImages: 'galleryImages',
-    detailImages: 'detailImages',
+    detailImageId: 'detailImageId',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type NormalProductScalarFieldEnum = (typeof NormalProductScalarFieldEnum)[keyof typeof NormalProductScalarFieldEnum]
+
+
+  export const FileScalarFieldEnum: {
+    id: 'id',
+    fileKey: 'fileKey',
+    fileName: 'fileName',
+    fileSize: 'fileSize',
+    mimeType: 'mimeType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
+    meta: 'meta'
+  };
+
+  export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
 
 
   export const CourseCategoryScalarFieldEnum: {
@@ -13893,6 +15392,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -13942,20 +15455,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'CourseType'
    */
   export type EnumCourseTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CourseType'>
@@ -13997,7 +15496,7 @@ export namespace Prisma {
     roles?: EnumRoleNullableListFilter<"User">
     status?: EnumUserStatusFilter<"User"> | $Enums.UserStatus
     rejectReason?: StringNullableFilter<"User"> | string | null
-    avatarUrl?: StringNullableFilter<"User"> | string | null
+    avatarFileId?: IntNullableFilter<"User"> | number | null
     email?: StringNullableFilter<"User"> | string | null
     gender?: StringNullableFilter<"User"> | string | null
     idType?: StringNullableFilter<"User"> | string | null
@@ -14010,6 +15509,7 @@ export namespace Prisma {
     powerOfAttorney?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    avatarUrl?: XOR<FileNullableScalarRelationFilter, FileWhereInput> | null
     orders?: OrderListRelationFilter
     addresses?: UserAddressListRelationFilter
   }
@@ -14022,7 +15522,7 @@ export namespace Prisma {
     roles?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrderInput | SortOrder
-    avatarUrl?: SortOrderInput | SortOrder
+    avatarFileId?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     idType?: SortOrderInput | SortOrder
@@ -14035,6 +15535,7 @@ export namespace Prisma {
     powerOfAttorney?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    avatarUrl?: FileOrderByWithRelationInput
     orders?: OrderOrderByRelationAggregateInput
     addresses?: UserAddressOrderByRelationAggregateInput
   }
@@ -14050,7 +15551,7 @@ export namespace Prisma {
     roles?: EnumRoleNullableListFilter<"User">
     status?: EnumUserStatusFilter<"User"> | $Enums.UserStatus
     rejectReason?: StringNullableFilter<"User"> | string | null
-    avatarUrl?: StringNullableFilter<"User"> | string | null
+    avatarFileId?: IntNullableFilter<"User"> | number | null
     email?: StringNullableFilter<"User"> | string | null
     gender?: StringNullableFilter<"User"> | string | null
     idType?: StringNullableFilter<"User"> | string | null
@@ -14063,6 +15564,7 @@ export namespace Prisma {
     powerOfAttorney?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    avatarUrl?: XOR<FileNullableScalarRelationFilter, FileWhereInput> | null
     orders?: OrderListRelationFilter
     addresses?: UserAddressListRelationFilter
   }, "id" | "username" | "phone">
@@ -14075,7 +15577,7 @@ export namespace Prisma {
     roles?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrderInput | SortOrder
-    avatarUrl?: SortOrderInput | SortOrder
+    avatarFileId?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     idType?: SortOrderInput | SortOrder
@@ -14089,8 +15591,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -14104,7 +15608,7 @@ export namespace Prisma {
     roles?: EnumRoleNullableListFilter<"User">
     status?: EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
     rejectReason?: StringNullableWithAggregatesFilter<"User"> | string | null
-    avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    avatarFileId?: IntNullableWithAggregatesFilter<"User"> | number | null
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     gender?: StringNullableWithAggregatesFilter<"User"> | string | null
     idType?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -14184,12 +15688,12 @@ export namespace Prisma {
     price?: FloatFilter<"NormalProduct"> | number
     discountPrice?: FloatNullableFilter<"NormalProduct"> | number | null
     stock?: IntFilter<"NormalProduct"> | number
-    imageUrl?: StringNullableFilter<"NormalProduct"> | string | null
-    galleryImages?: StringNullableListFilter<"NormalProduct">
-    detailImages?: StringNullableListFilter<"NormalProduct">
+    detailImageId?: IntNullableFilter<"NormalProduct"> | number | null
     categoryId?: StringFilter<"NormalProduct"> | string
     createdAt?: DateTimeFilter<"NormalProduct"> | Date | string
     updatedAt?: DateTimeFilter<"NormalProduct"> | Date | string
+    galleryImages?: FileListRelationFilter
+    detailImage?: XOR<FileNullableScalarRelationFilter, FileWhereInput> | null
     category?: XOR<NormalProductCategoryScalarRelationFilter, NormalProductCategoryWhereInput>
   }
 
@@ -14200,17 +15704,18 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrderInput | SortOrder
     stock?: SortOrder
-    imageUrl?: SortOrderInput | SortOrder
-    galleryImages?: SortOrder
-    detailImages?: SortOrder
+    detailImageId?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    galleryImages?: FileOrderByRelationAggregateInput
+    detailImage?: FileOrderByWithRelationInput
     category?: NormalProductCategoryOrderByWithRelationInput
   }
 
   export type NormalProductWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    detailImageId?: number
     AND?: NormalProductWhereInput | NormalProductWhereInput[]
     OR?: NormalProductWhereInput[]
     NOT?: NormalProductWhereInput | NormalProductWhereInput[]
@@ -14219,14 +15724,13 @@ export namespace Prisma {
     price?: FloatFilter<"NormalProduct"> | number
     discountPrice?: FloatNullableFilter<"NormalProduct"> | number | null
     stock?: IntFilter<"NormalProduct"> | number
-    imageUrl?: StringNullableFilter<"NormalProduct"> | string | null
-    galleryImages?: StringNullableListFilter<"NormalProduct">
-    detailImages?: StringNullableListFilter<"NormalProduct">
     categoryId?: StringFilter<"NormalProduct"> | string
     createdAt?: DateTimeFilter<"NormalProduct"> | Date | string
     updatedAt?: DateTimeFilter<"NormalProduct"> | Date | string
+    galleryImages?: FileListRelationFilter
+    detailImage?: XOR<FileNullableScalarRelationFilter, FileWhereInput> | null
     category?: XOR<NormalProductCategoryScalarRelationFilter, NormalProductCategoryWhereInput>
-  }, "id">
+  }, "id" | "detailImageId">
 
   export type NormalProductOrderByWithAggregationInput = {
     id?: SortOrder
@@ -14235,9 +15739,7 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrderInput | SortOrder
     stock?: SortOrder
-    imageUrl?: SortOrderInput | SortOrder
-    galleryImages?: SortOrder
-    detailImages?: SortOrder
+    detailImageId?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14258,12 +15760,93 @@ export namespace Prisma {
     price?: FloatWithAggregatesFilter<"NormalProduct"> | number
     discountPrice?: FloatNullableWithAggregatesFilter<"NormalProduct"> | number | null
     stock?: IntWithAggregatesFilter<"NormalProduct"> | number
-    imageUrl?: StringNullableWithAggregatesFilter<"NormalProduct"> | string | null
-    galleryImages?: StringNullableListFilter<"NormalProduct">
-    detailImages?: StringNullableListFilter<"NormalProduct">
+    detailImageId?: IntNullableWithAggregatesFilter<"NormalProduct"> | number | null
     categoryId?: StringWithAggregatesFilter<"NormalProduct"> | string
     createdAt?: DateTimeWithAggregatesFilter<"NormalProduct"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"NormalProduct"> | Date | string
+  }
+
+  export type FileWhereInput = {
+    AND?: FileWhereInput | FileWhereInput[]
+    OR?: FileWhereInput[]
+    NOT?: FileWhereInput | FileWhereInput[]
+    id?: IntFilter<"File"> | number
+    fileKey?: StringFilter<"File"> | string
+    fileName?: StringNullableFilter<"File"> | string | null
+    fileSize?: IntFilter<"File"> | number
+    mimeType?: StringFilter<"File"> | string
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"File"> | Date | string | null
+    meta?: JsonNullableFilter<"File">
+    avatarUrl?: UserListRelationFilter
+    galleryImages?: NormalProductListRelationFilter
+    detailImage?: XOR<NormalProductNullableScalarRelationFilter, NormalProductWhereInput> | null
+  }
+
+  export type FileOrderByWithRelationInput = {
+    id?: SortOrder
+    fileKey?: SortOrder
+    fileName?: SortOrderInput | SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    meta?: SortOrderInput | SortOrder
+    avatarUrl?: UserOrderByRelationAggregateInput
+    galleryImages?: NormalProductOrderByRelationAggregateInput
+    detailImage?: NormalProductOrderByWithRelationInput
+  }
+
+  export type FileWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    fileKey?: string
+    AND?: FileWhereInput | FileWhereInput[]
+    OR?: FileWhereInput[]
+    NOT?: FileWhereInput | FileWhereInput[]
+    fileName?: StringNullableFilter<"File"> | string | null
+    fileSize?: IntFilter<"File"> | number
+    mimeType?: StringFilter<"File"> | string
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"File"> | Date | string | null
+    meta?: JsonNullableFilter<"File">
+    avatarUrl?: UserListRelationFilter
+    galleryImages?: NormalProductListRelationFilter
+    detailImage?: XOR<NormalProductNullableScalarRelationFilter, NormalProductWhereInput> | null
+  }, "id" | "fileKey">
+
+  export type FileOrderByWithAggregationInput = {
+    id?: SortOrder
+    fileKey?: SortOrder
+    fileName?: SortOrderInput | SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    meta?: SortOrderInput | SortOrder
+    _count?: FileCountOrderByAggregateInput
+    _avg?: FileAvgOrderByAggregateInput
+    _max?: FileMaxOrderByAggregateInput
+    _min?: FileMinOrderByAggregateInput
+    _sum?: FileSumOrderByAggregateInput
+  }
+
+  export type FileScalarWhereWithAggregatesInput = {
+    AND?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
+    OR?: FileScalarWhereWithAggregatesInput[]
+    NOT?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"File"> | number
+    fileKey?: StringWithAggregatesFilter<"File"> | string
+    fileName?: StringNullableWithAggregatesFilter<"File"> | string | null
+    fileSize?: IntWithAggregatesFilter<"File"> | number
+    mimeType?: StringWithAggregatesFilter<"File"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"File"> | Date | string | null
+    meta?: JsonNullableWithAggregatesFilter<"File">
   }
 
   export type CourseCategoryWhereInput = {
@@ -14836,7 +16419,6 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -14849,6 +16431,7 @@ export namespace Prisma {
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    avatarUrl?: FileCreateNestedOneWithoutAvatarUrlInput
     orders?: OrderCreateNestedManyWithoutUserInput
     addresses?: UserAddressCreateNestedManyWithoutUserInput
   }
@@ -14861,7 +16444,7 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
+    avatarFileId?: number | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -14886,7 +16469,6 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14899,6 +16481,7 @@ export namespace Prisma {
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatarUrl?: FileUpdateOneWithoutAvatarUrlNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     addresses?: UserAddressUpdateManyWithoutUserNestedInput
   }
@@ -14911,7 +16494,7 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarFileId?: NullableIntFieldUpdateOperationsInput | number | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14936,7 +16519,7 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
+    avatarFileId?: number | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -14959,7 +16542,6 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14982,7 +16564,7 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarFileId?: NullableIntFieldUpdateOperationsInput | number | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15064,11 +16646,10 @@ export namespace Prisma {
     price: number
     discountPrice?: number | null
     stock: number
-    imageUrl?: string | null
-    galleryImages?: NormalProductCreategalleryImagesInput | string[]
-    detailImages?: NormalProductCreatedetailImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: FileCreateNestedOneWithoutDetailImageInput
     category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
   }
 
@@ -15079,12 +16660,11 @@ export namespace Prisma {
     price: number
     discountPrice?: number | null
     stock: number
-    imageUrl?: string | null
-    galleryImages?: NormalProductCreategalleryImagesInput | string[]
-    detailImages?: NormalProductCreatedetailImagesInput | string[]
+    detailImageId?: number | null
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
   }
 
   export type NormalProductUpdateInput = {
@@ -15094,11 +16674,10 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: FileUpdateOneWithoutDetailImageNestedInput
     category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
   }
 
@@ -15109,12 +16688,11 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
   }
 
   export type NormalProductCreateManyInput = {
@@ -15124,9 +16702,7 @@ export namespace Prisma {
     price: number
     discountPrice?: number | null
     stock: number
-    imageUrl?: string | null
-    galleryImages?: NormalProductCreategalleryImagesInput | string[]
-    detailImages?: NormalProductCreatedetailImagesInput | string[]
+    detailImageId?: number | null
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15139,9 +16715,6 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15153,12 +16726,103 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileCreateInput = {
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+  }
+
+  export type FileUncheckedCreateInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+  }
+
+  export type FileUpdateInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+  }
+
+  export type FileUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+  }
+
+  export type FileCreateManyInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type FileUpdateManyMutationInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type FileUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type CourseCategoryCreateInput = {
@@ -15837,6 +17501,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -15879,6 +17554,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type FileNullableScalarRelationFilter = {
+    is?: FileWhereInput | null
+    isNot?: FileWhereInput | null
+  }
+
   export type OrderListRelationFilter = {
     every?: OrderWhereInput
     some?: OrderWhereInput
@@ -15912,7 +17592,7 @@ export namespace Prisma {
     roles?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrder
-    avatarUrl?: SortOrder
+    avatarFileId?: SortOrder
     email?: SortOrder
     gender?: SortOrder
     idType?: SortOrder
@@ -15927,6 +17607,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type UserAvgOrderByAggregateInput = {
+    avatarFileId?: SortOrder
+  }
+
   export type UserMaxOrderByAggregateInput = {
     username?: SortOrder
     id?: SortOrder
@@ -15934,7 +17618,7 @@ export namespace Prisma {
     phone?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrder
-    avatarUrl?: SortOrder
+    avatarFileId?: SortOrder
     email?: SortOrder
     gender?: SortOrder
     idType?: SortOrder
@@ -15954,7 +17638,7 @@ export namespace Prisma {
     phone?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrder
-    avatarUrl?: SortOrder
+    avatarFileId?: SortOrder
     email?: SortOrder
     gender?: SortOrder
     idType?: SortOrder
@@ -15965,6 +17649,10 @@ export namespace Prisma {
     passwordHash?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    avatarFileId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -16011,6 +17699,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -16133,9 +17837,19 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type FileListRelationFilter = {
+    every?: FileWhereInput
+    some?: FileWhereInput
+    none?: FileWhereInput
+  }
+
   export type NormalProductCategoryScalarRelationFilter = {
     is?: NormalProductCategoryWhereInput
     isNot?: NormalProductCategoryWhereInput
+  }
+
+  export type FileOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type NormalProductCountOrderByAggregateInput = {
@@ -16145,9 +17859,7 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrder
     stock?: SortOrder
-    imageUrl?: SortOrder
-    galleryImages?: SortOrder
-    detailImages?: SortOrder
+    detailImageId?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -16157,6 +17869,7 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrder
     stock?: SortOrder
+    detailImageId?: SortOrder
   }
 
   export type NormalProductMaxOrderByAggregateInput = {
@@ -16166,7 +17879,7 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrder
     stock?: SortOrder
-    imageUrl?: SortOrder
+    detailImageId?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -16179,7 +17892,7 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrder
     stock?: SortOrder
-    imageUrl?: SortOrder
+    detailImageId?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -16189,6 +17902,7 @@ export namespace Prisma {
     price?: SortOrder
     discountPrice?: SortOrder
     stock?: SortOrder
+    detailImageId?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -16237,6 +17951,90 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type NormalProductNullableScalarRelationFilter = {
+    is?: NormalProductWhereInput | null
+    isNot?: NormalProductWhereInput | null
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FileCountOrderByAggregateInput = {
+    id?: SortOrder
+    fileKey?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    deletedAt?: SortOrder
+    meta?: SortOrder
+  }
+
+  export type FileAvgOrderByAggregateInput = {
+    id?: SortOrder
+    fileSize?: SortOrder
+  }
+
+  export type FileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fileKey?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type FileMinOrderByAggregateInput = {
+    id?: SortOrder
+    fileKey?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type FileSumOrderByAggregateInput = {
+    id?: SortOrder
+    fileSize?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type CourseListRelationFilter = {
@@ -16439,17 +18237,6 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -16543,20 +18330,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOrderStatusFilter<$PrismaModel>
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type OrderScalarRelationFilter = {
@@ -16665,6 +18438,12 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type FileCreateNestedOneWithoutAvatarUrlInput = {
+    create?: XOR<FileCreateWithoutAvatarUrlInput, FileUncheckedCreateWithoutAvatarUrlInput>
+    connectOrCreate?: FileCreateOrConnectWithoutAvatarUrlInput
+    connect?: FileWhereUniqueInput
+  }
+
   export type OrderCreateNestedManyWithoutUserInput = {
     create?: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput> | OrderCreateWithoutUserInput[] | OrderUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutUserInput | OrderCreateOrConnectWithoutUserInput[]
@@ -16719,6 +18498,16 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type FileUpdateOneWithoutAvatarUrlNestedInput = {
+    create?: XOR<FileCreateWithoutAvatarUrlInput, FileUncheckedCreateWithoutAvatarUrlInput>
+    connectOrCreate?: FileCreateOrConnectWithoutAvatarUrlInput
+    upsert?: FileUpsertWithoutAvatarUrlInput
+    disconnect?: FileWhereInput | boolean
+    delete?: FileWhereInput | boolean
+    connect?: FileWhereUniqueInput
+    update?: XOR<XOR<FileUpdateToOneWithWhereWithoutAvatarUrlInput, FileUpdateWithoutAvatarUrlInput>, FileUncheckedUpdateWithoutAvatarUrlInput>
+  }
+
   export type OrderUpdateManyWithoutUserNestedInput = {
     create?: XOR<OrderCreateWithoutUserInput, OrderUncheckedCreateWithoutUserInput> | OrderCreateWithoutUserInput[] | OrderUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutUserInput | OrderCreateOrConnectWithoutUserInput[]
@@ -16745,6 +18534,14 @@ export namespace Prisma {
     update?: UserAddressUpdateWithWhereUniqueWithoutUserInput | UserAddressUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserAddressUpdateManyWithWhereWithoutUserInput | UserAddressUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserAddressScalarWhereInput | UserAddressScalarWhereInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type OrderUncheckedUpdateManyWithoutUserNestedInput = {
@@ -16821,18 +18618,28 @@ export namespace Prisma {
     deleteMany?: NormalProductScalarWhereInput | NormalProductScalarWhereInput[]
   }
 
-  export type NormalProductCreategalleryImagesInput = {
-    set: string[]
+  export type FileCreateNestedManyWithoutGalleryImagesInput = {
+    create?: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput> | FileCreateWithoutGalleryImagesInput[] | FileUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutGalleryImagesInput | FileCreateOrConnectWithoutGalleryImagesInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
-  export type NormalProductCreatedetailImagesInput = {
-    set: string[]
+  export type FileCreateNestedOneWithoutDetailImageInput = {
+    create?: XOR<FileCreateWithoutDetailImageInput, FileUncheckedCreateWithoutDetailImageInput>
+    connectOrCreate?: FileCreateOrConnectWithoutDetailImageInput
+    connect?: FileWhereUniqueInput
   }
 
   export type NormalProductCategoryCreateNestedOneWithoutNormalProductsInput = {
     create?: XOR<NormalProductCategoryCreateWithoutNormalProductsInput, NormalProductCategoryUncheckedCreateWithoutNormalProductsInput>
     connectOrCreate?: NormalProductCategoryCreateOrConnectWithoutNormalProductsInput
     connect?: NormalProductCategoryWhereUniqueInput
+  }
+
+  export type FileUncheckedCreateNestedManyWithoutGalleryImagesInput = {
+    create?: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput> | FileCreateWithoutGalleryImagesInput[] | FileUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutGalleryImagesInput | FileCreateOrConnectWithoutGalleryImagesInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -16859,14 +18666,27 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NormalProductUpdategalleryImagesInput = {
-    set?: string[]
-    push?: string | string[]
+  export type FileUpdateManyWithoutGalleryImagesNestedInput = {
+    create?: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput> | FileCreateWithoutGalleryImagesInput[] | FileUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutGalleryImagesInput | FileCreateOrConnectWithoutGalleryImagesInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutGalleryImagesInput | FileUpsertWithWhereUniqueWithoutGalleryImagesInput[]
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutGalleryImagesInput | FileUpdateWithWhereUniqueWithoutGalleryImagesInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutGalleryImagesInput | FileUpdateManyWithWhereWithoutGalleryImagesInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
-  export type NormalProductUpdatedetailImagesInput = {
-    set?: string[]
-    push?: string | string[]
+  export type FileUpdateOneWithoutDetailImageNestedInput = {
+    create?: XOR<FileCreateWithoutDetailImageInput, FileUncheckedCreateWithoutDetailImageInput>
+    connectOrCreate?: FileCreateOrConnectWithoutDetailImageInput
+    upsert?: FileUpsertWithoutDetailImageInput
+    disconnect?: FileWhereInput | boolean
+    delete?: FileWhereInput | boolean
+    connect?: FileWhereUniqueInput
+    update?: XOR<XOR<FileUpdateToOneWithWhereWithoutDetailImageInput, FileUpdateWithoutDetailImageInput>, FileUncheckedUpdateWithoutDetailImageInput>
   }
 
   export type NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput = {
@@ -16875,6 +18695,135 @@ export namespace Prisma {
     upsert?: NormalProductCategoryUpsertWithoutNormalProductsInput
     connect?: NormalProductCategoryWhereUniqueInput
     update?: XOR<XOR<NormalProductCategoryUpdateToOneWithWhereWithoutNormalProductsInput, NormalProductCategoryUpdateWithoutNormalProductsInput>, NormalProductCategoryUncheckedUpdateWithoutNormalProductsInput>
+  }
+
+  export type FileUncheckedUpdateManyWithoutGalleryImagesNestedInput = {
+    create?: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput> | FileCreateWithoutGalleryImagesInput[] | FileUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutGalleryImagesInput | FileCreateOrConnectWithoutGalleryImagesInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutGalleryImagesInput | FileUpsertWithWhereUniqueWithoutGalleryImagesInput[]
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutGalleryImagesInput | FileUpdateWithWhereUniqueWithoutGalleryImagesInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutGalleryImagesInput | FileUpdateManyWithWhereWithoutGalleryImagesInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
+  export type UserCreateNestedManyWithoutAvatarUrlInput = {
+    create?: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput> | UserCreateWithoutAvatarUrlInput[] | UserUncheckedCreateWithoutAvatarUrlInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutAvatarUrlInput | UserCreateOrConnectWithoutAvatarUrlInput[]
+    createMany?: UserCreateManyAvatarUrlInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type NormalProductCreateNestedManyWithoutGalleryImagesInput = {
+    create?: XOR<NormalProductCreateWithoutGalleryImagesInput, NormalProductUncheckedCreateWithoutGalleryImagesInput> | NormalProductCreateWithoutGalleryImagesInput[] | NormalProductUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: NormalProductCreateOrConnectWithoutGalleryImagesInput | NormalProductCreateOrConnectWithoutGalleryImagesInput[]
+    connect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+  }
+
+  export type NormalProductCreateNestedOneWithoutDetailImageInput = {
+    create?: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
+    connectOrCreate?: NormalProductCreateOrConnectWithoutDetailImageInput
+    connect?: NormalProductWhereUniqueInput
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutAvatarUrlInput = {
+    create?: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput> | UserCreateWithoutAvatarUrlInput[] | UserUncheckedCreateWithoutAvatarUrlInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutAvatarUrlInput | UserCreateOrConnectWithoutAvatarUrlInput[]
+    createMany?: UserCreateManyAvatarUrlInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput = {
+    create?: XOR<NormalProductCreateWithoutGalleryImagesInput, NormalProductUncheckedCreateWithoutGalleryImagesInput> | NormalProductCreateWithoutGalleryImagesInput[] | NormalProductUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: NormalProductCreateOrConnectWithoutGalleryImagesInput | NormalProductCreateOrConnectWithoutGalleryImagesInput[]
+    connect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+  }
+
+  export type NormalProductUncheckedCreateNestedOneWithoutDetailImageInput = {
+    create?: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
+    connectOrCreate?: NormalProductCreateOrConnectWithoutDetailImageInput
+    connect?: NormalProductWhereUniqueInput
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UserUpdateManyWithoutAvatarUrlNestedInput = {
+    create?: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput> | UserCreateWithoutAvatarUrlInput[] | UserUncheckedCreateWithoutAvatarUrlInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutAvatarUrlInput | UserCreateOrConnectWithoutAvatarUrlInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutAvatarUrlInput | UserUpsertWithWhereUniqueWithoutAvatarUrlInput[]
+    createMany?: UserCreateManyAvatarUrlInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutAvatarUrlInput | UserUpdateWithWhereUniqueWithoutAvatarUrlInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutAvatarUrlInput | UserUpdateManyWithWhereWithoutAvatarUrlInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type NormalProductUpdateManyWithoutGalleryImagesNestedInput = {
+    create?: XOR<NormalProductCreateWithoutGalleryImagesInput, NormalProductUncheckedCreateWithoutGalleryImagesInput> | NormalProductCreateWithoutGalleryImagesInput[] | NormalProductUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: NormalProductCreateOrConnectWithoutGalleryImagesInput | NormalProductCreateOrConnectWithoutGalleryImagesInput[]
+    upsert?: NormalProductUpsertWithWhereUniqueWithoutGalleryImagesInput | NormalProductUpsertWithWhereUniqueWithoutGalleryImagesInput[]
+    set?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    disconnect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    delete?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    connect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    update?: NormalProductUpdateWithWhereUniqueWithoutGalleryImagesInput | NormalProductUpdateWithWhereUniqueWithoutGalleryImagesInput[]
+    updateMany?: NormalProductUpdateManyWithWhereWithoutGalleryImagesInput | NormalProductUpdateManyWithWhereWithoutGalleryImagesInput[]
+    deleteMany?: NormalProductScalarWhereInput | NormalProductScalarWhereInput[]
+  }
+
+  export type NormalProductUpdateOneWithoutDetailImageNestedInput = {
+    create?: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
+    connectOrCreate?: NormalProductCreateOrConnectWithoutDetailImageInput
+    upsert?: NormalProductUpsertWithoutDetailImageInput
+    disconnect?: NormalProductWhereInput | boolean
+    delete?: NormalProductWhereInput | boolean
+    connect?: NormalProductWhereUniqueInput
+    update?: XOR<XOR<NormalProductUpdateToOneWithWhereWithoutDetailImageInput, NormalProductUpdateWithoutDetailImageInput>, NormalProductUncheckedUpdateWithoutDetailImageInput>
+  }
+
+  export type UserUncheckedUpdateManyWithoutAvatarUrlNestedInput = {
+    create?: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput> | UserCreateWithoutAvatarUrlInput[] | UserUncheckedCreateWithoutAvatarUrlInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutAvatarUrlInput | UserCreateOrConnectWithoutAvatarUrlInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutAvatarUrlInput | UserUpsertWithWhereUniqueWithoutAvatarUrlInput[]
+    createMany?: UserCreateManyAvatarUrlInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutAvatarUrlInput | UserUpdateWithWhereUniqueWithoutAvatarUrlInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutAvatarUrlInput | UserUpdateManyWithWhereWithoutAvatarUrlInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput = {
+    create?: XOR<NormalProductCreateWithoutGalleryImagesInput, NormalProductUncheckedCreateWithoutGalleryImagesInput> | NormalProductCreateWithoutGalleryImagesInput[] | NormalProductUncheckedCreateWithoutGalleryImagesInput[]
+    connectOrCreate?: NormalProductCreateOrConnectWithoutGalleryImagesInput | NormalProductCreateOrConnectWithoutGalleryImagesInput[]
+    upsert?: NormalProductUpsertWithWhereUniqueWithoutGalleryImagesInput | NormalProductUpsertWithWhereUniqueWithoutGalleryImagesInput[]
+    set?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    disconnect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    delete?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    connect?: NormalProductWhereUniqueInput | NormalProductWhereUniqueInput[]
+    update?: NormalProductUpdateWithWhereUniqueWithoutGalleryImagesInput | NormalProductUpdateWithWhereUniqueWithoutGalleryImagesInput[]
+    updateMany?: NormalProductUpdateManyWithWhereWithoutGalleryImagesInput | NormalProductUpdateManyWithWhereWithoutGalleryImagesInput[]
+    deleteMany?: NormalProductScalarWhereInput | NormalProductScalarWhereInput[]
+  }
+
+  export type NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput = {
+    create?: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
+    connectOrCreate?: NormalProductCreateOrConnectWithoutDetailImageInput
+    upsert?: NormalProductUpsertWithoutDetailImageInput
+    disconnect?: NormalProductWhereInput | boolean
+    delete?: NormalProductWhereInput | boolean
+    connect?: NormalProductWhereUniqueInput
+    update?: XOR<XOR<NormalProductUpdateToOneWithWhereWithoutDetailImageInput, NormalProductUpdateWithoutDetailImageInput>, NormalProductUncheckedUpdateWithoutDetailImageInput>
   }
 
   export type CourseCreateNestedManyWithoutCategoryInput = {
@@ -16959,10 +18908,6 @@ export namespace Prisma {
 
   export type EnumOrderStatusFieldUpdateOperationsInput = {
     set?: $Enums.OrderStatus
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
@@ -17064,6 +19009,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -17130,7 +19086,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -17138,7 +19094,23 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -17202,17 +19174,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -17261,6 +19222,31 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumCourseTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.CourseType | EnumCourseTypeFieldRefInput<$PrismaModel>
     in?: $Enums.CourseType[] | ListEnumCourseTypeFieldRefInput<$PrismaModel>
@@ -17285,17 +19271,6 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
@@ -17306,18 +19281,36 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  export type FileCreateWithoutAvatarUrlInput = {
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+  }
+
+  export type FileUncheckedCreateWithoutAvatarUrlInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+  }
+
+  export type FileCreateOrConnectWithoutAvatarUrlInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutAvatarUrlInput, FileUncheckedCreateWithoutAvatarUrlInput>
   }
 
   export type OrderCreateWithoutUserInput = {
@@ -17406,6 +19399,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FileUpsertWithoutAvatarUrlInput = {
+    update: XOR<FileUpdateWithoutAvatarUrlInput, FileUncheckedUpdateWithoutAvatarUrlInput>
+    create: XOR<FileCreateWithoutAvatarUrlInput, FileUncheckedCreateWithoutAvatarUrlInput>
+    where?: FileWhereInput
+  }
+
+  export type FileUpdateToOneWithWhereWithoutAvatarUrlInput = {
+    where?: FileWhereInput
+    data: XOR<FileUpdateWithoutAvatarUrlInput, FileUncheckedUpdateWithoutAvatarUrlInput>
+  }
+
+  export type FileUpdateWithoutAvatarUrlInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutAvatarUrlInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+  }
+
   export type OrderUpsertWithWhereUniqueWithoutUserInput = {
     where: OrderWhereUniqueInput
     update: XOR<OrderUpdateWithoutUserInput, OrderUncheckedUpdateWithoutUserInput>
@@ -17485,11 +19516,10 @@ export namespace Prisma {
     price: number
     discountPrice?: number | null
     stock: number
-    imageUrl?: string | null
-    galleryImages?: NormalProductCreategalleryImagesInput | string[]
-    detailImages?: NormalProductCreatedetailImagesInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: FileCreateNestedOneWithoutDetailImageInput
   }
 
   export type NormalProductUncheckedCreateWithoutCategoryInput = {
@@ -17499,11 +19529,10 @@ export namespace Prisma {
     price: number
     discountPrice?: number | null
     stock: number
-    imageUrl?: string | null
-    galleryImages?: NormalProductCreategalleryImagesInput | string[]
-    detailImages?: NormalProductCreatedetailImagesInput | string[]
+    detailImageId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
   }
 
   export type NormalProductCreateOrConnectWithoutCategoryInput = {
@@ -17542,12 +19571,74 @@ export namespace Prisma {
     price?: FloatFilter<"NormalProduct"> | number
     discountPrice?: FloatNullableFilter<"NormalProduct"> | number | null
     stock?: IntFilter<"NormalProduct"> | number
-    imageUrl?: StringNullableFilter<"NormalProduct"> | string | null
-    galleryImages?: StringNullableListFilter<"NormalProduct">
-    detailImages?: StringNullableListFilter<"NormalProduct">
+    detailImageId?: IntNullableFilter<"NormalProduct"> | number | null
     categoryId?: StringFilter<"NormalProduct"> | string
     createdAt?: DateTimeFilter<"NormalProduct"> | Date | string
     updatedAt?: DateTimeFilter<"NormalProduct"> | Date | string
+  }
+
+  export type FileCreateWithoutGalleryImagesInput = {
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
+    detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+  }
+
+  export type FileUncheckedCreateWithoutGalleryImagesInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
+    detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+  }
+
+  export type FileCreateOrConnectWithoutGalleryImagesInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput>
+  }
+
+  export type FileCreateWithoutDetailImageInput = {
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
+  }
+
+  export type FileUncheckedCreateWithoutDetailImageInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
+  }
+
+  export type FileCreateOrConnectWithoutDetailImageInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutDetailImageInput, FileUncheckedCreateWithoutDetailImageInput>
   }
 
   export type NormalProductCategoryCreateWithoutNormalProductsInput = {
@@ -17569,6 +19660,75 @@ export namespace Prisma {
   export type NormalProductCategoryCreateOrConnectWithoutNormalProductsInput = {
     where: NormalProductCategoryWhereUniqueInput
     create: XOR<NormalProductCategoryCreateWithoutNormalProductsInput, NormalProductCategoryUncheckedCreateWithoutNormalProductsInput>
+  }
+
+  export type FileUpsertWithWhereUniqueWithoutGalleryImagesInput = {
+    where: FileWhereUniqueInput
+    update: XOR<FileUpdateWithoutGalleryImagesInput, FileUncheckedUpdateWithoutGalleryImagesInput>
+    create: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput>
+  }
+
+  export type FileUpdateWithWhereUniqueWithoutGalleryImagesInput = {
+    where: FileWhereUniqueInput
+    data: XOR<FileUpdateWithoutGalleryImagesInput, FileUncheckedUpdateWithoutGalleryImagesInput>
+  }
+
+  export type FileUpdateManyWithWhereWithoutGalleryImagesInput = {
+    where: FileScalarWhereInput
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutGalleryImagesInput>
+  }
+
+  export type FileScalarWhereInput = {
+    AND?: FileScalarWhereInput | FileScalarWhereInput[]
+    OR?: FileScalarWhereInput[]
+    NOT?: FileScalarWhereInput | FileScalarWhereInput[]
+    id?: IntFilter<"File"> | number
+    fileKey?: StringFilter<"File"> | string
+    fileName?: StringNullableFilter<"File"> | string | null
+    fileSize?: IntFilter<"File"> | number
+    mimeType?: StringFilter<"File"> | string
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"File"> | Date | string | null
+    meta?: JsonNullableFilter<"File">
+  }
+
+  export type FileUpsertWithoutDetailImageInput = {
+    update: XOR<FileUpdateWithoutDetailImageInput, FileUncheckedUpdateWithoutDetailImageInput>
+    create: XOR<FileCreateWithoutDetailImageInput, FileUncheckedCreateWithoutDetailImageInput>
+    where?: FileWhereInput
+  }
+
+  export type FileUpdateToOneWithWhereWithoutDetailImageInput = {
+    where?: FileWhereInput
+    data: XOR<FileUpdateWithoutDetailImageInput, FileUncheckedUpdateWithoutDetailImageInput>
+  }
+
+  export type FileUpdateWithoutDetailImageInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutDetailImageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
   }
 
   export type NormalProductCategoryUpsertWithoutNormalProductsInput = {
@@ -17596,6 +19756,221 @@ export namespace Prisma {
     isEnabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutAvatarUrlInput = {
+    username: string
+    id?: string
+    name: string
+    phone: string
+    roles?: UserCreaterolesInput | $Enums.Role[]
+    status?: $Enums.UserStatus
+    rejectReason?: string | null
+    email?: string | null
+    gender?: string | null
+    idType?: string | null
+    idNumber?: string | null
+    entity?: string | null
+    entityAddress?: string | null
+    cityScope?: string | null
+    competitionScopes?: UserCreatecompetitionScopesInput | string[]
+    passwordHash?: string | null
+    powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderCreateNestedManyWithoutUserInput
+    addresses?: UserAddressCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAvatarUrlInput = {
+    username: string
+    id?: string
+    name: string
+    phone: string
+    roles?: UserCreaterolesInput | $Enums.Role[]
+    status?: $Enums.UserStatus
+    rejectReason?: string | null
+    email?: string | null
+    gender?: string | null
+    idType?: string | null
+    idNumber?: string | null
+    entity?: string | null
+    entityAddress?: string | null
+    cityScope?: string | null
+    competitionScopes?: UserCreatecompetitionScopesInput | string[]
+    passwordHash?: string | null
+    powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    addresses?: UserAddressUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAvatarUrlInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput>
+  }
+
+  export type UserCreateManyAvatarUrlInputEnvelope = {
+    data: UserCreateManyAvatarUrlInput | UserCreateManyAvatarUrlInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NormalProductCreateWithoutGalleryImagesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    discountPrice?: number | null
+    stock: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    detailImage?: FileCreateNestedOneWithoutDetailImageInput
+    category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
+  }
+
+  export type NormalProductUncheckedCreateWithoutGalleryImagesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    discountPrice?: number | null
+    stock: number
+    detailImageId?: number | null
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NormalProductCreateOrConnectWithoutGalleryImagesInput = {
+    where: NormalProductWhereUniqueInput
+    create: XOR<NormalProductCreateWithoutGalleryImagesInput, NormalProductUncheckedCreateWithoutGalleryImagesInput>
+  }
+
+  export type NormalProductCreateWithoutDetailImageInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    discountPrice?: number | null
+    stock: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
+    category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
+  }
+
+  export type NormalProductUncheckedCreateWithoutDetailImageInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    discountPrice?: number | null
+    stock: number
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
+  }
+
+  export type NormalProductCreateOrConnectWithoutDetailImageInput = {
+    where: NormalProductWhereUniqueInput
+    create: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutAvatarUrlInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutAvatarUrlInput, UserUncheckedUpdateWithoutAvatarUrlInput>
+    create: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutAvatarUrlInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutAvatarUrlInput, UserUncheckedUpdateWithoutAvatarUrlInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutAvatarUrlInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutAvatarUrlInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    username?: StringFilter<"User"> | string
+    id?: StringFilter<"User"> | string
+    name?: StringFilter<"User"> | string
+    phone?: StringFilter<"User"> | string
+    roles?: EnumRoleNullableListFilter<"User">
+    status?: EnumUserStatusFilter<"User"> | $Enums.UserStatus
+    rejectReason?: StringNullableFilter<"User"> | string | null
+    avatarFileId?: IntNullableFilter<"User"> | number | null
+    email?: StringNullableFilter<"User"> | string | null
+    gender?: StringNullableFilter<"User"> | string | null
+    idType?: StringNullableFilter<"User"> | string | null
+    idNumber?: StringNullableFilter<"User"> | string | null
+    entity?: StringNullableFilter<"User"> | string | null
+    entityAddress?: StringNullableFilter<"User"> | string | null
+    cityScope?: StringNullableFilter<"User"> | string | null
+    competitionScopes?: StringNullableListFilter<"User">
+    passwordHash?: StringNullableFilter<"User"> | string | null
+    powerOfAttorney?: JsonNullableFilter<"User">
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+  }
+
+  export type NormalProductUpsertWithWhereUniqueWithoutGalleryImagesInput = {
+    where: NormalProductWhereUniqueInput
+    update: XOR<NormalProductUpdateWithoutGalleryImagesInput, NormalProductUncheckedUpdateWithoutGalleryImagesInput>
+    create: XOR<NormalProductCreateWithoutGalleryImagesInput, NormalProductUncheckedCreateWithoutGalleryImagesInput>
+  }
+
+  export type NormalProductUpdateWithWhereUniqueWithoutGalleryImagesInput = {
+    where: NormalProductWhereUniqueInput
+    data: XOR<NormalProductUpdateWithoutGalleryImagesInput, NormalProductUncheckedUpdateWithoutGalleryImagesInput>
+  }
+
+  export type NormalProductUpdateManyWithWhereWithoutGalleryImagesInput = {
+    where: NormalProductScalarWhereInput
+    data: XOR<NormalProductUpdateManyMutationInput, NormalProductUncheckedUpdateManyWithoutGalleryImagesInput>
+  }
+
+  export type NormalProductUpsertWithoutDetailImageInput = {
+    update: XOR<NormalProductUpdateWithoutDetailImageInput, NormalProductUncheckedUpdateWithoutDetailImageInput>
+    create: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
+    where?: NormalProductWhereInput
+  }
+
+  export type NormalProductUpdateToOneWithWhereWithoutDetailImageInput = {
+    where?: NormalProductWhereInput
+    data: XOR<NormalProductUpdateWithoutDetailImageInput, NormalProductUncheckedUpdateWithoutDetailImageInput>
+  }
+
+  export type NormalProductUpdateWithoutDetailImageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
+    category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
+  }
+
+  export type NormalProductUncheckedUpdateWithoutDetailImageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
   }
 
   export type CourseCreateWithoutCategoryInput = {
@@ -17732,7 +20107,6 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -17745,6 +20119,7 @@ export namespace Prisma {
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    avatarUrl?: FileCreateNestedOneWithoutAvatarUrlInput
     addresses?: UserAddressCreateNestedManyWithoutUserInput
   }
 
@@ -17756,7 +20131,7 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
+    avatarFileId?: number | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -17830,7 +20205,6 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17843,6 +20217,7 @@ export namespace Prisma {
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatarUrl?: FileUpdateOneWithoutAvatarUrlNestedInput
     addresses?: UserAddressUpdateManyWithoutUserNestedInput
   }
 
@@ -17854,7 +20229,7 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarFileId?: NullableIntFieldUpdateOperationsInput | number | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18006,7 +20381,6 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -18019,6 +20393,7 @@ export namespace Prisma {
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    avatarUrl?: FileCreateNestedOneWithoutAvatarUrlInput
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
@@ -18030,7 +20405,7 @@ export namespace Prisma {
     roles?: UserCreaterolesInput | $Enums.Role[]
     status?: $Enums.UserStatus
     rejectReason?: string | null
-    avatarUrl?: string | null
+    avatarFileId?: number | null
     email?: string | null
     gender?: string | null
     idType?: string | null
@@ -18070,7 +20445,6 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18083,6 +20457,7 @@ export namespace Prisma {
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatarUrl?: FileUpdateOneWithoutAvatarUrlNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
@@ -18094,7 +20469,7 @@ export namespace Prisma {
     roles?: UserUpdaterolesInput | $Enums.Role[]
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarFileId?: NullableIntFieldUpdateOperationsInput | number | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     idType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18247,9 +20622,7 @@ export namespace Prisma {
     price: number
     discountPrice?: number | null
     stock: number
-    imageUrl?: string | null
-    galleryImages?: NormalProductCreategalleryImagesInput | string[]
-    detailImages?: NormalProductCreatedetailImagesInput | string[]
+    detailImageId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18261,11 +20634,10 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: FileUpdateOneWithoutDetailImageNestedInput
   }
 
   export type NormalProductUncheckedUpdateWithoutCategoryInput = {
@@ -18275,11 +20647,10 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
   }
 
   export type NormalProductUncheckedUpdateManyWithoutCategoryInput = {
@@ -18289,9 +20660,177 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
     stock?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    galleryImages?: NormalProductUpdategalleryImagesInput | string[]
-    detailImages?: NormalProductUpdatedetailImagesInput | string[]
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUpdateWithoutGalleryImagesInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
+    detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutGalleryImagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
+    detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+  }
+
+  export type FileUncheckedUpdateManyWithoutGalleryImagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type UserCreateManyAvatarUrlInput = {
+    username: string
+    id?: string
+    name: string
+    phone: string
+    roles?: UserCreaterolesInput | $Enums.Role[]
+    status?: $Enums.UserStatus
+    rejectReason?: string | null
+    email?: string | null
+    gender?: string | null
+    idType?: string | null
+    idNumber?: string | null
+    entity?: string | null
+    entityAddress?: string | null
+    cityScope?: string | null
+    competitionScopes?: UserCreatecompetitionScopesInput | string[]
+    passwordHash?: string | null
+    powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateWithoutAvatarUrlInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    roles?: UserUpdaterolesInput | $Enums.Role[]
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    entity?: NullableStringFieldUpdateOperationsInput | string | null
+    entityAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    cityScope?: NullableStringFieldUpdateOperationsInput | string | null
+    competitionScopes?: UserUpdatecompetitionScopesInput | string[]
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    addresses?: UserAddressUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAvatarUrlInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    roles?: UserUpdaterolesInput | $Enums.Role[]
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    entity?: NullableStringFieldUpdateOperationsInput | string | null
+    entityAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    cityScope?: NullableStringFieldUpdateOperationsInput | string | null
+    competitionScopes?: UserUpdatecompetitionScopesInput | string[]
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: UserAddressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutAvatarUrlInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    roles?: UserUpdaterolesInput | $Enums.Role[]
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    idType?: NullableStringFieldUpdateOperationsInput | string | null
+    idNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    entity?: NullableStringFieldUpdateOperationsInput | string | null
+    entityAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    cityScope?: NullableStringFieldUpdateOperationsInput | string | null
+    competitionScopes?: UserUpdatecompetitionScopesInput | string[]
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NormalProductUpdateWithoutGalleryImagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    detailImage?: FileUpdateOneWithoutDetailImageNestedInput
+    category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
+  }
+
+  export type NormalProductUncheckedUpdateWithoutGalleryImagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NormalProductUncheckedUpdateManyWithoutGalleryImagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

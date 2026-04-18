@@ -59,7 +59,7 @@ export class OrderService {
       orderItems.push({
         productId: product.id,
         productName: product.name,
-        productImage: product.imageUrl,
+        productImage: product.detailImageId,
         price,
         quantity: item.quantity,
         subtotal,

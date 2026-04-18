@@ -128,7 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   roles: 'roles',
   status: 'status',
   rejectReason: 'rejectReason',
-  avatarUrl: 'avatarUrl',
+  avatarFileId: 'avatarFileId',
   email: 'email',
   gender: 'gender',
   idType: 'idType',
@@ -158,12 +158,22 @@ exports.Prisma.NormalProductScalarFieldEnum = {
   price: 'price',
   discountPrice: 'discountPrice',
   stock: 'stock',
-  imageUrl: 'imageUrl',
-  galleryImages: 'galleryImages',
-  detailImages: 'detailImages',
+  detailImageId: 'detailImageId',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FileScalarFieldEnum = {
+  id: 'id',
+  fileKey: 'fileKey',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  meta: 'meta'
 };
 
 exports.Prisma.CourseCategoryScalarFieldEnum = {
@@ -311,6 +321,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   NormalProductCategory: 'NormalProductCategory',
   NormalProduct: 'NormalProduct',
+  File: 'File',
   CourseCategory: 'CourseCategory',
   Course: 'Course',
   VerificationCode: 'VerificationCode',

@@ -29,8 +29,10 @@ model User {
   roles             Role[]     @default([USER])
   status            UserStatus @default(APPROVED)
   rejectReason      String?
+  /// 头像文件ID
+  avatarFileId      Int?
   /// 头像地址
-  avatarUrl         String?
+  avatarUrl         File?      @relation(fields: [avatarFileId], name: "avatarUrl", references: [id])
   /// 邮箱
   email             String?
   /// 性别
@@ -107,12 +109,12 @@ model NormalProduct {
   discountPrice Float?
   /// 库存
   stock         Int
-  /// 商品封面图
-  imageUrl      String?
   /// 商品图集（列表页/轮播）
-  galleryImages String[]              @default([])
-  /// 商品详情图集（详情页长图）
-  detailImages  String[]              @default([])
+  galleryImages File[]                @relation("galleryImages")
+  /// 详情图ID（外键）
+  detailImageId Int?                  @unique
+  /// 详情图关联
+  detailImage   File?                 @relation(name: "detailImage", fields: [detailImageId], references: [id])
   /// 分类 ID
   categoryId    String
   /// 分类关联
@@ -123,12 +125,34 @@ model NormalProduct {
   updatedAt     DateTime              @updatedAt
 }
 
+// 文件模型 - 系统中上传的文件信息
+model File {
+  id        Int       @id @default(autoincrement()) // 文件唯一标识
+  fileKey   String    @unique // 文件存储键（唯一）
+  fileName  String? // 原始文件名（可选）
+  fileSize  Int // 文件大小（字节）
+  mimeType  String // 文件MIME类型
+  createdAt DateTime  @default(now()) // 创建时间
+  updatedAt DateTime  @updatedAt // 更新时间
+  deletedAt DateTime? // 删除时间（软删除，可选）
+
+  meta Json? // 扩展信息
+
+  // 关联
+  avatarUrl     User[]          @relation("avatarUrl")
+  galleryImages NormalProduct[] @relation("galleryImages")
+  detailImage   NormalProduct?  @relation(name: "detailImage")
+
+  @@index([fileKey])
+  @@index([createdAt])
+}
+
 //课程分类表
 model CourseCategory {
   id        String   @id @default(uuid())
   name      String
   /// 是否启用
-  isEnabled      Boolean         @default(true)
+  isEnabled Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   courses   Course[]

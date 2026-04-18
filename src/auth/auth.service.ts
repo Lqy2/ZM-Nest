@@ -228,7 +228,9 @@ export class AuthService {
         name: createUserDto.name ?? '',
         phone: normalizedPhone,
         roles: roles.length ? roles : [Role.USER],
-        avatarUrl: createUserDto.avatarUrl,
+        avatarUrl: createUserDto.avatarUrl
+          ? { connect: { id: Number(createUserDto.avatarUrl) } }
+          : undefined,
         email: createUserDto.email ?? '',
         gender: createUserDto.gender ?? '',
         idType: createUserDto.idType ?? '',

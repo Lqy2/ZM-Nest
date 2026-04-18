@@ -35,7 +35,4 @@ export class UploadController {
       // downloadUrl: `https://${cdnDomain}/${getDownloadUrlDto.fileKey}`,
     };
   }
-
-
-
 }
