@@ -25,6 +25,7 @@ import { ProductModule } from './product/product.module';
 import { UploadModule } from './upload/upload.module';
 import { OrderModule } from './order/order.module';
 import { CourseCategoryModule } from './course-category/course-category.module';
+import { CourseModule } from './course/course.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -46,6 +47,7 @@ import configuration from './config/configuration';
     UploadModule,
     OrderModule,
     CourseCategoryModule,
+    CourseModule,
   ],
   controllers: [AppController],
   providers: [

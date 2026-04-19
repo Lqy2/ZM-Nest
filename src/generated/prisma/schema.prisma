@@ -142,6 +142,8 @@ model File {
   avatarUrl     User[]          @relation("avatarUrl")
   galleryImages NormalProduct[] @relation("galleryImages")
   detailImage   NormalProduct?  @relation(name: "detailImage")
+  coverImage    Course[]        @relation("coverImage")
+  videoUrl      Course[]        @relation("videoUrl")
 
   @@index([fileKey])
   @@index([createdAt])
@@ -172,22 +174,26 @@ model Course {
   id              String         @id @default(uuid())
   /// 课程名称
   name            String
+  /// 封面图ID
+  coverImageId    Int
   /// 封面图OSS地址
-  coverImage      String
+  coverImage      File           @relation(fields: [coverImageId], name: "coverImage", references: [id])
   /// 课程简介
   description     String?
   /// 课程价格（元）
   price           Float
   /// 课程类型
   type            CourseType     @default(PAID)
+  /// 视频ID
+  videoUrlId      Int
   /// 完整视频OSS地址
-  videoUrl        String
+  videoUrl        File           @relation(fields: [videoUrlId], name: "videoUrl", references: [id])
   /// 试看时长（秒），默认5分钟
   previewDuration Int            @default(300)
   /// 视频总时长（秒）
-  duration        Int
+  duration        Int?
   /// 学习人数
-  studentCount    Int            @default(0)
+  studentCount    Int?           @default(0)
   /// 是否上架
   isPublished     Boolean        @default(false)
   /// 分类ID

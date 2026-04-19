@@ -1939,11 +1939,15 @@ export namespace Prisma {
   export type FileCountOutputType = {
     avatarUrl: number
     galleryImages: number
+    coverImage: number
+    videoUrl: number
   }
 
   export type FileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     avatarUrl?: boolean | FileCountOutputTypeCountAvatarUrlArgs
     galleryImages?: boolean | FileCountOutputTypeCountGalleryImagesArgs
+    coverImage?: boolean | FileCountOutputTypeCountCoverImageArgs
+    videoUrl?: boolean | FileCountOutputTypeCountVideoUrlArgs
   }
 
   // Custom InputTypes
@@ -1969,6 +1973,20 @@ export namespace Prisma {
    */
   export type FileCountOutputTypeCountGalleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NormalProductWhereInput
+  }
+
+  /**
+   * FileCountOutputType without action
+   */
+  export type FileCountOutputTypeCountCoverImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CourseWhereInput
+  }
+
+  /**
+   * FileCountOutputType without action
+   */
+  export type FileCountOutputTypeCountVideoUrlArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CourseWhereInput
   }
 
 
@@ -6021,6 +6039,8 @@ export namespace Prisma {
     avatarUrl?: boolean | File$avatarUrlArgs<ExtArgs>
     galleryImages?: boolean | File$galleryImagesArgs<ExtArgs>
     detailImage?: boolean | File$detailImageArgs<ExtArgs>
+    coverImage?: boolean | File$coverImageArgs<ExtArgs>
+    videoUrl?: boolean | File$videoUrlArgs<ExtArgs>
     _count?: boolean | FileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
@@ -6065,6 +6085,8 @@ export namespace Prisma {
     avatarUrl?: boolean | File$avatarUrlArgs<ExtArgs>
     galleryImages?: boolean | File$galleryImagesArgs<ExtArgs>
     detailImage?: boolean | File$detailImageArgs<ExtArgs>
+    coverImage?: boolean | File$coverImageArgs<ExtArgs>
+    videoUrl?: boolean | File$videoUrlArgs<ExtArgs>
     _count?: boolean | FileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6076,6 +6098,8 @@ export namespace Prisma {
       avatarUrl: Prisma.$UserPayload<ExtArgs>[]
       galleryImages: Prisma.$NormalProductPayload<ExtArgs>[]
       detailImage: Prisma.$NormalProductPayload<ExtArgs> | null
+      coverImage: Prisma.$CoursePayload<ExtArgs>[]
+      videoUrl: Prisma.$CoursePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6484,6 +6508,8 @@ export namespace Prisma {
     avatarUrl<T extends File$avatarUrlArgs<ExtArgs> = {}>(args?: Subset<T, File$avatarUrlArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     galleryImages<T extends File$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, File$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NormalProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     detailImage<T extends File$detailImageArgs<ExtArgs> = {}>(args?: Subset<T, File$detailImageArgs<ExtArgs>>): Prisma__NormalProductClient<$Result.GetResult<Prisma.$NormalProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    coverImage<T extends File$coverImageArgs<ExtArgs> = {}>(args?: Subset<T, File$coverImageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    videoUrl<T extends File$videoUrlArgs<ExtArgs> = {}>(args?: Subset<T, File$videoUrlArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6974,6 +7000,54 @@ export namespace Prisma {
      */
     include?: NormalProductInclude<ExtArgs> | null
     where?: NormalProductWhereInput
+  }
+
+  /**
+   * File.coverImage
+   */
+  export type File$coverImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Course
+     */
+    select?: CourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Course
+     */
+    omit?: CourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseInclude<ExtArgs> | null
+    where?: CourseWhereInput
+    orderBy?: CourseOrderByWithRelationInput | CourseOrderByWithRelationInput[]
+    cursor?: CourseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CourseScalarFieldEnum | CourseScalarFieldEnum[]
+  }
+
+  /**
+   * File.videoUrl
+   */
+  export type File$videoUrlArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Course
+     */
+    select?: CourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Course
+     */
+    omit?: CourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseInclude<ExtArgs> | null
+    where?: CourseWhereInput
+    orderBy?: CourseOrderByWithRelationInput | CourseOrderByWithRelationInput[]
+    cursor?: CourseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CourseScalarFieldEnum | CourseScalarFieldEnum[]
   }
 
   /**
@@ -8081,14 +8155,18 @@ export namespace Prisma {
   }
 
   export type CourseAvgAggregateOutputType = {
+    coverImageId: number | null
     price: number | null
+    videoUrlId: number | null
     previewDuration: number | null
     duration: number | null
     studentCount: number | null
   }
 
   export type CourseSumAggregateOutputType = {
+    coverImageId: number | null
     price: number | null
+    videoUrlId: number | null
     previewDuration: number | null
     duration: number | null
     studentCount: number | null
@@ -8097,11 +8175,11 @@ export namespace Prisma {
   export type CourseMinAggregateOutputType = {
     id: string | null
     name: string | null
-    coverImage: string | null
+    coverImageId: number | null
     description: string | null
     price: number | null
     type: $Enums.CourseType | null
-    videoUrl: string | null
+    videoUrlId: number | null
     previewDuration: number | null
     duration: number | null
     studentCount: number | null
@@ -8114,11 +8192,11 @@ export namespace Prisma {
   export type CourseMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    coverImage: string | null
+    coverImageId: number | null
     description: string | null
     price: number | null
     type: $Enums.CourseType | null
-    videoUrl: string | null
+    videoUrlId: number | null
     previewDuration: number | null
     duration: number | null
     studentCount: number | null
@@ -8131,11 +8209,11 @@ export namespace Prisma {
   export type CourseCountAggregateOutputType = {
     id: number
     name: number
-    coverImage: number
+    coverImageId: number
     description: number
     price: number
     type: number
-    videoUrl: number
+    videoUrlId: number
     previewDuration: number
     duration: number
     studentCount: number
@@ -8148,14 +8226,18 @@ export namespace Prisma {
 
 
   export type CourseAvgAggregateInputType = {
+    coverImageId?: true
     price?: true
+    videoUrlId?: true
     previewDuration?: true
     duration?: true
     studentCount?: true
   }
 
   export type CourseSumAggregateInputType = {
+    coverImageId?: true
     price?: true
+    videoUrlId?: true
     previewDuration?: true
     duration?: true
     studentCount?: true
@@ -8164,11 +8246,11 @@ export namespace Prisma {
   export type CourseMinAggregateInputType = {
     id?: true
     name?: true
-    coverImage?: true
+    coverImageId?: true
     description?: true
     price?: true
     type?: true
-    videoUrl?: true
+    videoUrlId?: true
     previewDuration?: true
     duration?: true
     studentCount?: true
@@ -8181,11 +8263,11 @@ export namespace Prisma {
   export type CourseMaxAggregateInputType = {
     id?: true
     name?: true
-    coverImage?: true
+    coverImageId?: true
     description?: true
     price?: true
     type?: true
-    videoUrl?: true
+    videoUrlId?: true
     previewDuration?: true
     duration?: true
     studentCount?: true
@@ -8198,11 +8280,11 @@ export namespace Prisma {
   export type CourseCountAggregateInputType = {
     id?: true
     name?: true
-    coverImage?: true
+    coverImageId?: true
     description?: true
     price?: true
     type?: true
-    videoUrl?: true
+    videoUrlId?: true
     previewDuration?: true
     duration?: true
     studentCount?: true
@@ -8302,14 +8384,14 @@ export namespace Prisma {
   export type CourseGroupByOutputType = {
     id: string
     name: string
-    coverImage: string
+    coverImageId: number
     description: string | null
     price: number
     type: $Enums.CourseType
-    videoUrl: string
+    videoUrlId: number
     previewDuration: number
-    duration: number
-    studentCount: number
+    duration: number | null
+    studentCount: number | null
     isPublished: boolean
     categoryId: string
     createdAt: Date
@@ -8338,11 +8420,11 @@ export namespace Prisma {
   export type CourseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    coverImage?: boolean
+    coverImageId?: boolean
     description?: boolean
     price?: boolean
     type?: boolean
-    videoUrl?: boolean
+    videoUrlId?: boolean
     previewDuration?: boolean
     duration?: boolean
     studentCount?: boolean
@@ -8350,17 +8432,19 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    coverImage?: boolean | FileDefaultArgs<ExtArgs>
+    videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    coverImage?: boolean
+    coverImageId?: boolean
     description?: boolean
     price?: boolean
     type?: boolean
-    videoUrl?: boolean
+    videoUrlId?: boolean
     previewDuration?: boolean
     duration?: boolean
     studentCount?: boolean
@@ -8368,17 +8452,19 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    coverImage?: boolean | FileDefaultArgs<ExtArgs>
+    videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    coverImage?: boolean
+    coverImageId?: boolean
     description?: boolean
     price?: boolean
     type?: boolean
-    videoUrl?: boolean
+    videoUrlId?: boolean
     previewDuration?: boolean
     duration?: boolean
     studentCount?: boolean
@@ -8386,17 +8472,19 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    coverImage?: boolean | FileDefaultArgs<ExtArgs>
+    videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectScalar = {
     id?: boolean
     name?: boolean
-    coverImage?: boolean
+    coverImageId?: boolean
     description?: boolean
     price?: boolean
     type?: boolean
-    videoUrl?: boolean
+    videoUrlId?: boolean
     previewDuration?: boolean
     duration?: boolean
     studentCount?: boolean
@@ -8406,20 +8494,34 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "coverImage" | "description" | "price" | "type" | "videoUrl" | "previewDuration" | "duration" | "studentCount" | "isPublished" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "coverImageId" | "description" | "price" | "type" | "videoUrlId" | "previewDuration" | "duration" | "studentCount" | "isPublished" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    coverImage?: boolean | FileDefaultArgs<ExtArgs>
+    videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }
   export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    coverImage?: boolean | FileDefaultArgs<ExtArgs>
+    videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }
   export type CourseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    coverImage?: boolean | FileDefaultArgs<ExtArgs>
+    videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
   }
 
   export type $CoursePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Course"
     objects: {
+      /**
+       * 封面图OSS地址
+       */
+      coverImage: Prisma.$FilePayload<ExtArgs>
+      /**
+       * 完整视频OSS地址
+       */
+      videoUrl: Prisma.$FilePayload<ExtArgs>
       /**
        * 关联分类
        */
@@ -8435,9 +8537,9 @@ export namespace Prisma {
        */
       name: string
       /**
-       * 封面图OSS地址
+       * 封面图ID
        */
-      coverImage: string
+      coverImageId: number
       /**
        * 课程简介
        */
@@ -8451,9 +8553,9 @@ export namespace Prisma {
        */
       type: $Enums.CourseType
       /**
-       * 完整视频OSS地址
+       * 视频ID
        */
-      videoUrl: string
+      videoUrlId: number
       /**
        * 试看时长（秒），默认5分钟
        */
@@ -8461,11 +8563,11 @@ export namespace Prisma {
       /**
        * 视频总时长（秒）
        */
-      duration: number
+      duration: number | null
       /**
        * 学习人数
        */
-      studentCount: number
+      studentCount: number | null
       /**
        * 是否上架
        */
@@ -8876,6 +8978,8 @@ export namespace Prisma {
    */
   export interface Prisma__CourseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    coverImage<T extends FileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FileDefaultArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    videoUrl<T extends FileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FileDefaultArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     category<T extends CourseCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseCategoryDefaultArgs<ExtArgs>>): Prisma__CourseCategoryClient<$Result.GetResult<Prisma.$CourseCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8908,11 +9012,11 @@ export namespace Prisma {
   interface CourseFieldRefs {
     readonly id: FieldRef<"Course", 'String'>
     readonly name: FieldRef<"Course", 'String'>
-    readonly coverImage: FieldRef<"Course", 'String'>
+    readonly coverImageId: FieldRef<"Course", 'Int'>
     readonly description: FieldRef<"Course", 'String'>
     readonly price: FieldRef<"Course", 'Float'>
     readonly type: FieldRef<"Course", 'CourseType'>
-    readonly videoUrl: FieldRef<"Course", 'String'>
+    readonly videoUrlId: FieldRef<"Course", 'Int'>
     readonly previewDuration: FieldRef<"Course", 'Int'>
     readonly duration: FieldRef<"Course", 'Int'>
     readonly studentCount: FieldRef<"Course", 'Int'>
@@ -15206,11 +15310,11 @@ export namespace Prisma {
   export const CourseScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    coverImage: 'coverImage',
+    coverImageId: 'coverImageId',
     description: 'description',
     price: 'price',
     type: 'type',
-    videoUrl: 'videoUrl',
+    videoUrlId: 'videoUrlId',
     previewDuration: 'previewDuration',
     duration: 'duration',
     studentCount: 'studentCount',
@@ -15782,6 +15886,8 @@ export namespace Prisma {
     avatarUrl?: UserListRelationFilter
     galleryImages?: NormalProductListRelationFilter
     detailImage?: XOR<NormalProductNullableScalarRelationFilter, NormalProductWhereInput> | null
+    coverImage?: CourseListRelationFilter
+    videoUrl?: CourseListRelationFilter
   }
 
   export type FileOrderByWithRelationInput = {
@@ -15797,6 +15903,8 @@ export namespace Prisma {
     avatarUrl?: UserOrderByRelationAggregateInput
     galleryImages?: NormalProductOrderByRelationAggregateInput
     detailImage?: NormalProductOrderByWithRelationInput
+    coverImage?: CourseOrderByRelationAggregateInput
+    videoUrl?: CourseOrderByRelationAggregateInput
   }
 
   export type FileWhereUniqueInput = Prisma.AtLeast<{
@@ -15815,6 +15923,8 @@ export namespace Prisma {
     avatarUrl?: UserListRelationFilter
     galleryImages?: NormalProductListRelationFilter
     detailImage?: XOR<NormalProductNullableScalarRelationFilter, NormalProductWhereInput> | null
+    coverImage?: CourseListRelationFilter
+    videoUrl?: CourseListRelationFilter
   }, "id" | "fileKey">
 
   export type FileOrderByWithAggregationInput = {
@@ -15910,36 +16020,40 @@ export namespace Prisma {
     NOT?: CourseWhereInput | CourseWhereInput[]
     id?: StringFilter<"Course"> | string
     name?: StringFilter<"Course"> | string
-    coverImage?: StringFilter<"Course"> | string
+    coverImageId?: IntFilter<"Course"> | number
     description?: StringNullableFilter<"Course"> | string | null
     price?: FloatFilter<"Course"> | number
     type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
-    videoUrl?: StringFilter<"Course"> | string
+    videoUrlId?: IntFilter<"Course"> | number
     previewDuration?: IntFilter<"Course"> | number
-    duration?: IntFilter<"Course"> | number
-    studentCount?: IntFilter<"Course"> | number
+    duration?: IntNullableFilter<"Course"> | number | null
+    studentCount?: IntNullableFilter<"Course"> | number | null
     isPublished?: BoolFilter<"Course"> | boolean
     categoryId?: StringFilter<"Course"> | string
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
+    coverImage?: XOR<FileScalarRelationFilter, FileWhereInput>
+    videoUrl?: XOR<FileScalarRelationFilter, FileWhereInput>
     category?: XOR<CourseCategoryScalarRelationFilter, CourseCategoryWhereInput>
   }
 
   export type CourseOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    coverImage?: SortOrder
+    coverImageId?: SortOrder
     description?: SortOrderInput | SortOrder
     price?: SortOrder
     type?: SortOrder
-    videoUrl?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
-    duration?: SortOrder
-    studentCount?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    studentCount?: SortOrderInput | SortOrder
     isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    coverImage?: FileOrderByWithRelationInput
+    videoUrl?: FileOrderByWithRelationInput
     category?: CourseCategoryOrderByWithRelationInput
   }
 
@@ -15949,32 +16063,34 @@ export namespace Prisma {
     OR?: CourseWhereInput[]
     NOT?: CourseWhereInput | CourseWhereInput[]
     name?: StringFilter<"Course"> | string
-    coverImage?: StringFilter<"Course"> | string
+    coverImageId?: IntFilter<"Course"> | number
     description?: StringNullableFilter<"Course"> | string | null
     price?: FloatFilter<"Course"> | number
     type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
-    videoUrl?: StringFilter<"Course"> | string
+    videoUrlId?: IntFilter<"Course"> | number
     previewDuration?: IntFilter<"Course"> | number
-    duration?: IntFilter<"Course"> | number
-    studentCount?: IntFilter<"Course"> | number
+    duration?: IntNullableFilter<"Course"> | number | null
+    studentCount?: IntNullableFilter<"Course"> | number | null
     isPublished?: BoolFilter<"Course"> | boolean
     categoryId?: StringFilter<"Course"> | string
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
+    coverImage?: XOR<FileScalarRelationFilter, FileWhereInput>
+    videoUrl?: XOR<FileScalarRelationFilter, FileWhereInput>
     category?: XOR<CourseCategoryScalarRelationFilter, CourseCategoryWhereInput>
   }, "id">
 
   export type CourseOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    coverImage?: SortOrder
+    coverImageId?: SortOrder
     description?: SortOrderInput | SortOrder
     price?: SortOrder
     type?: SortOrder
-    videoUrl?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
-    duration?: SortOrder
-    studentCount?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    studentCount?: SortOrderInput | SortOrder
     isPublished?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
@@ -15992,14 +16108,14 @@ export namespace Prisma {
     NOT?: CourseScalarWhereWithAggregatesInput | CourseScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Course"> | string
     name?: StringWithAggregatesFilter<"Course"> | string
-    coverImage?: StringWithAggregatesFilter<"Course"> | string
+    coverImageId?: IntWithAggregatesFilter<"Course"> | number
     description?: StringNullableWithAggregatesFilter<"Course"> | string | null
     price?: FloatWithAggregatesFilter<"Course"> | number
     type?: EnumCourseTypeWithAggregatesFilter<"Course"> | $Enums.CourseType
-    videoUrl?: StringWithAggregatesFilter<"Course"> | string
+    videoUrlId?: IntWithAggregatesFilter<"Course"> | number
     previewDuration?: IntWithAggregatesFilter<"Course"> | number
-    duration?: IntWithAggregatesFilter<"Course"> | number
-    studentCount?: IntWithAggregatesFilter<"Course"> | number
+    duration?: IntNullableWithAggregatesFilter<"Course"> | number | null
+    studentCount?: IntNullableWithAggregatesFilter<"Course"> | number | null
     isPublished?: BoolWithAggregatesFilter<"Course"> | boolean
     categoryId?: StringWithAggregatesFilter<"Course"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
@@ -16744,6 +16860,8 @@ export namespace Prisma {
     avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
     galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
     detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileUncheckedCreateInput = {
@@ -16759,6 +16877,8 @@ export namespace Prisma {
     avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
     galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
     detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseUncheckedCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseUncheckedCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileUpdateInput = {
@@ -16773,6 +16893,8 @@ export namespace Prisma {
     avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
     galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
     detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type FileUncheckedUpdateInput = {
@@ -16788,6 +16910,8 @@ export namespace Prisma {
     avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
     galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
     detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUncheckedUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUncheckedUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type FileCreateManyInput = {
@@ -16888,31 +17012,31 @@ export namespace Prisma {
   export type CourseCreateInput = {
     id?: string
     name: string
-    coverImage: string
     description?: string | null
     price: number
     type?: $Enums.CourseType
-    videoUrl: string
     previewDuration?: number
-    duration: number
-    studentCount?: number
+    duration?: number | null
+    studentCount?: number | null
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    coverImage: FileCreateNestedOneWithoutCoverImageInput
+    videoUrl: FileCreateNestedOneWithoutVideoUrlInput
     category: CourseCategoryCreateNestedOneWithoutCoursesInput
   }
 
   export type CourseUncheckedCreateInput = {
     id?: string
     name: string
-    coverImage: string
+    coverImageId: number
     description?: string | null
     price: number
     type?: $Enums.CourseType
-    videoUrl: string
+    videoUrlId: number
     previewDuration?: number
-    duration: number
-    studentCount?: number
+    duration?: number | null
+    studentCount?: number | null
     isPublished?: boolean
     categoryId: string
     createdAt?: Date | string
@@ -16922,31 +17046,31 @@ export namespace Prisma {
   export type CourseUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
+    videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
     category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
   }
 
   export type CourseUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
+    videoUrlId?: IntFieldUpdateOperationsInput | number
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16956,14 +17080,14 @@ export namespace Prisma {
   export type CourseCreateManyInput = {
     id?: string
     name: string
-    coverImage: string
+    coverImageId: number
     description?: string | null
     price: number
     type?: $Enums.CourseType
-    videoUrl: string
+    videoUrlId: number
     previewDuration?: number
-    duration: number
-    studentCount?: number
+    duration?: number | null
+    studentCount?: number | null
     isPublished?: boolean
     categoryId: string
     createdAt?: Date | string
@@ -16973,14 +17097,12 @@ export namespace Prisma {
   export type CourseUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16989,14 +17111,14 @@ export namespace Prisma {
   export type CourseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
+    videoUrlId?: IntFieldUpdateOperationsInput | number
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17975,7 +18097,17 @@ export namespace Prisma {
     isNot?: NormalProductWhereInput | null
   }
 
+  export type CourseListRelationFilter = {
+    every?: CourseWhereInput
+    some?: CourseWhereInput
+    none?: CourseWhereInput
+  }
+
   export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CourseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18037,16 +18169,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type CourseListRelationFilter = {
-    every?: CourseWhereInput
-    some?: CourseWhereInput
-    none?: CourseWhereInput
-  }
-
-  export type CourseOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type CourseCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -18078,6 +18200,11 @@ export namespace Prisma {
     not?: NestedEnumCourseTypeFilter<$PrismaModel> | $Enums.CourseType
   }
 
+  export type FileScalarRelationFilter = {
+    is?: FileWhereInput
+    isNot?: FileWhereInput
+  }
+
   export type CourseCategoryScalarRelationFilter = {
     is?: CourseCategoryWhereInput
     isNot?: CourseCategoryWhereInput
@@ -18086,11 +18213,11 @@ export namespace Prisma {
   export type CourseCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    coverImage?: SortOrder
+    coverImageId?: SortOrder
     description?: SortOrder
     price?: SortOrder
     type?: SortOrder
-    videoUrl?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
     duration?: SortOrder
     studentCount?: SortOrder
@@ -18101,7 +18228,9 @@ export namespace Prisma {
   }
 
   export type CourseAvgOrderByAggregateInput = {
+    coverImageId?: SortOrder
     price?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
     duration?: SortOrder
     studentCount?: SortOrder
@@ -18110,11 +18239,11 @@ export namespace Prisma {
   export type CourseMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    coverImage?: SortOrder
+    coverImageId?: SortOrder
     description?: SortOrder
     price?: SortOrder
     type?: SortOrder
-    videoUrl?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
     duration?: SortOrder
     studentCount?: SortOrder
@@ -18127,11 +18256,11 @@ export namespace Prisma {
   export type CourseMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    coverImage?: SortOrder
+    coverImageId?: SortOrder
     description?: SortOrder
     price?: SortOrder
     type?: SortOrder
-    videoUrl?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
     duration?: SortOrder
     studentCount?: SortOrder
@@ -18142,7 +18271,9 @@ export namespace Prisma {
   }
 
   export type CourseSumOrderByAggregateInput = {
+    coverImageId?: SortOrder
     price?: SortOrder
+    videoUrlId?: SortOrder
     previewDuration?: SortOrder
     duration?: SortOrder
     studentCount?: SortOrder
@@ -18729,6 +18860,20 @@ export namespace Prisma {
     connect?: NormalProductWhereUniqueInput
   }
 
+  export type CourseCreateNestedManyWithoutCoverImageInput = {
+    create?: XOR<CourseCreateWithoutCoverImageInput, CourseUncheckedCreateWithoutCoverImageInput> | CourseCreateWithoutCoverImageInput[] | CourseUncheckedCreateWithoutCoverImageInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutCoverImageInput | CourseCreateOrConnectWithoutCoverImageInput[]
+    createMany?: CourseCreateManyCoverImageInputEnvelope
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+  }
+
+  export type CourseCreateNestedManyWithoutVideoUrlInput = {
+    create?: XOR<CourseCreateWithoutVideoUrlInput, CourseUncheckedCreateWithoutVideoUrlInput> | CourseCreateWithoutVideoUrlInput[] | CourseUncheckedCreateWithoutVideoUrlInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutVideoUrlInput | CourseCreateOrConnectWithoutVideoUrlInput[]
+    createMany?: CourseCreateManyVideoUrlInputEnvelope
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutAvatarUrlInput = {
     create?: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput> | UserCreateWithoutAvatarUrlInput[] | UserUncheckedCreateWithoutAvatarUrlInput[]
     connectOrCreate?: UserCreateOrConnectWithoutAvatarUrlInput | UserCreateOrConnectWithoutAvatarUrlInput[]
@@ -18746,6 +18891,20 @@ export namespace Prisma {
     create?: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
     connectOrCreate?: NormalProductCreateOrConnectWithoutDetailImageInput
     connect?: NormalProductWhereUniqueInput
+  }
+
+  export type CourseUncheckedCreateNestedManyWithoutCoverImageInput = {
+    create?: XOR<CourseCreateWithoutCoverImageInput, CourseUncheckedCreateWithoutCoverImageInput> | CourseCreateWithoutCoverImageInput[] | CourseUncheckedCreateWithoutCoverImageInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutCoverImageInput | CourseCreateOrConnectWithoutCoverImageInput[]
+    createMany?: CourseCreateManyCoverImageInputEnvelope
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+  }
+
+  export type CourseUncheckedCreateNestedManyWithoutVideoUrlInput = {
+    create?: XOR<CourseCreateWithoutVideoUrlInput, CourseUncheckedCreateWithoutVideoUrlInput> | CourseCreateWithoutVideoUrlInput[] | CourseUncheckedCreateWithoutVideoUrlInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutVideoUrlInput | CourseCreateOrConnectWithoutVideoUrlInput[]
+    createMany?: CourseCreateManyVideoUrlInputEnvelope
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -18789,6 +18948,34 @@ export namespace Prisma {
     update?: XOR<XOR<NormalProductUpdateToOneWithWhereWithoutDetailImageInput, NormalProductUpdateWithoutDetailImageInput>, NormalProductUncheckedUpdateWithoutDetailImageInput>
   }
 
+  export type CourseUpdateManyWithoutCoverImageNestedInput = {
+    create?: XOR<CourseCreateWithoutCoverImageInput, CourseUncheckedCreateWithoutCoverImageInput> | CourseCreateWithoutCoverImageInput[] | CourseUncheckedCreateWithoutCoverImageInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutCoverImageInput | CourseCreateOrConnectWithoutCoverImageInput[]
+    upsert?: CourseUpsertWithWhereUniqueWithoutCoverImageInput | CourseUpsertWithWhereUniqueWithoutCoverImageInput[]
+    createMany?: CourseCreateManyCoverImageInputEnvelope
+    set?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    disconnect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    delete?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    update?: CourseUpdateWithWhereUniqueWithoutCoverImageInput | CourseUpdateWithWhereUniqueWithoutCoverImageInput[]
+    updateMany?: CourseUpdateManyWithWhereWithoutCoverImageInput | CourseUpdateManyWithWhereWithoutCoverImageInput[]
+    deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
+  }
+
+  export type CourseUpdateManyWithoutVideoUrlNestedInput = {
+    create?: XOR<CourseCreateWithoutVideoUrlInput, CourseUncheckedCreateWithoutVideoUrlInput> | CourseCreateWithoutVideoUrlInput[] | CourseUncheckedCreateWithoutVideoUrlInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutVideoUrlInput | CourseCreateOrConnectWithoutVideoUrlInput[]
+    upsert?: CourseUpsertWithWhereUniqueWithoutVideoUrlInput | CourseUpsertWithWhereUniqueWithoutVideoUrlInput[]
+    createMany?: CourseCreateManyVideoUrlInputEnvelope
+    set?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    disconnect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    delete?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    update?: CourseUpdateWithWhereUniqueWithoutVideoUrlInput | CourseUpdateWithWhereUniqueWithoutVideoUrlInput[]
+    updateMany?: CourseUpdateManyWithWhereWithoutVideoUrlInput | CourseUpdateManyWithWhereWithoutVideoUrlInput[]
+    deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutAvatarUrlNestedInput = {
     create?: XOR<UserCreateWithoutAvatarUrlInput, UserUncheckedCreateWithoutAvatarUrlInput> | UserCreateWithoutAvatarUrlInput[] | UserUncheckedCreateWithoutAvatarUrlInput[]
     connectOrCreate?: UserCreateOrConnectWithoutAvatarUrlInput | UserCreateOrConnectWithoutAvatarUrlInput[]
@@ -18824,6 +19011,34 @@ export namespace Prisma {
     delete?: NormalProductWhereInput | boolean
     connect?: NormalProductWhereUniqueInput
     update?: XOR<XOR<NormalProductUpdateToOneWithWhereWithoutDetailImageInput, NormalProductUpdateWithoutDetailImageInput>, NormalProductUncheckedUpdateWithoutDetailImageInput>
+  }
+
+  export type CourseUncheckedUpdateManyWithoutCoverImageNestedInput = {
+    create?: XOR<CourseCreateWithoutCoverImageInput, CourseUncheckedCreateWithoutCoverImageInput> | CourseCreateWithoutCoverImageInput[] | CourseUncheckedCreateWithoutCoverImageInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutCoverImageInput | CourseCreateOrConnectWithoutCoverImageInput[]
+    upsert?: CourseUpsertWithWhereUniqueWithoutCoverImageInput | CourseUpsertWithWhereUniqueWithoutCoverImageInput[]
+    createMany?: CourseCreateManyCoverImageInputEnvelope
+    set?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    disconnect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    delete?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    update?: CourseUpdateWithWhereUniqueWithoutCoverImageInput | CourseUpdateWithWhereUniqueWithoutCoverImageInput[]
+    updateMany?: CourseUpdateManyWithWhereWithoutCoverImageInput | CourseUpdateManyWithWhereWithoutCoverImageInput[]
+    deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
+  }
+
+  export type CourseUncheckedUpdateManyWithoutVideoUrlNestedInput = {
+    create?: XOR<CourseCreateWithoutVideoUrlInput, CourseUncheckedCreateWithoutVideoUrlInput> | CourseCreateWithoutVideoUrlInput[] | CourseUncheckedCreateWithoutVideoUrlInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutVideoUrlInput | CourseCreateOrConnectWithoutVideoUrlInput[]
+    upsert?: CourseUpsertWithWhereUniqueWithoutVideoUrlInput | CourseUpsertWithWhereUniqueWithoutVideoUrlInput[]
+    createMany?: CourseCreateManyVideoUrlInputEnvelope
+    set?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    disconnect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    delete?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    update?: CourseUpdateWithWhereUniqueWithoutVideoUrlInput | CourseUpdateWithWhereUniqueWithoutVideoUrlInput[]
+    updateMany?: CourseUpdateManyWithWhereWithoutVideoUrlInput | CourseUpdateManyWithWhereWithoutVideoUrlInput[]
+    deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
   }
 
   export type CourseCreateNestedManyWithoutCategoryInput = {
@@ -18868,6 +19083,18 @@ export namespace Prisma {
     deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
   }
 
+  export type FileCreateNestedOneWithoutCoverImageInput = {
+    create?: XOR<FileCreateWithoutCoverImageInput, FileUncheckedCreateWithoutCoverImageInput>
+    connectOrCreate?: FileCreateOrConnectWithoutCoverImageInput
+    connect?: FileWhereUniqueInput
+  }
+
+  export type FileCreateNestedOneWithoutVideoUrlInput = {
+    create?: XOR<FileCreateWithoutVideoUrlInput, FileUncheckedCreateWithoutVideoUrlInput>
+    connectOrCreate?: FileCreateOrConnectWithoutVideoUrlInput
+    connect?: FileWhereUniqueInput
+  }
+
   export type CourseCategoryCreateNestedOneWithoutCoursesInput = {
     create?: XOR<CourseCategoryCreateWithoutCoursesInput, CourseCategoryUncheckedCreateWithoutCoursesInput>
     connectOrCreate?: CourseCategoryCreateOrConnectWithoutCoursesInput
@@ -18876,6 +19103,22 @@ export namespace Prisma {
 
   export type EnumCourseTypeFieldUpdateOperationsInput = {
     set?: $Enums.CourseType
+  }
+
+  export type FileUpdateOneRequiredWithoutCoverImageNestedInput = {
+    create?: XOR<FileCreateWithoutCoverImageInput, FileUncheckedCreateWithoutCoverImageInput>
+    connectOrCreate?: FileCreateOrConnectWithoutCoverImageInput
+    upsert?: FileUpsertWithoutCoverImageInput
+    connect?: FileWhereUniqueInput
+    update?: XOR<XOR<FileUpdateToOneWithWhereWithoutCoverImageInput, FileUpdateWithoutCoverImageInput>, FileUncheckedUpdateWithoutCoverImageInput>
+  }
+
+  export type FileUpdateOneRequiredWithoutVideoUrlNestedInput = {
+    create?: XOR<FileCreateWithoutVideoUrlInput, FileUncheckedCreateWithoutVideoUrlInput>
+    connectOrCreate?: FileCreateOrConnectWithoutVideoUrlInput
+    upsert?: FileUpsertWithoutVideoUrlInput
+    connect?: FileWhereUniqueInput
+    update?: XOR<XOR<FileUpdateToOneWithWhereWithoutVideoUrlInput, FileUpdateWithoutVideoUrlInput>, FileUncheckedUpdateWithoutVideoUrlInput>
   }
 
   export type CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput = {
@@ -19292,6 +19535,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
     detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileUncheckedCreateWithoutAvatarUrlInput = {
@@ -19306,6 +19551,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
     detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseUncheckedCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseUncheckedCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileCreateOrConnectWithoutAvatarUrlInput = {
@@ -19421,6 +19668,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
     detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type FileUncheckedUpdateWithoutAvatarUrlInput = {
@@ -19435,6 +19684,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
     detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUncheckedUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUncheckedUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutUserInput = {
@@ -19588,6 +19839,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
     detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileUncheckedCreateWithoutGalleryImagesInput = {
@@ -19602,6 +19855,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
     detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseUncheckedCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseUncheckedCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileCreateOrConnectWithoutGalleryImagesInput = {
@@ -19620,6 +19875,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
     galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
+    coverImage?: CourseCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileUncheckedCreateWithoutDetailImageInput = {
@@ -19634,6 +19891,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
     galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
+    coverImage?: CourseUncheckedCreateNestedManyWithoutCoverImageInput
+    videoUrl?: CourseUncheckedCreateNestedManyWithoutVideoUrlInput
   }
 
   export type FileCreateOrConnectWithoutDetailImageInput = {
@@ -19715,6 +19974,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
     galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
+    coverImage?: CourseUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type FileUncheckedUpdateWithoutDetailImageInput = {
@@ -19729,6 +19990,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
     galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    coverImage?: CourseUncheckedUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUncheckedUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type NormalProductCategoryUpsertWithoutNormalProductsInput = {
@@ -19878,6 +20141,90 @@ export namespace Prisma {
     create: XOR<NormalProductCreateWithoutDetailImageInput, NormalProductUncheckedCreateWithoutDetailImageInput>
   }
 
+  export type CourseCreateWithoutCoverImageInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    videoUrl: FileCreateNestedOneWithoutVideoUrlInput
+    category: CourseCategoryCreateNestedOneWithoutCoursesInput
+  }
+
+  export type CourseUncheckedCreateWithoutCoverImageInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    videoUrlId: number
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseCreateOrConnectWithoutCoverImageInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutCoverImageInput, CourseUncheckedCreateWithoutCoverImageInput>
+  }
+
+  export type CourseCreateManyCoverImageInputEnvelope = {
+    data: CourseCreateManyCoverImageInput | CourseCreateManyCoverImageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CourseCreateWithoutVideoUrlInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    coverImage: FileCreateNestedOneWithoutCoverImageInput
+    category: CourseCategoryCreateNestedOneWithoutCoursesInput
+  }
+
+  export type CourseUncheckedCreateWithoutVideoUrlInput = {
+    id?: string
+    name: string
+    coverImageId: number
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseCreateOrConnectWithoutVideoUrlInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutVideoUrlInput, CourseUncheckedCreateWithoutVideoUrlInput>
+  }
+
+  export type CourseCreateManyVideoUrlInputEnvelope = {
+    data: CourseCreateManyVideoUrlInput | CourseCreateManyVideoUrlInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithWhereUniqueWithoutAvatarUrlInput = {
     where: UserWhereUniqueInput
     update: XOR<UserUpdateWithoutAvatarUrlInput, UserUncheckedUpdateWithoutAvatarUrlInput>
@@ -19973,33 +20320,85 @@ export namespace Prisma {
     galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
   }
 
+  export type CourseUpsertWithWhereUniqueWithoutCoverImageInput = {
+    where: CourseWhereUniqueInput
+    update: XOR<CourseUpdateWithoutCoverImageInput, CourseUncheckedUpdateWithoutCoverImageInput>
+    create: XOR<CourseCreateWithoutCoverImageInput, CourseUncheckedCreateWithoutCoverImageInput>
+  }
+
+  export type CourseUpdateWithWhereUniqueWithoutCoverImageInput = {
+    where: CourseWhereUniqueInput
+    data: XOR<CourseUpdateWithoutCoverImageInput, CourseUncheckedUpdateWithoutCoverImageInput>
+  }
+
+  export type CourseUpdateManyWithWhereWithoutCoverImageInput = {
+    where: CourseScalarWhereInput
+    data: XOR<CourseUpdateManyMutationInput, CourseUncheckedUpdateManyWithoutCoverImageInput>
+  }
+
+  export type CourseScalarWhereInput = {
+    AND?: CourseScalarWhereInput | CourseScalarWhereInput[]
+    OR?: CourseScalarWhereInput[]
+    NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
+    id?: StringFilter<"Course"> | string
+    name?: StringFilter<"Course"> | string
+    coverImageId?: IntFilter<"Course"> | number
+    description?: StringNullableFilter<"Course"> | string | null
+    price?: FloatFilter<"Course"> | number
+    type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
+    videoUrlId?: IntFilter<"Course"> | number
+    previewDuration?: IntFilter<"Course"> | number
+    duration?: IntNullableFilter<"Course"> | number | null
+    studentCount?: IntNullableFilter<"Course"> | number | null
+    isPublished?: BoolFilter<"Course"> | boolean
+    categoryId?: StringFilter<"Course"> | string
+    createdAt?: DateTimeFilter<"Course"> | Date | string
+    updatedAt?: DateTimeFilter<"Course"> | Date | string
+  }
+
+  export type CourseUpsertWithWhereUniqueWithoutVideoUrlInput = {
+    where: CourseWhereUniqueInput
+    update: XOR<CourseUpdateWithoutVideoUrlInput, CourseUncheckedUpdateWithoutVideoUrlInput>
+    create: XOR<CourseCreateWithoutVideoUrlInput, CourseUncheckedCreateWithoutVideoUrlInput>
+  }
+
+  export type CourseUpdateWithWhereUniqueWithoutVideoUrlInput = {
+    where: CourseWhereUniqueInput
+    data: XOR<CourseUpdateWithoutVideoUrlInput, CourseUncheckedUpdateWithoutVideoUrlInput>
+  }
+
+  export type CourseUpdateManyWithWhereWithoutVideoUrlInput = {
+    where: CourseScalarWhereInput
+    data: XOR<CourseUpdateManyMutationInput, CourseUncheckedUpdateManyWithoutVideoUrlInput>
+  }
+
   export type CourseCreateWithoutCategoryInput = {
     id?: string
     name: string
-    coverImage: string
     description?: string | null
     price: number
     type?: $Enums.CourseType
-    videoUrl: string
     previewDuration?: number
-    duration: number
-    studentCount?: number
+    duration?: number | null
+    studentCount?: number | null
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    coverImage: FileCreateNestedOneWithoutCoverImageInput
+    videoUrl: FileCreateNestedOneWithoutVideoUrlInput
   }
 
   export type CourseUncheckedCreateWithoutCategoryInput = {
     id?: string
     name: string
-    coverImage: string
+    coverImageId: number
     description?: string | null
     price: number
     type?: $Enums.CourseType
-    videoUrl: string
+    videoUrlId: number
     previewDuration?: number
-    duration: number
-    studentCount?: number
+    duration?: number | null
+    studentCount?: number | null
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20031,24 +20430,76 @@ export namespace Prisma {
     data: XOR<CourseUpdateManyMutationInput, CourseUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type CourseScalarWhereInput = {
-    AND?: CourseScalarWhereInput | CourseScalarWhereInput[]
-    OR?: CourseScalarWhereInput[]
-    NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
-    id?: StringFilter<"Course"> | string
-    name?: StringFilter<"Course"> | string
-    coverImage?: StringFilter<"Course"> | string
-    description?: StringNullableFilter<"Course"> | string | null
-    price?: FloatFilter<"Course"> | number
-    type?: EnumCourseTypeFilter<"Course"> | $Enums.CourseType
-    videoUrl?: StringFilter<"Course"> | string
-    previewDuration?: IntFilter<"Course"> | number
-    duration?: IntFilter<"Course"> | number
-    studentCount?: IntFilter<"Course"> | number
-    isPublished?: BoolFilter<"Course"> | boolean
-    categoryId?: StringFilter<"Course"> | string
-    createdAt?: DateTimeFilter<"Course"> | Date | string
-    updatedAt?: DateTimeFilter<"Course"> | Date | string
+  export type FileCreateWithoutCoverImageInput = {
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+    videoUrl?: CourseCreateNestedManyWithoutVideoUrlInput
+  }
+
+  export type FileUncheckedCreateWithoutCoverImageInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+    videoUrl?: CourseUncheckedCreateNestedManyWithoutVideoUrlInput
+  }
+
+  export type FileCreateOrConnectWithoutCoverImageInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutCoverImageInput, FileUncheckedCreateWithoutCoverImageInput>
+  }
+
+  export type FileCreateWithoutVideoUrlInput = {
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseCreateNestedManyWithoutCoverImageInput
+  }
+
+  export type FileUncheckedCreateWithoutVideoUrlInput = {
+    id?: number
+    fileKey: string
+    fileName?: string | null
+    fileSize: number
+    mimeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedCreateNestedManyWithoutAvatarUrlInput
+    galleryImages?: NormalProductUncheckedCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: NormalProductUncheckedCreateNestedOneWithoutDetailImageInput
+    coverImage?: CourseUncheckedCreateNestedManyWithoutCoverImageInput
+  }
+
+  export type FileCreateOrConnectWithoutVideoUrlInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutVideoUrlInput, FileUncheckedCreateWithoutVideoUrlInput>
   }
 
   export type CourseCategoryCreateWithoutCoursesInput = {
@@ -20070,6 +20521,90 @@ export namespace Prisma {
   export type CourseCategoryCreateOrConnectWithoutCoursesInput = {
     where: CourseCategoryWhereUniqueInput
     create: XOR<CourseCategoryCreateWithoutCoursesInput, CourseCategoryUncheckedCreateWithoutCoursesInput>
+  }
+
+  export type FileUpsertWithoutCoverImageInput = {
+    update: XOR<FileUpdateWithoutCoverImageInput, FileUncheckedUpdateWithoutCoverImageInput>
+    create: XOR<FileCreateWithoutCoverImageInput, FileUncheckedCreateWithoutCoverImageInput>
+    where?: FileWhereInput
+  }
+
+  export type FileUpdateToOneWithWhereWithoutCoverImageInput = {
+    where?: FileWhereInput
+    data: XOR<FileUpdateWithoutCoverImageInput, FileUncheckedUpdateWithoutCoverImageInput>
+  }
+
+  export type FileUpdateWithoutCoverImageInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+    videoUrl?: CourseUpdateManyWithoutVideoUrlNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutCoverImageInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+    videoUrl?: CourseUncheckedUpdateManyWithoutVideoUrlNestedInput
+  }
+
+  export type FileUpsertWithoutVideoUrlInput = {
+    update: XOR<FileUpdateWithoutVideoUrlInput, FileUncheckedUpdateWithoutVideoUrlInput>
+    create: XOR<FileCreateWithoutVideoUrlInput, FileUncheckedCreateWithoutVideoUrlInput>
+    where?: FileWhereInput
+  }
+
+  export type FileUpdateToOneWithWhereWithoutVideoUrlInput = {
+    where?: FileWhereInput
+    data: XOR<FileUpdateWithoutVideoUrlInput, FileUncheckedUpdateWithoutVideoUrlInput>
+  }
+
+  export type FileUpdateWithoutVideoUrlInput = {
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUpdateManyWithoutCoverImageNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutVideoUrlInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fileKey?: StringFieldUpdateOperationsInput | string
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: IntFieldUpdateOperationsInput | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
+    galleryImages?: NormalProductUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUncheckedUpdateManyWithoutCoverImageNestedInput
   }
 
   export type CourseCategoryUpsertWithoutCoursesInput = {
@@ -20676,6 +21211,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserUpdateManyWithoutAvatarUrlNestedInput
     detailImage?: NormalProductUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type FileUncheckedUpdateWithoutGalleryImagesInput = {
@@ -20690,6 +21227,8 @@ export namespace Prisma {
     meta?: NullableJsonNullValueInput | InputJsonValue
     avatarUrl?: UserUncheckedUpdateManyWithoutAvatarUrlNestedInput
     detailImage?: NormalProductUncheckedUpdateOneWithoutDetailImageNestedInput
+    coverImage?: CourseUncheckedUpdateManyWithoutCoverImageNestedInput
+    videoUrl?: CourseUncheckedUpdateManyWithoutVideoUrlNestedInput
   }
 
   export type FileUncheckedUpdateManyWithoutGalleryImagesInput = {
@@ -20722,6 +21261,38 @@ export namespace Prisma {
     competitionScopes?: UserCreatecompetitionScopesInput | string[]
     passwordHash?: string | null
     powerOfAttorney?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseCreateManyCoverImageInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    videoUrlId: number
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseCreateManyVideoUrlInput = {
+    id?: string
+    name: string
+    coverImageId: number
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20835,17 +21406,113 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CourseUpdateWithoutCoverImageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
+    category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutCoverImageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrlId?: IntFieldUpdateOperationsInput | number
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseUncheckedUpdateManyWithoutCoverImageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrlId?: IntFieldUpdateOperationsInput | number
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseUpdateWithoutVideoUrlInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
+    category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutVideoUrlInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseUncheckedUpdateManyWithoutVideoUrlInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CourseCreateManyCategoryInput = {
     id?: string
     name: string
-    coverImage: string
+    coverImageId: number
     description?: string | null
     price: number
     type?: $Enums.CourseType
-    videoUrl: string
+    videoUrlId: number
     previewDuration?: number
-    duration: number
-    studentCount?: number
+    duration?: number | null
+    studentCount?: number | null
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20854,30 +21521,30 @@ export namespace Prisma {
   export type CourseUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
+    videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
+    videoUrlId?: IntFieldUpdateOperationsInput | number
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20886,14 +21553,14 @@ export namespace Prisma {
   export type CourseUncheckedUpdateManyWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
-    videoUrl?: StringFieldUpdateOperationsInput | string
+    videoUrlId?: IntFieldUpdateOperationsInput | number
     previewDuration?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    studentCount?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

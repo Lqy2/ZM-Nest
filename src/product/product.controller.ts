@@ -11,6 +11,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Public } from '../auth/public.decorator';
+import { FilterProductDto } from './dto/filter-product.dto';
 
 // @Public()
 @Controller('product')
@@ -23,9 +24,9 @@ export class ProductController {
   }
 
   @Public()
-  @Get()
-  findAll() {
-    return this.productService.findAll();
+  @Get('filter')
+  findAll(@Body() filterProductDto: FilterProductDto) {
+    return this.productService.findAll(filterProductDto);
   }
 
   @Get(':id')
@@ -36,11 +37,11 @@ export class ProductController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+    return this.productService.update(id, updateProductDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+    return this.productService.remove(id);
   }
 }
