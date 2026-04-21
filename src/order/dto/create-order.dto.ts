@@ -2,9 +2,13 @@ import { IsNotEmpty, IsString, IsNumber, IsArray, ValidateNested, IsOptional } f
 import { Type } from 'class-transformer';
 
 class OrderItemDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   productId: string;
+
+  @IsOptional()
+  @IsString()
+  courseId: string;
 
   @IsNotEmpty()
   @IsNumber()

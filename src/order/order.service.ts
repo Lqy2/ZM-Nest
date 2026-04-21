@@ -31,45 +31,86 @@ export class OrderService {
     const { items, receiverName, receiverPhone, receiverAddress, remark } =
       createOrderDto;
 
-    const productIds = items.map((item) => item.productId);
-    const products = await this.prisma.normalProduct.findMany({
-      where: { id: { in: productIds } },
-    });
-
-    if (products.length !== items.length) {
-      throw new BadRequestException('部分商品不存在');
-    }
-
     const orderItems: any[] = [];
     let totalAmount = 0;
-
     for (const item of items) {
-      const product = products.find((p) => p.id === item.productId);
-      if (!product) {
-        throw new BadRequestException(`商品 ${item.productId} 不存在`);
+      if (!item.productId && !item.courseId) {
+        throw new BadRequestException(
+          '每个订单项至少要有 productId 或 courseId',
+        );
       }
-      if (product.stock < item.quantity) {
-        throw new BadRequestException(`商品 ${product.name} 库存不足`);
-      }
-
-      const price = product.discountPrice ?? product.price;
-      const subtotal = price * item.quantity;
-      totalAmount += subtotal;
-
-      orderItems.push({
-        productId: product.id,
-        productName: product.name,
-        productImage: product.detailImageId,
-        price,
-        quantity: item.quantity,
-        subtotal,
+      // 商品默认数量是1
+      if (!item.quantity) item.quantity = 1;
+    }
+    // 1. 处理普通商品
+    const productItems = items.filter((i) => i.productId);
+    if (productItems.length > 0) {
+      const productIds = productItems.map((item) => item.productId);
+      const products = await this.prisma.normalProduct.findMany({
+        where: { id: { in: productIds } },
       });
+
+      for (const item of productItems) {
+        const product = products.find((p) => p.id === item.productId);
+        if (!product)
+          throw new BadRequestException(`商品 ${item.productId} 不存在`);
+        if (product.stock < item.quantity)
+          throw new BadRequestException(`商品 ${product.name} 库存不足`);
+
+        const price = product.discountPrice ?? product.price;
+        const subtotal = price * item.quantity;
+        totalAmount += subtotal;
+
+        orderItems.push({
+          itemType: 'PRODUCT',
+          productId: product.id,
+          courseId: null,
+          itemName: product.name,
+          itemImage: null,
+          price,
+          quantity: item.quantity,
+          subtotal,
+        });
+      }
+    }
+
+    // 2. 处理课程
+    const courseItems = items.filter((i) => i.courseId);
+    if (courseItems.length > 0) {
+      const courseIds = courseItems.map((item) => item.courseId);
+      const courses = await this.prisma.course.findMany({
+        where: { id: { in: courseIds }, isPublished: true },
+      });
+
+      for (const item of courseItems) {
+        const course = courses.find((c) => c.id === item.courseId);
+        if (!course)
+          throw new BadRequestException(`课程 ${item.courseId} 不存在或未上架`);
+
+        totalAmount += course.price;
+
+        orderItems.push({
+          itemType: 'COURSE',
+          productId: null, // ✅ 你现在 schema 是必填String，先传空字符串
+          courseId: course.id,
+          itemName: course.name,
+          itemImage: null,
+          price: course.price,
+          quantity: 1,
+          subtotal: course.price,
+        });
+      }
+    }
+
+    if (orderItems.length === 0) {
+      throw new BadRequestException('订单项不能为空');
     }
 
     const orderNo = this.generateOrderNo();
 
-    const order = await this.prisma.$transaction(async (tx) => {
-      for (const item of items) {
+    return this.prisma.$transaction(async (tx) => {
+      // 只有普通商品扣库存
+      for (const item of productItems) {
         await tx.normalProduct.update({
           where: { id: item.productId },
           data: { stock: { decrement: item.quantity } },
@@ -79,24 +120,18 @@ export class OrderService {
       return tx.order.create({
         data: {
           orderNo,
-          userId,
+          user: { connect: { id: userId } },
           totalAmount,
           payAmount: totalAmount,
           receiverName,
           receiverPhone,
           receiverAddress,
           remark,
-          items: {
-            create: orderItems,
-          },
+          items: { create: orderItems },
         },
-        include: {
-          items: true,
-        },
+        include: { items: true },
       });
     });
-
-    return order;
   }
 
   // 获取我的订单
@@ -139,7 +174,7 @@ export class OrderService {
     await this.prisma.$transaction(async (tx) => {
       for (const item of order.items) {
         await tx.normalProduct.update({
-          where: { id: item.productId },
+          where: { id: item.productId! },
           data: { stock: { increment: item.quantity } },
         });
       }
@@ -151,5 +186,42 @@ export class OrderService {
     });
 
     return { message: '订单已取消' };
+  }
+
+  // 模拟支付成功（仅用于测试）
+  async simulatePaymentSuccess(orderId: string) {
+    return this.prisma.$transaction(async (tx) => {
+      // 1. 更新订单状态为已支付
+      const order = await tx.order.update({
+        where: { id: orderId },
+        data: {
+          status: 'PAID',
+          paidAt: new Date(),
+          payAmount: { increment: 0 }, // 测试支付金额为0
+        },
+        include: { items: true },
+      });
+
+      // 2. 后面所有逻辑和真实支付完全一样！
+      for (const item of order.items) {
+        if (item.itemType === 'PRODUCT') {
+          await tx.normalProduct.update({
+            where: { id: item.productId! },
+            data: { stock: { decrement: item.quantity } },
+          });
+        }
+      }
+
+      // 3. 清空购物车
+      // await tx.cartItem.deleteMany({
+      //   where: { cart: { userId: order.userId } },
+      // });
+
+      return {
+        success: true,
+        message: '✅ 模拟支付成功！',
+        orderNo: order.orderNo,
+      };
+    });
   }
 }

@@ -16,6 +16,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   // 核心方法：Passport验签成功后，自动调用这个方法，传入解码后的载荷
   async validate(payload: any) {
-    return { userId: payload.sub, username: payload.name };
+    return { userId: payload.userId, username: payload.name };
   }
 }

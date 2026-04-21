@@ -102,17 +102,39 @@ export class CourseService {
     );
   }
 
-  findOne(id: string) {
-    return this.prismaService.course.findUnique({
-      where: {
-        id,
-      },
+  async findOne(id: string) {
+    const course = await this.prismaService.course.findUnique({
+      where: { id },
       include: {
         category: true,
         coverImage: true,
         videoUrl: true,
       },
     });
+
+    if (!course) {
+      return null;
+    }
+
+    return {
+      ...course,
+      // 封面图处理
+      coverImage: course.coverImage
+        ? {
+            downloadUrl: this.uploadService.getSignedUrl(
+              course.coverImage.fileKey,
+            ),
+          }
+        : null,
+      // 视频处理
+      videoUrl: course.videoUrl
+        ? {
+            downloadUrl: this.uploadService.getSignedUrl(
+              course.videoUrl.fileKey,
+            ),
+          }
+        : null,
+    };
   }
 
   async update(id: string, updateCourseDto: UpdateCourseDto) {

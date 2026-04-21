@@ -242,9 +242,11 @@ exports.Prisma.OrderScalarFieldEnum = {
 exports.Prisma.OrderItemScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
+  itemType: 'itemType',
   productId: 'productId',
-  productName: 'productName',
-  productImage: 'productImage',
+  courseId: 'courseId',
+  itemName: 'itemName',
+  itemImage: 'itemImage',
   price: 'price',
   quantity: 'quantity',
   subtotal: 'subtotal',
@@ -315,6 +317,11 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED',
   REFUNDED: 'REFUNDED'
+};
+
+exports.ItemType = exports.$Enums.ItemType = {
+  PRODUCT: 'PRODUCT',
+  COURSE: 'COURSE'
 };
 
 exports.Prisma.ModelName = {

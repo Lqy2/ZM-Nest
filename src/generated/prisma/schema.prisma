@@ -123,6 +123,7 @@ model NormalProduct {
   createdAt     DateTime              @default(now())
   /// 更新时间
   updatedAt     DateTime              @updatedAt
+  orderItems    OrderItem[]
 }
 
 // 文件模型 - 系统中上传的文件信息
@@ -204,6 +205,7 @@ model Course {
   createdAt       DateTime       @default(now())
   /// 更新时间
   updatedAt       DateTime       @updatedAt
+  orderItems      OrderItem[]
 }
 
 /// 短信验证码表：登录/注册/重置密码等场景使用
@@ -309,12 +311,19 @@ model OrderItem {
   /// 关联订单
   order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
+  itemType ItemType @default(PRODUCT)
+
   /// 商品ID（下单时快照）
-  productId    String
-  /// 商品名称（下单时快照，防止商品后续改名）
-  productName  String
+  productId String?
+  product   NormalProduct? @relation(fields: [productId], references: [id])
+
+  courseId String?
+  course   Course? @relation(fields: [courseId], references: [id])
+
+  /// 商品名称（下单时快照，防止商品后续改名；课程名称和普通商品名称统称名称）
+  itemName  String
   /// 商品图片快照
-  productImage String?
+  itemImage String?
 
   /// 购买时单价
   price    Float
@@ -325,6 +334,14 @@ model OrderItem {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // 联合唯一索引
+  @@unique([orderId, productId, courseId])
+}
+
+enum ItemType {
+  PRODUCT
+  COURSE
 }
 
 // 用户收货地址表

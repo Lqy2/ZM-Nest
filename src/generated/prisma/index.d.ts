@@ -110,6 +110,14 @@ export const OrderStatus: {
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
 
+
+export const ItemType: {
+  PRODUCT: 'PRODUCT',
+  COURSE: 'COURSE'
+};
+
+export type ItemType = (typeof ItemType)[keyof typeof ItemType]
+
 }
 
 export type Role = $Enums.Role
@@ -127,6 +135,10 @@ export const CourseType: typeof $Enums.CourseType
 export type OrderStatus = $Enums.OrderStatus
 
 export const OrderStatus: typeof $Enums.OrderStatus
+
+export type ItemType = $Enums.ItemType
+
+export const ItemType: typeof $Enums.ItemType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1907,10 +1919,12 @@ export namespace Prisma {
 
   export type NormalProductCountOutputType = {
     galleryImages: number
+    orderItems: number
   }
 
   export type NormalProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     galleryImages?: boolean | NormalProductCountOutputTypeCountGalleryImagesArgs
+    orderItems?: boolean | NormalProductCountOutputTypeCountOrderItemsArgs
   }
 
   // Custom InputTypes
@@ -1929,6 +1943,13 @@ export namespace Prisma {
    */
   export type NormalProductCountOutputTypeCountGalleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FileWhereInput
+  }
+
+  /**
+   * NormalProductCountOutputType without action
+   */
+  export type NormalProductCountOutputTypeCountOrderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderItemWhereInput
   }
 
 
@@ -2018,6 +2039,37 @@ export namespace Prisma {
    */
   export type CourseCategoryCountOutputTypeCountCoursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CourseWhereInput
+  }
+
+
+  /**
+   * Count Type CourseCountOutputType
+   */
+
+  export type CourseCountOutputType = {
+    orderItems: number
+  }
+
+  export type CourseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    orderItems?: boolean | CourseCountOutputTypeCountOrderItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourseCountOutputType
+     */
+    select?: CourseCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeCountOrderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderItemWhereInput
   }
 
 
@@ -4794,6 +4846,7 @@ export namespace Prisma {
     galleryImages?: boolean | NormalProduct$galleryImagesArgs<ExtArgs>
     detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
+    orderItems?: boolean | NormalProduct$orderItemsArgs<ExtArgs>
     _count?: boolean | NormalProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["normalProduct"]>
 
@@ -4845,6 +4898,7 @@ export namespace Prisma {
     galleryImages?: boolean | NormalProduct$galleryImagesArgs<ExtArgs>
     detailImage?: boolean | NormalProduct$detailImageArgs<ExtArgs>
     category?: boolean | NormalProductCategoryDefaultArgs<ExtArgs>
+    orderItems?: boolean | NormalProduct$orderItemsArgs<ExtArgs>
     _count?: boolean | NormalProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type NormalProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4871,6 +4925,7 @@ export namespace Prisma {
        * 分类关联
        */
       category: Prisma.$NormalProductCategoryPayload<ExtArgs>
+      orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       /**
@@ -5310,6 +5365,7 @@ export namespace Prisma {
     galleryImages<T extends NormalProduct$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, NormalProduct$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     detailImage<T extends NormalProduct$detailImageArgs<ExtArgs> = {}>(args?: Subset<T, NormalProduct$detailImageArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     category<T extends NormalProductCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NormalProductCategoryDefaultArgs<ExtArgs>>): Prisma__NormalProductCategoryClient<$Result.GetResult<Prisma.$NormalProductCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    orderItems<T extends NormalProduct$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, NormalProduct$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5785,6 +5841,30 @@ export namespace Prisma {
      */
     include?: FileInclude<ExtArgs> | null
     where?: FileWhereInput
+  }
+
+  /**
+   * NormalProduct.orderItems
+   */
+  export type NormalProduct$orderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderItem
+     */
+    select?: OrderItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderItem
+     */
+    omit?: OrderItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderItemInclude<ExtArgs> | null
+    where?: OrderItemWhereInput
+    orderBy?: OrderItemOrderByWithRelationInput | OrderItemOrderByWithRelationInput[]
+    cursor?: OrderItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderItemScalarFieldEnum | OrderItemScalarFieldEnum[]
   }
 
   /**
@@ -8435,6 +8515,8 @@ export namespace Prisma {
     coverImage?: boolean | FileDefaultArgs<ExtArgs>
     videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
+    orderItems?: boolean | Course$orderItemsArgs<ExtArgs>
+    _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8499,6 +8581,8 @@ export namespace Prisma {
     coverImage?: boolean | FileDefaultArgs<ExtArgs>
     videoUrl?: boolean | FileDefaultArgs<ExtArgs>
     category?: boolean | CourseCategoryDefaultArgs<ExtArgs>
+    orderItems?: boolean | Course$orderItemsArgs<ExtArgs>
+    _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     coverImage?: boolean | FileDefaultArgs<ExtArgs>
@@ -8526,6 +8610,7 @@ export namespace Prisma {
        * 关联分类
        */
       category: Prisma.$CourseCategoryPayload<ExtArgs>
+      orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       /**
@@ -8981,6 +9066,7 @@ export namespace Prisma {
     coverImage<T extends FileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FileDefaultArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     videoUrl<T extends FileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FileDefaultArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     category<T extends CourseCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseCategoryDefaultArgs<ExtArgs>>): Prisma__CourseCategoryClient<$Result.GetResult<Prisma.$CourseCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    orderItems<T extends Course$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Course$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9417,6 +9503,30 @@ export namespace Prisma {
      * Limit how many Courses to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Course.orderItems
+   */
+  export type Course$orderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderItem
+     */
+    select?: OrderItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderItem
+     */
+    omit?: OrderItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderItemInclude<ExtArgs> | null
+    where?: OrderItemWhereInput
+    orderBy?: OrderItemOrderByWithRelationInput | OrderItemOrderByWithRelationInput[]
+    cursor?: OrderItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderItemScalarFieldEnum | OrderItemScalarFieldEnum[]
   }
 
   /**
@@ -12898,9 +13008,11 @@ export namespace Prisma {
   export type OrderItemMinAggregateOutputType = {
     id: string | null
     orderId: string | null
+    itemType: $Enums.ItemType | null
     productId: string | null
-    productName: string | null
-    productImage: string | null
+    courseId: string | null
+    itemName: string | null
+    itemImage: string | null
     price: number | null
     quantity: number | null
     subtotal: number | null
@@ -12911,9 +13023,11 @@ export namespace Prisma {
   export type OrderItemMaxAggregateOutputType = {
     id: string | null
     orderId: string | null
+    itemType: $Enums.ItemType | null
     productId: string | null
-    productName: string | null
-    productImage: string | null
+    courseId: string | null
+    itemName: string | null
+    itemImage: string | null
     price: number | null
     quantity: number | null
     subtotal: number | null
@@ -12924,9 +13038,11 @@ export namespace Prisma {
   export type OrderItemCountAggregateOutputType = {
     id: number
     orderId: number
+    itemType: number
     productId: number
-    productName: number
-    productImage: number
+    courseId: number
+    itemName: number
+    itemImage: number
     price: number
     quantity: number
     subtotal: number
@@ -12951,9 +13067,11 @@ export namespace Prisma {
   export type OrderItemMinAggregateInputType = {
     id?: true
     orderId?: true
+    itemType?: true
     productId?: true
-    productName?: true
-    productImage?: true
+    courseId?: true
+    itemName?: true
+    itemImage?: true
     price?: true
     quantity?: true
     subtotal?: true
@@ -12964,9 +13082,11 @@ export namespace Prisma {
   export type OrderItemMaxAggregateInputType = {
     id?: true
     orderId?: true
+    itemType?: true
     productId?: true
-    productName?: true
-    productImage?: true
+    courseId?: true
+    itemName?: true
+    itemImage?: true
     price?: true
     quantity?: true
     subtotal?: true
@@ -12977,9 +13097,11 @@ export namespace Prisma {
   export type OrderItemCountAggregateInputType = {
     id?: true
     orderId?: true
+    itemType?: true
     productId?: true
-    productName?: true
-    productImage?: true
+    courseId?: true
+    itemName?: true
+    itemImage?: true
     price?: true
     quantity?: true
     subtotal?: true
@@ -13077,9 +13199,11 @@ export namespace Prisma {
   export type OrderItemGroupByOutputType = {
     id: string
     orderId: string
-    productId: string
-    productName: string
-    productImage: string | null
+    itemType: $Enums.ItemType
+    productId: string | null
+    courseId: string | null
+    itemName: string
+    itemImage: string | null
     price: number
     quantity: number
     subtotal: number
@@ -13109,51 +13233,65 @@ export namespace Prisma {
   export type OrderItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     orderId?: boolean
+    itemType?: boolean
     productId?: boolean
-    productName?: boolean
-    productImage?: boolean
+    courseId?: boolean
+    itemName?: boolean
+    itemImage?: boolean
     price?: boolean
     quantity?: boolean
     subtotal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
+    product?: boolean | OrderItem$productArgs<ExtArgs>
+    course?: boolean | OrderItem$courseArgs<ExtArgs>
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     orderId?: boolean
+    itemType?: boolean
     productId?: boolean
-    productName?: boolean
-    productImage?: boolean
+    courseId?: boolean
+    itemName?: boolean
+    itemImage?: boolean
     price?: boolean
     quantity?: boolean
     subtotal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
+    product?: boolean | OrderItem$productArgs<ExtArgs>
+    course?: boolean | OrderItem$courseArgs<ExtArgs>
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     orderId?: boolean
+    itemType?: boolean
     productId?: boolean
-    productName?: boolean
-    productImage?: boolean
+    courseId?: boolean
+    itemName?: boolean
+    itemImage?: boolean
     price?: boolean
     quantity?: boolean
     subtotal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
+    product?: boolean | OrderItem$productArgs<ExtArgs>
+    course?: boolean | OrderItem$courseArgs<ExtArgs>
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectScalar = {
     id?: boolean
     orderId?: boolean
+    itemType?: boolean
     productId?: boolean
-    productName?: boolean
-    productImage?: boolean
+    courseId?: boolean
+    itemName?: boolean
+    itemImage?: boolean
     price?: boolean
     quantity?: boolean
     subtotal?: boolean
@@ -13161,15 +13299,21 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "productId" | "productName" | "productImage" | "price" | "quantity" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
+  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "itemType" | "productId" | "courseId" | "itemName" | "itemImage" | "price" | "quantity" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
   export type OrderItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
+    product?: boolean | OrderItem$productArgs<ExtArgs>
+    course?: boolean | OrderItem$courseArgs<ExtArgs>
   }
   export type OrderItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
+    product?: boolean | OrderItem$productArgs<ExtArgs>
+    course?: boolean | OrderItem$courseArgs<ExtArgs>
   }
   export type OrderItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
+    product?: boolean | OrderItem$productArgs<ExtArgs>
+    course?: boolean | OrderItem$courseArgs<ExtArgs>
   }
 
   export type $OrderItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13179,6 +13323,8 @@ export namespace Prisma {
        * 关联订单
        */
       order: Prisma.$OrderPayload<ExtArgs>
+      product: Prisma.$NormalProductPayload<ExtArgs> | null
+      course: Prisma.$CoursePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13186,18 +13332,20 @@ export namespace Prisma {
        * 订单ID
        */
       orderId: string
+      itemType: $Enums.ItemType
       /**
        * 商品ID（下单时快照）
        */
-      productId: string
+      productId: string | null
+      courseId: string | null
       /**
-       * 商品名称（下单时快照，防止商品后续改名）
+       * 商品名称（下单时快照，防止商品后续改名；课程名称和普通商品名称统称名称）
        */
-      productName: string
+      itemName: string
       /**
        * 商品图片快照
        */
-      productImage: string | null
+      itemImage: string | null
       /**
        * 购买时单价
        */
@@ -13607,6 +13755,8 @@ export namespace Prisma {
   export interface Prisma__OrderItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    product<T extends OrderItem$productArgs<ExtArgs> = {}>(args?: Subset<T, OrderItem$productArgs<ExtArgs>>): Prisma__NormalProductClient<$Result.GetResult<Prisma.$NormalProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    course<T extends OrderItem$courseArgs<ExtArgs> = {}>(args?: Subset<T, OrderItem$courseArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13638,9 +13788,11 @@ export namespace Prisma {
   interface OrderItemFieldRefs {
     readonly id: FieldRef<"OrderItem", 'String'>
     readonly orderId: FieldRef<"OrderItem", 'String'>
+    readonly itemType: FieldRef<"OrderItem", 'ItemType'>
     readonly productId: FieldRef<"OrderItem", 'String'>
-    readonly productName: FieldRef<"OrderItem", 'String'>
-    readonly productImage: FieldRef<"OrderItem", 'String'>
+    readonly courseId: FieldRef<"OrderItem", 'String'>
+    readonly itemName: FieldRef<"OrderItem", 'String'>
+    readonly itemImage: FieldRef<"OrderItem", 'String'>
     readonly price: FieldRef<"OrderItem", 'Float'>
     readonly quantity: FieldRef<"OrderItem", 'Int'>
     readonly subtotal: FieldRef<"OrderItem", 'Float'>
@@ -14039,6 +14191,44 @@ export namespace Prisma {
      * Limit how many OrderItems to delete.
      */
     limit?: number
+  }
+
+  /**
+   * OrderItem.product
+   */
+  export type OrderItem$productArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NormalProduct
+     */
+    select?: NormalProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NormalProduct
+     */
+    omit?: NormalProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NormalProductInclude<ExtArgs> | null
+    where?: NormalProductWhereInput
+  }
+
+  /**
+   * OrderItem.course
+   */
+  export type OrderItem$courseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Course
+     */
+    select?: CourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Course
+     */
+    omit?: CourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseInclude<ExtArgs> | null
+    where?: CourseWhereInput
   }
 
   /**
@@ -15377,9 +15567,11 @@ export namespace Prisma {
   export const OrderItemScalarFieldEnum: {
     id: 'id',
     orderId: 'orderId',
+    itemType: 'itemType',
     productId: 'productId',
-    productName: 'productName',
-    productImage: 'productImage',
+    courseId: 'courseId',
+    itemName: 'itemName',
+    itemImage: 'itemImage',
     price: 'price',
     quantity: 'quantity',
     subtotal: 'subtotal',
@@ -15583,6 +15775,20 @@ export namespace Prisma {
    * Reference to a field of type 'OrderStatus[]'
    */
   export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ItemType'
+   */
+  export type EnumItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ItemType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ItemType[]'
+   */
+  export type ListEnumItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ItemType[]'>
     
   /**
    * Deep Input Types
@@ -15799,6 +16005,7 @@ export namespace Prisma {
     galleryImages?: FileListRelationFilter
     detailImage?: XOR<FileNullableScalarRelationFilter, FileWhereInput> | null
     category?: XOR<NormalProductCategoryScalarRelationFilter, NormalProductCategoryWhereInput>
+    orderItems?: OrderItemListRelationFilter
   }
 
   export type NormalProductOrderByWithRelationInput = {
@@ -15815,6 +16022,7 @@ export namespace Prisma {
     galleryImages?: FileOrderByRelationAggregateInput
     detailImage?: FileOrderByWithRelationInput
     category?: NormalProductCategoryOrderByWithRelationInput
+    orderItems?: OrderItemOrderByRelationAggregateInput
   }
 
   export type NormalProductWhereUniqueInput = Prisma.AtLeast<{
@@ -15834,6 +16042,7 @@ export namespace Prisma {
     galleryImages?: FileListRelationFilter
     detailImage?: XOR<FileNullableScalarRelationFilter, FileWhereInput> | null
     category?: XOR<NormalProductCategoryScalarRelationFilter, NormalProductCategoryWhereInput>
+    orderItems?: OrderItemListRelationFilter
   }, "id" | "detailImageId">
 
   export type NormalProductOrderByWithAggregationInput = {
@@ -16035,6 +16244,7 @@ export namespace Prisma {
     coverImage?: XOR<FileScalarRelationFilter, FileWhereInput>
     videoUrl?: XOR<FileScalarRelationFilter, FileWhereInput>
     category?: XOR<CourseCategoryScalarRelationFilter, CourseCategoryWhereInput>
+    orderItems?: OrderItemListRelationFilter
   }
 
   export type CourseOrderByWithRelationInput = {
@@ -16055,6 +16265,7 @@ export namespace Prisma {
     coverImage?: FileOrderByWithRelationInput
     videoUrl?: FileOrderByWithRelationInput
     category?: CourseCategoryOrderByWithRelationInput
+    orderItems?: OrderItemOrderByRelationAggregateInput
   }
 
   export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -16078,6 +16289,7 @@ export namespace Prisma {
     coverImage?: XOR<FileScalarRelationFilter, FileWhereInput>
     videoUrl?: XOR<FileScalarRelationFilter, FileWhereInput>
     category?: XOR<CourseCategoryScalarRelationFilter, CourseCategoryWhereInput>
+    orderItems?: OrderItemListRelationFilter
   }, "id">
 
   export type CourseOrderByWithAggregationInput = {
@@ -16366,54 +16578,69 @@ export namespace Prisma {
     NOT?: OrderItemWhereInput | OrderItemWhereInput[]
     id?: StringFilter<"OrderItem"> | string
     orderId?: StringFilter<"OrderItem"> | string
-    productId?: StringFilter<"OrderItem"> | string
-    productName?: StringFilter<"OrderItem"> | string
-    productImage?: StringNullableFilter<"OrderItem"> | string | null
+    itemType?: EnumItemTypeFilter<"OrderItem"> | $Enums.ItemType
+    productId?: StringNullableFilter<"OrderItem"> | string | null
+    courseId?: StringNullableFilter<"OrderItem"> | string | null
+    itemName?: StringFilter<"OrderItem"> | string
+    itemImage?: StringNullableFilter<"OrderItem"> | string | null
     price?: FloatFilter<"OrderItem"> | number
     quantity?: IntFilter<"OrderItem"> | number
     subtotal?: FloatFilter<"OrderItem"> | number
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+    product?: XOR<NormalProductNullableScalarRelationFilter, NormalProductWhereInput> | null
+    course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }
 
   export type OrderItemOrderByWithRelationInput = {
     id?: SortOrder
     orderId?: SortOrder
-    productId?: SortOrder
-    productName?: SortOrder
-    productImage?: SortOrderInput | SortOrder
+    itemType?: SortOrder
+    productId?: SortOrderInput | SortOrder
+    courseId?: SortOrderInput | SortOrder
+    itemName?: SortOrder
+    itemImage?: SortOrderInput | SortOrder
     price?: SortOrder
     quantity?: SortOrder
     subtotal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     order?: OrderOrderByWithRelationInput
+    product?: NormalProductOrderByWithRelationInput
+    course?: CourseOrderByWithRelationInput
   }
 
   export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    orderId_productId_courseId?: OrderItemOrderIdProductIdCourseIdCompoundUniqueInput
     AND?: OrderItemWhereInput | OrderItemWhereInput[]
     OR?: OrderItemWhereInput[]
     NOT?: OrderItemWhereInput | OrderItemWhereInput[]
     orderId?: StringFilter<"OrderItem"> | string
-    productId?: StringFilter<"OrderItem"> | string
-    productName?: StringFilter<"OrderItem"> | string
-    productImage?: StringNullableFilter<"OrderItem"> | string | null
+    itemType?: EnumItemTypeFilter<"OrderItem"> | $Enums.ItemType
+    productId?: StringNullableFilter<"OrderItem"> | string | null
+    courseId?: StringNullableFilter<"OrderItem"> | string | null
+    itemName?: StringFilter<"OrderItem"> | string
+    itemImage?: StringNullableFilter<"OrderItem"> | string | null
     price?: FloatFilter<"OrderItem"> | number
     quantity?: IntFilter<"OrderItem"> | number
     subtotal?: FloatFilter<"OrderItem"> | number
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
-  }, "id">
+    product?: XOR<NormalProductNullableScalarRelationFilter, NormalProductWhereInput> | null
+    course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
+  }, "id" | "orderId_productId_courseId">
 
   export type OrderItemOrderByWithAggregationInput = {
     id?: SortOrder
     orderId?: SortOrder
-    productId?: SortOrder
-    productName?: SortOrder
-    productImage?: SortOrderInput | SortOrder
+    itemType?: SortOrder
+    productId?: SortOrderInput | SortOrder
+    courseId?: SortOrderInput | SortOrder
+    itemName?: SortOrder
+    itemImage?: SortOrderInput | SortOrder
     price?: SortOrder
     quantity?: SortOrder
     subtotal?: SortOrder
@@ -16432,9 +16659,11 @@ export namespace Prisma {
     NOT?: OrderItemScalarWhereWithAggregatesInput | OrderItemScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"OrderItem"> | string
     orderId?: StringWithAggregatesFilter<"OrderItem"> | string
-    productId?: StringWithAggregatesFilter<"OrderItem"> | string
-    productName?: StringWithAggregatesFilter<"OrderItem"> | string
-    productImage?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+    itemType?: EnumItemTypeWithAggregatesFilter<"OrderItem"> | $Enums.ItemType
+    productId?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+    courseId?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+    itemName?: StringWithAggregatesFilter<"OrderItem"> | string
+    itemImage?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
     price?: FloatWithAggregatesFilter<"OrderItem"> | number
     quantity?: IntWithAggregatesFilter<"OrderItem"> | number
     subtotal?: FloatWithAggregatesFilter<"OrderItem"> | number
@@ -16767,6 +16996,7 @@ export namespace Prisma {
     galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
     detailImage?: FileCreateNestedOneWithoutDetailImageInput
     category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
+    orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductUncheckedCreateInput = {
@@ -16781,6 +17011,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductUpdateInput = {
@@ -16795,6 +17026,7 @@ export namespace Prisma {
     galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
     detailImage?: FileUpdateOneWithoutDetailImageNestedInput
     category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
+    orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductUncheckedUpdateInput = {
@@ -16809,6 +17041,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductCreateManyInput = {
@@ -17024,6 +17257,7 @@ export namespace Prisma {
     coverImage: FileCreateNestedOneWithoutCoverImageInput
     videoUrl: FileCreateNestedOneWithoutVideoUrlInput
     category: CourseCategoryCreateNestedOneWithoutCoursesInput
+    orderItems?: OrderItemCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateInput = {
@@ -17041,6 +17275,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUpdateInput = {
@@ -17058,6 +17293,7 @@ export namespace Prisma {
     coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
     videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
     category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
+    orderItems?: OrderItemUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateInput = {
@@ -17075,6 +17311,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseCreateManyInput = {
@@ -17393,23 +17630,27 @@ export namespace Prisma {
 
   export type OrderItemCreateInput = {
     id?: string
-    productId: string
-    productName: string
-    productImage?: string | null
+    itemType?: $Enums.ItemType
+    itemName: string
+    itemImage?: string | null
     price: number
     quantity: number
     subtotal: number
     createdAt?: Date | string
     updatedAt?: Date | string
     order: OrderCreateNestedOneWithoutItemsInput
+    product?: NormalProductCreateNestedOneWithoutOrderItemsInput
+    course?: CourseCreateNestedOneWithoutOrderItemsInput
   }
 
   export type OrderItemUncheckedCreateInput = {
     id?: string
     orderId: string
-    productId: string
-    productName: string
-    productImage?: string | null
+    itemType?: $Enums.ItemType
+    productId?: string | null
+    courseId?: string | null
+    itemName: string
+    itemImage?: string | null
     price: number
     quantity: number
     subtotal: number
@@ -17419,23 +17660,27 @@ export namespace Prisma {
 
   export type OrderItemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: OrderUpdateOneRequiredWithoutItemsNestedInput
+    product?: NormalProductUpdateOneWithoutOrderItemsNestedInput
+    course?: CourseUpdateOneWithoutOrderItemsNestedInput
   }
 
   export type OrderItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
@@ -17446,9 +17691,11 @@ export namespace Prisma {
   export type OrderItemCreateManyInput = {
     id?: string
     orderId: string
-    productId: string
-    productName: string
-    productImage?: string | null
+    itemType?: $Enums.ItemType
+    productId?: string | null
+    courseId?: string | null
+    itemName: string
+    itemImage?: string | null
     price: number
     quantity: number
     subtotal: number
@@ -17458,9 +17705,9 @@ export namespace Prisma {
 
   export type OrderItemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
@@ -17471,9 +17718,11 @@ export namespace Prisma {
   export type OrderItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
@@ -17970,7 +18219,17 @@ export namespace Prisma {
     isNot?: NormalProductCategoryWhereInput
   }
 
+  export type OrderItemListRelationFilter = {
+    every?: OrderItemWhereInput
+    some?: OrderItemWhereInput
+    none?: OrderItemWhereInput
+  }
+
   export type FileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrderItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18373,16 +18632,6 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type OrderItemListRelationFilter = {
-    every?: OrderItemWhereInput
-    some?: OrderItemWhereInput
-    none?: OrderItemWhereInput
-  }
-
-  export type OrderItemOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type OrderCountOrderByAggregateInput = {
     id?: SortOrder
     orderNo?: SortOrder
@@ -18463,17 +18712,37 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
+  export type EnumItemTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeFilter<$PrismaModel> | $Enums.ItemType
+  }
+
   export type OrderScalarRelationFilter = {
     is?: OrderWhereInput
     isNot?: OrderWhereInput
   }
 
+  export type CourseNullableScalarRelationFilter = {
+    is?: CourseWhereInput | null
+    isNot?: CourseWhereInput | null
+  }
+
+  export type OrderItemOrderIdProductIdCourseIdCompoundUniqueInput = {
+    orderId: string
+    productId: string
+    courseId: string
+  }
+
   export type OrderItemCountOrderByAggregateInput = {
     id?: SortOrder
     orderId?: SortOrder
+    itemType?: SortOrder
     productId?: SortOrder
-    productName?: SortOrder
-    productImage?: SortOrder
+    courseId?: SortOrder
+    itemName?: SortOrder
+    itemImage?: SortOrder
     price?: SortOrder
     quantity?: SortOrder
     subtotal?: SortOrder
@@ -18490,9 +18759,11 @@ export namespace Prisma {
   export type OrderItemMaxOrderByAggregateInput = {
     id?: SortOrder
     orderId?: SortOrder
+    itemType?: SortOrder
     productId?: SortOrder
-    productName?: SortOrder
-    productImage?: SortOrder
+    courseId?: SortOrder
+    itemName?: SortOrder
+    itemImage?: SortOrder
     price?: SortOrder
     quantity?: SortOrder
     subtotal?: SortOrder
@@ -18503,9 +18774,11 @@ export namespace Prisma {
   export type OrderItemMinOrderByAggregateInput = {
     id?: SortOrder
     orderId?: SortOrder
+    itemType?: SortOrder
     productId?: SortOrder
-    productName?: SortOrder
-    productImage?: SortOrder
+    courseId?: SortOrder
+    itemName?: SortOrder
+    itemImage?: SortOrder
     price?: SortOrder
     quantity?: SortOrder
     subtotal?: SortOrder
@@ -18517,6 +18790,16 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     subtotal?: SortOrder
+  }
+
+  export type EnumItemTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeWithAggregatesFilter<$PrismaModel> | $Enums.ItemType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumItemTypeFilter<$PrismaModel>
+    _max?: NestedEnumItemTypeFilter<$PrismaModel>
   }
 
   export type UserAddressCountOrderByAggregateInput = {
@@ -18767,10 +19050,24 @@ export namespace Prisma {
     connect?: NormalProductCategoryWhereUniqueInput
   }
 
+  export type OrderItemCreateNestedManyWithoutProductInput = {
+    create?: XOR<OrderItemCreateWithoutProductInput, OrderItemUncheckedCreateWithoutProductInput> | OrderItemCreateWithoutProductInput[] | OrderItemUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutProductInput | OrderItemCreateOrConnectWithoutProductInput[]
+    createMany?: OrderItemCreateManyProductInputEnvelope
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
   export type FileUncheckedCreateNestedManyWithoutGalleryImagesInput = {
     create?: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput> | FileCreateWithoutGalleryImagesInput[] | FileUncheckedCreateWithoutGalleryImagesInput[]
     connectOrCreate?: FileCreateOrConnectWithoutGalleryImagesInput | FileCreateOrConnectWithoutGalleryImagesInput[]
     connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
+  export type OrderItemUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<OrderItemCreateWithoutProductInput, OrderItemUncheckedCreateWithoutProductInput> | OrderItemCreateWithoutProductInput[] | OrderItemUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutProductInput | OrderItemCreateOrConnectWithoutProductInput[]
+    createMany?: OrderItemCreateManyProductInputEnvelope
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -18828,6 +19125,20 @@ export namespace Prisma {
     update?: XOR<XOR<NormalProductCategoryUpdateToOneWithWhereWithoutNormalProductsInput, NormalProductCategoryUpdateWithoutNormalProductsInput>, NormalProductCategoryUncheckedUpdateWithoutNormalProductsInput>
   }
 
+  export type OrderItemUpdateManyWithoutProductNestedInput = {
+    create?: XOR<OrderItemCreateWithoutProductInput, OrderItemUncheckedCreateWithoutProductInput> | OrderItemCreateWithoutProductInput[] | OrderItemUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutProductInput | OrderItemCreateOrConnectWithoutProductInput[]
+    upsert?: OrderItemUpsertWithWhereUniqueWithoutProductInput | OrderItemUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: OrderItemCreateManyProductInputEnvelope
+    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    update?: OrderItemUpdateWithWhereUniqueWithoutProductInput | OrderItemUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: OrderItemUpdateManyWithWhereWithoutProductInput | OrderItemUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+  }
+
   export type FileUncheckedUpdateManyWithoutGalleryImagesNestedInput = {
     create?: XOR<FileCreateWithoutGalleryImagesInput, FileUncheckedCreateWithoutGalleryImagesInput> | FileCreateWithoutGalleryImagesInput[] | FileUncheckedCreateWithoutGalleryImagesInput[]
     connectOrCreate?: FileCreateOrConnectWithoutGalleryImagesInput | FileCreateOrConnectWithoutGalleryImagesInput[]
@@ -18839,6 +19150,20 @@ export namespace Prisma {
     update?: FileUpdateWithWhereUniqueWithoutGalleryImagesInput | FileUpdateWithWhereUniqueWithoutGalleryImagesInput[]
     updateMany?: FileUpdateManyWithWhereWithoutGalleryImagesInput | FileUpdateManyWithWhereWithoutGalleryImagesInput[]
     deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
+  export type OrderItemUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<OrderItemCreateWithoutProductInput, OrderItemUncheckedCreateWithoutProductInput> | OrderItemCreateWithoutProductInput[] | OrderItemUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutProductInput | OrderItemCreateOrConnectWithoutProductInput[]
+    upsert?: OrderItemUpsertWithWhereUniqueWithoutProductInput | OrderItemUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: OrderItemCreateManyProductInputEnvelope
+    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    update?: OrderItemUpdateWithWhereUniqueWithoutProductInput | OrderItemUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: OrderItemUpdateManyWithWhereWithoutProductInput | OrderItemUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
   export type UserCreateNestedManyWithoutAvatarUrlInput = {
@@ -19101,6 +19426,20 @@ export namespace Prisma {
     connect?: CourseCategoryWhereUniqueInput
   }
 
+  export type OrderItemCreateNestedManyWithoutCourseInput = {
+    create?: XOR<OrderItemCreateWithoutCourseInput, OrderItemUncheckedCreateWithoutCourseInput> | OrderItemCreateWithoutCourseInput[] | OrderItemUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutCourseInput | OrderItemCreateOrConnectWithoutCourseInput[]
+    createMany?: OrderItemCreateManyCourseInputEnvelope
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
+  export type OrderItemUncheckedCreateNestedManyWithoutCourseInput = {
+    create?: XOR<OrderItemCreateWithoutCourseInput, OrderItemUncheckedCreateWithoutCourseInput> | OrderItemCreateWithoutCourseInput[] | OrderItemUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutCourseInput | OrderItemCreateOrConnectWithoutCourseInput[]
+    createMany?: OrderItemCreateManyCourseInputEnvelope
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
   export type EnumCourseTypeFieldUpdateOperationsInput = {
     set?: $Enums.CourseType
   }
@@ -19127,6 +19466,34 @@ export namespace Prisma {
     upsert?: CourseCategoryUpsertWithoutCoursesInput
     connect?: CourseCategoryWhereUniqueInput
     update?: XOR<XOR<CourseCategoryUpdateToOneWithWhereWithoutCoursesInput, CourseCategoryUpdateWithoutCoursesInput>, CourseCategoryUncheckedUpdateWithoutCoursesInput>
+  }
+
+  export type OrderItemUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<OrderItemCreateWithoutCourseInput, OrderItemUncheckedCreateWithoutCourseInput> | OrderItemCreateWithoutCourseInput[] | OrderItemUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutCourseInput | OrderItemCreateOrConnectWithoutCourseInput[]
+    upsert?: OrderItemUpsertWithWhereUniqueWithoutCourseInput | OrderItemUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: OrderItemCreateManyCourseInputEnvelope
+    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    update?: OrderItemUpdateWithWhereUniqueWithoutCourseInput | OrderItemUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: OrderItemUpdateManyWithWhereWithoutCourseInput | OrderItemUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+  }
+
+  export type OrderItemUncheckedUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<OrderItemCreateWithoutCourseInput, OrderItemUncheckedCreateWithoutCourseInput> | OrderItemCreateWithoutCourseInput[] | OrderItemUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutCourseInput | OrderItemCreateOrConnectWithoutCourseInput[]
+    upsert?: OrderItemUpsertWithWhereUniqueWithoutCourseInput | OrderItemUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: OrderItemCreateManyCourseInputEnvelope
+    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    update?: OrderItemUpdateWithWhereUniqueWithoutCourseInput | OrderItemUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: OrderItemUpdateManyWithWhereWithoutCourseInput | OrderItemUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutOrdersInput = {
@@ -19195,12 +19562,48 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput
   }
 
+  export type NormalProductCreateNestedOneWithoutOrderItemsInput = {
+    create?: XOR<NormalProductCreateWithoutOrderItemsInput, NormalProductUncheckedCreateWithoutOrderItemsInput>
+    connectOrCreate?: NormalProductCreateOrConnectWithoutOrderItemsInput
+    connect?: NormalProductWhereUniqueInput
+  }
+
+  export type CourseCreateNestedOneWithoutOrderItemsInput = {
+    create?: XOR<CourseCreateWithoutOrderItemsInput, CourseUncheckedCreateWithoutOrderItemsInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutOrderItemsInput
+    connect?: CourseWhereUniqueInput
+  }
+
+  export type EnumItemTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ItemType
+  }
+
   export type OrderUpdateOneRequiredWithoutItemsNestedInput = {
     create?: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
     connectOrCreate?: OrderCreateOrConnectWithoutItemsInput
     upsert?: OrderUpsertWithoutItemsInput
     connect?: OrderWhereUniqueInput
     update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutItemsInput, OrderUpdateWithoutItemsInput>, OrderUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type NormalProductUpdateOneWithoutOrderItemsNestedInput = {
+    create?: XOR<NormalProductCreateWithoutOrderItemsInput, NormalProductUncheckedCreateWithoutOrderItemsInput>
+    connectOrCreate?: NormalProductCreateOrConnectWithoutOrderItemsInput
+    upsert?: NormalProductUpsertWithoutOrderItemsInput
+    disconnect?: NormalProductWhereInput | boolean
+    delete?: NormalProductWhereInput | boolean
+    connect?: NormalProductWhereUniqueInput
+    update?: XOR<XOR<NormalProductUpdateToOneWithWhereWithoutOrderItemsInput, NormalProductUpdateWithoutOrderItemsInput>, NormalProductUncheckedUpdateWithoutOrderItemsInput>
+  }
+
+  export type CourseUpdateOneWithoutOrderItemsNestedInput = {
+    create?: XOR<CourseCreateWithoutOrderItemsInput, CourseUncheckedCreateWithoutOrderItemsInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutOrderItemsInput
+    upsert?: CourseUpsertWithoutOrderItemsInput
+    disconnect?: CourseWhereInput | boolean
+    delete?: CourseWhereInput | boolean
+    connect?: CourseWhereUniqueInput
+    update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutOrderItemsInput, CourseUpdateWithoutOrderItemsInput>, CourseUncheckedUpdateWithoutOrderItemsInput>
   }
 
   export type UserCreateNestedOneWithoutAddressesInput = {
@@ -19524,6 +19927,23 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumItemTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeFilter<$PrismaModel> | $Enums.ItemType
+  }
+
+  export type NestedEnumItemTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ItemType | EnumItemTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ItemType[] | ListEnumItemTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumItemTypeWithAggregatesFilter<$PrismaModel> | $Enums.ItemType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumItemTypeFilter<$PrismaModel>
+    _max?: NestedEnumItemTypeFilter<$PrismaModel>
+  }
+
   export type FileCreateWithoutAvatarUrlInput = {
     fileKey: string
     fileName?: string | null
@@ -19771,6 +20191,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
     detailImage?: FileCreateNestedOneWithoutDetailImageInput
+    orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductUncheckedCreateWithoutCategoryInput = {
@@ -19784,6 +20205,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductCreateOrConnectWithoutCategoryInput = {
@@ -19921,6 +20343,44 @@ export namespace Prisma {
     create: XOR<NormalProductCategoryCreateWithoutNormalProductsInput, NormalProductCategoryUncheckedCreateWithoutNormalProductsInput>
   }
 
+  export type OrderItemCreateWithoutProductInput = {
+    id?: string
+    itemType?: $Enums.ItemType
+    itemName: string
+    itemImage?: string | null
+    price: number
+    quantity: number
+    subtotal: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    order: OrderCreateNestedOneWithoutItemsInput
+    course?: CourseCreateNestedOneWithoutOrderItemsInput
+  }
+
+  export type OrderItemUncheckedCreateWithoutProductInput = {
+    id?: string
+    orderId: string
+    itemType?: $Enums.ItemType
+    courseId?: string | null
+    itemName: string
+    itemImage?: string | null
+    price: number
+    quantity: number
+    subtotal: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderItemCreateOrConnectWithoutProductInput = {
+    where: OrderItemWhereUniqueInput
+    create: XOR<OrderItemCreateWithoutProductInput, OrderItemUncheckedCreateWithoutProductInput>
+  }
+
+  export type OrderItemCreateManyProductInputEnvelope = {
+    data: OrderItemCreateManyProductInput | OrderItemCreateManyProductInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FileUpsertWithWhereUniqueWithoutGalleryImagesInput = {
     where: FileWhereUniqueInput
     update: XOR<FileUpdateWithoutGalleryImagesInput, FileUncheckedUpdateWithoutGalleryImagesInput>
@@ -20021,6 +20481,40 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderItemUpsertWithWhereUniqueWithoutProductInput = {
+    where: OrderItemWhereUniqueInput
+    update: XOR<OrderItemUpdateWithoutProductInput, OrderItemUncheckedUpdateWithoutProductInput>
+    create: XOR<OrderItemCreateWithoutProductInput, OrderItemUncheckedCreateWithoutProductInput>
+  }
+
+  export type OrderItemUpdateWithWhereUniqueWithoutProductInput = {
+    where: OrderItemWhereUniqueInput
+    data: XOR<OrderItemUpdateWithoutProductInput, OrderItemUncheckedUpdateWithoutProductInput>
+  }
+
+  export type OrderItemUpdateManyWithWhereWithoutProductInput = {
+    where: OrderItemScalarWhereInput
+    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type OrderItemScalarWhereInput = {
+    AND?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+    OR?: OrderItemScalarWhereInput[]
+    NOT?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+    id?: StringFilter<"OrderItem"> | string
+    orderId?: StringFilter<"OrderItem"> | string
+    itemType?: EnumItemTypeFilter<"OrderItem"> | $Enums.ItemType
+    productId?: StringNullableFilter<"OrderItem"> | string | null
+    courseId?: StringNullableFilter<"OrderItem"> | string | null
+    itemName?: StringFilter<"OrderItem"> | string
+    itemImage?: StringNullableFilter<"OrderItem"> | string | null
+    price?: FloatFilter<"OrderItem"> | number
+    quantity?: IntFilter<"OrderItem"> | number
+    subtotal?: FloatFilter<"OrderItem"> | number
+    createdAt?: DateTimeFilter<"OrderItem"> | Date | string
+    updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
+  }
+
   export type UserCreateWithoutAvatarUrlInput = {
     username: string
     id?: string
@@ -20090,6 +20584,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     detailImage?: FileCreateNestedOneWithoutDetailImageInput
     category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
+    orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductUncheckedCreateWithoutGalleryImagesInput = {
@@ -20103,6 +20598,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductCreateOrConnectWithoutGalleryImagesInput = {
@@ -20121,6 +20617,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
     category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
+    orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductUncheckedCreateWithoutDetailImageInput = {
@@ -20134,6 +20631,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type NormalProductCreateOrConnectWithoutDetailImageInput = {
@@ -20155,6 +20653,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     videoUrl: FileCreateNestedOneWithoutVideoUrlInput
     category: CourseCategoryCreateNestedOneWithoutCoursesInput
+    orderItems?: OrderItemCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutCoverImageInput = {
@@ -20171,6 +20670,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutCoverImageInput = {
@@ -20197,6 +20697,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     coverImage: FileCreateNestedOneWithoutCoverImageInput
     category: CourseCategoryCreateNestedOneWithoutCoursesInput
+    orderItems?: OrderItemCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutVideoUrlInput = {
@@ -20213,6 +20714,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutVideoUrlInput = {
@@ -20305,6 +20807,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
     category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
+    orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductUncheckedUpdateWithoutDetailImageInput = {
@@ -20318,6 +20821,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type CourseUpsertWithWhereUniqueWithoutCoverImageInput = {
@@ -20386,6 +20890,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     coverImage: FileCreateNestedOneWithoutCoverImageInput
     videoUrl: FileCreateNestedOneWithoutVideoUrlInput
+    orderItems?: OrderItemCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutCategoryInput = {
@@ -20402,6 +20907,7 @@ export namespace Prisma {
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutCategoryInput = {
@@ -20523,6 +21029,44 @@ export namespace Prisma {
     create: XOR<CourseCategoryCreateWithoutCoursesInput, CourseCategoryUncheckedCreateWithoutCoursesInput>
   }
 
+  export type OrderItemCreateWithoutCourseInput = {
+    id?: string
+    itemType?: $Enums.ItemType
+    itemName: string
+    itemImage?: string | null
+    price: number
+    quantity: number
+    subtotal: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    order: OrderCreateNestedOneWithoutItemsInput
+    product?: NormalProductCreateNestedOneWithoutOrderItemsInput
+  }
+
+  export type OrderItemUncheckedCreateWithoutCourseInput = {
+    id?: string
+    orderId: string
+    itemType?: $Enums.ItemType
+    productId?: string | null
+    itemName: string
+    itemImage?: string | null
+    price: number
+    quantity: number
+    subtotal: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderItemCreateOrConnectWithoutCourseInput = {
+    where: OrderItemWhereUniqueInput
+    create: XOR<OrderItemCreateWithoutCourseInput, OrderItemUncheckedCreateWithoutCourseInput>
+  }
+
+  export type OrderItemCreateManyCourseInputEnvelope = {
+    data: OrderItemCreateManyCourseInput | OrderItemCreateManyCourseInput[]
+    skipDuplicates?: boolean
+  }
+
   export type FileUpsertWithoutCoverImageInput = {
     update: XOR<FileUpdateWithoutCoverImageInput, FileUncheckedUpdateWithoutCoverImageInput>
     create: XOR<FileCreateWithoutCoverImageInput, FileUncheckedCreateWithoutCoverImageInput>
@@ -20634,6 +21178,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderItemUpsertWithWhereUniqueWithoutCourseInput = {
+    where: OrderItemWhereUniqueInput
+    update: XOR<OrderItemUpdateWithoutCourseInput, OrderItemUncheckedUpdateWithoutCourseInput>
+    create: XOR<OrderItemCreateWithoutCourseInput, OrderItemUncheckedCreateWithoutCourseInput>
+  }
+
+  export type OrderItemUpdateWithWhereUniqueWithoutCourseInput = {
+    where: OrderItemWhereUniqueInput
+    data: XOR<OrderItemUpdateWithoutCourseInput, OrderItemUncheckedUpdateWithoutCourseInput>
+  }
+
+  export type OrderItemUpdateManyWithWhereWithoutCourseInput = {
+    where: OrderItemScalarWhereInput
+    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutCourseInput>
+  }
+
   export type UserCreateWithoutOrdersInput = {
     username: string
     id?: string
@@ -20689,21 +21249,25 @@ export namespace Prisma {
 
   export type OrderItemCreateWithoutOrderInput = {
     id?: string
-    productId: string
-    productName: string
-    productImage?: string | null
+    itemType?: $Enums.ItemType
+    itemName: string
+    itemImage?: string | null
     price: number
     quantity: number
     subtotal: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    product?: NormalProductCreateNestedOneWithoutOrderItemsInput
+    course?: CourseCreateNestedOneWithoutOrderItemsInput
   }
 
   export type OrderItemUncheckedCreateWithoutOrderInput = {
     id?: string
-    productId: string
-    productName: string
-    productImage?: string | null
+    itemType?: $Enums.ItemType
+    productId?: string | null
+    courseId?: string | null
+    itemName: string
+    itemImage?: string | null
     price: number
     quantity: number
     subtotal: number
@@ -20796,22 +21360,6 @@ export namespace Prisma {
     data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutOrderInput>
   }
 
-  export type OrderItemScalarWhereInput = {
-    AND?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
-    OR?: OrderItemScalarWhereInput[]
-    NOT?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
-    id?: StringFilter<"OrderItem"> | string
-    orderId?: StringFilter<"OrderItem"> | string
-    productId?: StringFilter<"OrderItem"> | string
-    productName?: StringFilter<"OrderItem"> | string
-    productImage?: StringNullableFilter<"OrderItem"> | string | null
-    price?: FloatFilter<"OrderItem"> | number
-    quantity?: IntFilter<"OrderItem"> | number
-    subtotal?: FloatFilter<"OrderItem"> | number
-    createdAt?: DateTimeFilter<"OrderItem"> | Date | string
-    updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
-  }
-
   export type OrderCreateWithoutItemsInput = {
     id?: string
     orderNo: string
@@ -20855,6 +21403,78 @@ export namespace Prisma {
   export type OrderCreateOrConnectWithoutItemsInput = {
     where: OrderWhereUniqueInput
     create: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
+  }
+
+  export type NormalProductCreateWithoutOrderItemsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    discountPrice?: number | null
+    stock: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    galleryImages?: FileCreateNestedManyWithoutGalleryImagesInput
+    detailImage?: FileCreateNestedOneWithoutDetailImageInput
+    category: NormalProductCategoryCreateNestedOneWithoutNormalProductsInput
+  }
+
+  export type NormalProductUncheckedCreateWithoutOrderItemsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    discountPrice?: number | null
+    stock: number
+    detailImageId?: number | null
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    galleryImages?: FileUncheckedCreateNestedManyWithoutGalleryImagesInput
+  }
+
+  export type NormalProductCreateOrConnectWithoutOrderItemsInput = {
+    where: NormalProductWhereUniqueInput
+    create: XOR<NormalProductCreateWithoutOrderItemsInput, NormalProductUncheckedCreateWithoutOrderItemsInput>
+  }
+
+  export type CourseCreateWithoutOrderItemsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    coverImage: FileCreateNestedOneWithoutCoverImageInput
+    videoUrl: FileCreateNestedOneWithoutVideoUrlInput
+    category: CourseCategoryCreateNestedOneWithoutCoursesInput
+  }
+
+  export type CourseUncheckedCreateWithoutOrderItemsInput = {
+    id?: string
+    name: string
+    coverImageId: number
+    description?: string | null
+    price: number
+    type?: $Enums.CourseType
+    videoUrlId: number
+    previewDuration?: number
+    duration?: number | null
+    studentCount?: number | null
+    isPublished?: boolean
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseCreateOrConnectWithoutOrderItemsInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutOrderItemsInput, CourseUncheckedCreateWithoutOrderItemsInput>
   }
 
   export type OrderUpsertWithoutItemsInput = {
@@ -20904,6 +21524,90 @@ export namespace Prisma {
     remark?: NullableStringFieldUpdateOperationsInput | string | null
     trackingNo?: NullableStringFieldUpdateOperationsInput | string | null
     logisticsCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NormalProductUpsertWithoutOrderItemsInput = {
+    update: XOR<NormalProductUpdateWithoutOrderItemsInput, NormalProductUncheckedUpdateWithoutOrderItemsInput>
+    create: XOR<NormalProductCreateWithoutOrderItemsInput, NormalProductUncheckedCreateWithoutOrderItemsInput>
+    where?: NormalProductWhereInput
+  }
+
+  export type NormalProductUpdateToOneWithWhereWithoutOrderItemsInput = {
+    where?: NormalProductWhereInput
+    data: XOR<NormalProductUpdateWithoutOrderItemsInput, NormalProductUncheckedUpdateWithoutOrderItemsInput>
+  }
+
+  export type NormalProductUpdateWithoutOrderItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
+    detailImage?: FileUpdateOneWithoutDetailImageNestedInput
+    category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
+  }
+
+  export type NormalProductUncheckedUpdateWithoutOrderItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    discountPrice?: NullableFloatFieldUpdateOperationsInput | number | null
+    stock?: IntFieldUpdateOperationsInput | number
+    detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
+  }
+
+  export type CourseUpsertWithoutOrderItemsInput = {
+    update: XOR<CourseUpdateWithoutOrderItemsInput, CourseUncheckedUpdateWithoutOrderItemsInput>
+    create: XOR<CourseCreateWithoutOrderItemsInput, CourseUncheckedCreateWithoutOrderItemsInput>
+    where?: CourseWhereInput
+  }
+
+  export type CourseUpdateToOneWithWhereWithoutOrderItemsInput = {
+    where?: CourseWhereInput
+    data: XOR<CourseUpdateWithoutOrderItemsInput, CourseUncheckedUpdateWithoutOrderItemsInput>
+  }
+
+  export type CourseUpdateWithoutOrderItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
+    videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
+    category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutOrderItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    coverImageId?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    type?: EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType
+    videoUrlId?: IntFieldUpdateOperationsInput | number
+    previewDuration?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    studentCount?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21173,6 +21877,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     galleryImages?: FileUpdateManyWithoutGalleryImagesNestedInput
     detailImage?: FileUpdateOneWithoutDetailImageNestedInput
+    orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductUncheckedUpdateWithoutCategoryInput = {
@@ -21186,6 +21891,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     galleryImages?: FileUncheckedUpdateManyWithoutGalleryImagesNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductUncheckedUpdateManyWithoutCategoryInput = {
@@ -21198,6 +21904,20 @@ export namespace Prisma {
     detailImageId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderItemCreateManyProductInput = {
+    id?: string
+    orderId: string
+    itemType?: $Enums.ItemType
+    courseId?: string | null
+    itemName: string
+    itemImage?: string | null
+    price: number
+    quantity: number
+    subtotal: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type FileUpdateWithoutGalleryImagesInput = {
@@ -21241,6 +21961,48 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type OrderItemUpdateWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: OrderUpdateOneRequiredWithoutItemsNestedInput
+    course?: CourseUpdateOneWithoutOrderItemsNestedInput
+  }
+
+  export type OrderItemUncheckedUpdateWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderItemUncheckedUpdateManyWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateManyAvatarUrlInput = {
@@ -21378,6 +22140,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     detailImage?: FileUpdateOneWithoutDetailImageNestedInput
     category?: NormalProductCategoryUpdateOneRequiredWithoutNormalProductsNestedInput
+    orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductUncheckedUpdateWithoutGalleryImagesInput = {
@@ -21391,6 +22154,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type NormalProductUncheckedUpdateManyWithoutGalleryImagesInput = {
@@ -21420,6 +22184,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
     category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
+    orderItems?: OrderItemUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutCoverImageInput = {
@@ -21436,6 +22201,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateManyWithoutCoverImageInput = {
@@ -21468,6 +22234,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
     category?: CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput
+    orderItems?: OrderItemUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutVideoUrlInput = {
@@ -21484,6 +22251,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateManyWithoutVideoUrlInput = {
@@ -21532,6 +22300,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     coverImage?: FileUpdateOneRequiredWithoutCoverImageNestedInput
     videoUrl?: FileUpdateOneRequiredWithoutVideoUrlNestedInput
+    orderItems?: OrderItemUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutCategoryInput = {
@@ -21548,6 +22317,7 @@ export namespace Prisma {
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateManyWithoutCategoryInput = {
@@ -21566,11 +22336,69 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderItemCreateManyCourseInput = {
+    id?: string
+    orderId: string
+    itemType?: $Enums.ItemType
+    productId?: string | null
+    itemName: string
+    itemImage?: string | null
+    price: number
+    quantity: number
+    subtotal: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderItemUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: OrderUpdateOneRequiredWithoutItemsNestedInput
+    product?: NormalProductUpdateOneWithoutOrderItemsNestedInput
+  }
+
+  export type OrderItemUncheckedUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderItemUncheckedUpdateManyWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OrderItemCreateManyOrderInput = {
     id?: string
-    productId: string
-    productName: string
-    productImage?: string | null
+    itemType?: $Enums.ItemType
+    productId?: string | null
+    courseId?: string | null
+    itemName: string
+    itemImage?: string | null
     price: number
     quantity: number
     subtotal: number
@@ -21580,21 +22408,25 @@ export namespace Prisma {
 
   export type OrderItemUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: NormalProductUpdateOneWithoutOrderItemsNestedInput
+    course?: CourseUpdateOneWithoutOrderItemsNestedInput
   }
 
   export type OrderItemUncheckedUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
@@ -21604,9 +22436,11 @@ export namespace Prisma {
 
   export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    productName?: StringFieldUpdateOperationsInput | string
-    productImage?: NullableStringFieldUpdateOperationsInput | string | null
+    itemType?: EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    itemName?: StringFieldUpdateOperationsInput | string
+    itemImage?: NullableStringFieldUpdateOperationsInput | string | null
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number

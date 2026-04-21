@@ -72,7 +72,7 @@ export class AuthService {
 
     const payload = {
       phone: user.phone,
-      sub: user.id,
+      userId: user.id,
       roles: normalizedRoles,
     };
     const userInfo = await this.prismaService.user.findUnique({
@@ -113,7 +113,7 @@ export class AuthService {
       );
     const payload = {
       phone: user.phone,
-      sub: user.id,
+      userId: user.id,
       roles: normalizedRoles,
     };
 

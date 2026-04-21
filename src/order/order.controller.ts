@@ -1,14 +1,25 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Request,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) { }
+  constructor(private readonly orderService: OrderService) {}
 
   // 生成订单号
   @Post()
   create(@Request() req, @Body() createOrderDto: CreateOrderDto) {
+    console.log('完整的 req.user ===>', req.user);
+    console.log('userId ===>', req.user?.userId);
     return this.orderService.create(req.user.userId, createOrderDto);
   }
 
@@ -28,5 +39,12 @@ export class OrderController {
   @Post(':id/cancel')
   cancel(@Param('id') id: string, @Request() req) {
     return this.orderService.cancel(id, req.user.userId);
+  }
+
+  // 测试支付成功（仅用于测试）
+  @Post(':id/pay/test')
+  async testPay(@Param('id') orderId: string) {
+    // 测试用：直接标记支付成功
+    return this.orderService.simulatePaymentSuccess(orderId);
   }
 }
