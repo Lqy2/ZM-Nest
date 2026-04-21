@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { FilterCourseDto } from './dto/filter-course.dto';
+import { Public } from '../auth/public.decorator';
 
 @Controller('course')
 export class CourseController {
@@ -14,11 +15,13 @@ export class CourseController {
   }
 
   @Get("filter")
-  findAll(@Body() filterCourseDto: FilterCourseDto) {
+  @Public()
+  findAll(@Query() filterCourseDto: FilterCourseDto) {
     return this.courseService.findAll(filterCourseDto);
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.courseService.findOne(id);
   }

@@ -16,7 +16,7 @@ export class ProductService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly uploadService: UploadService,
-  ) {}
+  ) { }
 
   create(createProductDto: CreateProductDto) {
     // console.log(createProductDto);
@@ -69,7 +69,7 @@ export class ProductService {
 
   // 查询所有产品
   async findAll(filterProductDto: FilterProductDto) {
-    const { name, categoryId, current, pageSize, skip, take } =
+    const { name, id, categoryId, current, pageSize, skip, take } =
       filterProductDto;
 
     const where: Prisma.NormalProductWhereInput = {};
@@ -78,12 +78,17 @@ export class ProductService {
         contains: name, //模糊查询
       };
     }
+    if (id) {
+      where.id = {
+        equals: id,
+      };
+    }
     if (categoryId) {
       where.categoryId = {
         equals: categoryId,
       };
     }
-
+    console.log(where);
     const [list, total] = await Promise.all([
       this.prismaService.normalProduct.findMany({
         where,
@@ -110,10 +115,10 @@ export class ProductService {
       // 详情图也一样处理
       detailImage: item.detailImage
         ? {
-            downloadUrl: this.uploadService.getSignedUrl(
-              item.detailImage.fileKey,
-            ),
-          }
+          downloadUrl: this.uploadService.getSignedUrl(
+            item.detailImage.fileKey,
+          ),
+        }
         : null,
     }));
     // console.log(processedList);
@@ -125,11 +130,13 @@ export class ProductService {
     );
   }
 
-  findOne(id: number): Promise<NormalProduct> {
-    return this.prismaService.normalProduct.findUniqueOrThrow({
+  findOne(id: number) {
+    return this.prismaService.normalProduct.findUnique({
       where: { id: String(id) },
       include: {
         category: true,
+        galleryImages: true,
+        detailImage: true,
       },
     });
   }
@@ -139,28 +146,15 @@ export class ProductService {
       where: {
         id,
       },
+      include: {
+        galleryImages: true,
+      },
     });
     if (!product) {
       throw new Error('商品不存在');
     }
 
     const { galleryImages, detailImage, categoryId } = updateProductDto;
-    // return this.prismaService.normalProduct.update({
-    //   where: { id: String(id) },
-    //   data: {
-    //     ...data,
-    //     galleryImages: galleryImages
-    //       ? { set: galleryImages.map((id) => ({ id: Number(id) })) }
-    //       : undefined,
-    //     detailImage: detailImage
-    //       ? { connect: { id: Number(detailImage.id) } }
-    //       : undefined,
-    //     category: categoryId ? { connect: { id: categoryId } } : undefined,
-    //   },
-    //   include: {
-    //     category: true,
-    //   },
-    // });
 
     const data: Prisma.NormalProductUpdateInput = {
       name: updateProductDto.name,
@@ -171,22 +165,43 @@ export class ProductService {
       stock: updateProductDto.stock,
     };
 
+    // if (detailImage !== undefined) {
+    //   if (detailImage === null) {
+    //     data.detailImage = { disconnect: true };
+    //   } else {
+    //     if (detailImage.id) {
+    //       data.detailImage = { connect: { id: detailImage.id } };
+    //     } else {
+    //       data.detailImage = { create: detailImage };
+    //     }
+    //   }
+    // }
     if (detailImage) {
       data.detailImage = detailImage.id
         ? { connect: { id: detailImage.id } }
         : { create: detailImage };
     }
-    if (galleryImages) {
+
+    if (galleryImages !== undefined) {
+      const oldImageIds = (product.galleryImages || []).map(img => ({ id: img.id }));
+
       data.galleryImages = {
+        disconnect: oldImageIds,
         connectOrCreate: galleryImages.map((file) => ({
           where: { fileKey: file.fileKey },
           create: file,
         })),
       };
     }
+
     return this.prismaService.normalProduct.update({
       where: { id },
       data,
+      include: {
+        category: true,
+        galleryImages: true,
+        detailImage: true,
+      },
     });
   }
 

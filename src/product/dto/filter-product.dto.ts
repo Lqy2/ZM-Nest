@@ -8,7 +8,9 @@ import {
 import { PaginationDto } from '../../common/dto/pagination.dto';
 
 export class FilterProductDto extends PaginationDto {
-  id: string;
+  @IsOptional()
+  @IsString()
+  id?: string;
   @IsOptional()
   @IsString()
   name?: string;

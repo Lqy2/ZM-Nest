@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -25,7 +26,7 @@ export class ProductController {
 
   @Public()
   @Get('filter')
-  findAll(@Body() filterProductDto: FilterProductDto) {
+  findAll(@Query() filterProductDto: FilterProductDto) {
     return this.productService.findAll(filterProductDto);
   }
 
