@@ -30,29 +30,29 @@ model User {
   status            UserStatus @default(APPROVED)
   rejectReason      String?
   /// 头像文件ID
-  avatarFileId      Int?
+  avatarId          Int?
   /// 头像地址
-  avatarUrl         File?      @relation(fields: [avatarFileId], name: "avatarUrl", references: [id])
+  avatar            File?      @relation(fields: [avatarId], name: "avatar", references: [id])
   /// 邮箱
   email             String?
   /// 性别
   gender            String?
-  /// 证件类型（如身份证、护照）
-  idType            String?
-  /// 证件号码
-  idNumber          String?
-  /// 所属单位/组织名称
-  entity            String?
-  /// 单位地址
-  entityAddress     String?
-  /// 市级负责人查看范围（设区市）
-  cityScope         String?
-  /// 赛项负责人查看范围（赛项ID列表）
-  competitionScopes String[]
+  // /// 证件类型（如身份证、护照）
+  // idType            String?
+  // /// 证件号码
+  // idNumber          String?
+  // /// 所属单位/组织名称
+  // entity            String?
+  // /// 单位地址
+  // entityAddress     String?
+  // /// 市级负责人查看范围（设区市）
+  // cityScope         String?
+  // /// 赛项负责人查看范围（赛项ID列表）
+  // competitionScopes String[]
   /// 密码哈希（如使用 bcrypt）
   passwordHash      String?
   /// 授权委托书（JSON 格式存储相关信息）
-  powerOfAttorney   Json?
+  // powerOfAttorney   Json?
   /// 创建时间
   createdAt         DateTime   @default(now())
   /// 更新时间（由数据库自动更新）
@@ -86,44 +86,103 @@ enum UserStatus {
 
 //普通商品分类表
 model NormalProductCategory {
-  id             String          @id @default(uuid())
+  // id             String          @id @default(uuid())
+  id             int          @id @default(autoincrement())
   name           String
   /// 是否启用
   isEnabled      Boolean         @default(true)
+
+  itemType ItemType @default(PRODUCT)
+
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   normalProducts NormalProduct[]
 }
 
-//普通商品表
-model NormalProduct {
-  /// 主键，使用 uuid
+model Product{
+/// 主键，使用 uuid
   id            String                @id @default(uuid())
   /// 商品名称
   name          String
   /// 商品简介
   description   String?
   /// 价格
-  price         Float
+  price         Int
+  /// 分类 ID
+  categoryId    Int
+  /// 分类关联
+  category      NormalProductCategory @relation(fields: [categoryId], references: [id])
+
+  /// 商品详情
+  productDetail NormalProduct?
+
+  // 课程详情
+  courseDetail  Course?
+
+  orderItems    OrderItem[]
+}
+
+//普通商品表
+model NormalProduct {
+  /// 商品ID
+  // id             String                @id @default(uuid())
+  id             int                @id @default(autoincrement())
   /// 优惠价
-  discountPrice Float?
+  discountPrice Int?
   /// 库存
   stock         Int
   /// 商品图集（列表页/轮播）
-  galleryImages File[]                @relation("galleryImages")
+    File[]                @relation("galleryImages")
   /// 详情图ID（外键）
   detailImageId Int?                  @unique
   /// 详情图关联
   detailImage   File?                 @relation(name: "detailImage", fields: [detailImageId], references: [id])
-  /// 分类 ID
-  categoryId    String
-  /// 分类关联
-  category      NormalProductCategory @relation(fields: [categoryId], references: [id])
+  /// 是否上架
+  isPublished     Boolean        @default(false)
+  
   /// 创建时间
   createdAt     DateTime              @default(now())
   /// 更新时间
   updatedAt     DateTime              @updatedAt
-  orderItems    OrderItem[]
+  
+}
+
+//课程表
+model Course {
+  /// 课程ID
+  // id              String         @id @default(uuid())
+  id              int         @id @default(autoincrement())
+  // /// 课程名称
+  // name            String
+  /// 封面图ID
+  coverImageId    Int
+  /// 封面图OSS地址
+  coverImage      File           @relation(fields: [coverImageId], name: "coverImage", references: [id])
+  /// 课程简介
+  // description     String?
+  // /// 课程价格（元）
+  // price           Int
+  /// 课程类型
+  type            CourseType     @default(PAID)
+  /// 视频ID
+  videoId         Int
+  /// 完整视频OSS地址
+  video           File           @relation(fields: [videoId], name: "video", references: [id])
+  /// 试看时长（秒），默认5分钟
+  previewDuration Int            @default(300)
+  /// 视频总时长（秒）
+  duration        Int?
+  /// 学习人数
+  studentCount    Int?           @default(0)
+  /// 分类ID
+  // categoryId      String
+  // /// 关联分类
+  // category        NormalProductCategory @relation(fields: [categoryId], references: [id])
+  /// 创建时间
+  // createdAt       DateTime       @default(now())
+  // /// 更新时间
+  // updatedAt       DateTime       @updatedAt
+  // orderItems      OrderItem[]
 }
 
 // 文件模型 - 系统中上传的文件信息
@@ -142,71 +201,34 @@ model File {
   // 关联
   avatarUrl     User[]          @relation("avatarUrl")
   galleryImages NormalProduct[] @relation("galleryImages")
-  detailImage   NormalProduct?  @relation(name: "detailImage")
+  detailImage   NormalProduct[]  @relation(name: "detailImage")
   coverImage    Course[]        @relation("coverImage")
-  videoUrl      Course[]        @relation("videoUrl")
+  video         Course[]        @relation("video")
 
   @@index([fileKey])
   @@index([createdAt])
 }
 
 //课程分类表
-model CourseCategory {
-  id        String   @id @default(uuid())
-  name      String
-  /// 是否启用
-  isEnabled Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  courses   Course[]
-}
+// model CourseCategory {
+//   id        String   @id @default(uuid())
+//   name      String
+//   /// 是否启用
+//   isEnabled Boolean  @default(true)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   courses   Course[]
+// }
 
 //课程类型枚举
-enum CourseType {
+enum CourseType { 
   /// 免费课程
   FREE
   /// 付费课程（可试看）
   PAID
 }
 
-//课程表
-model Course {
-  /// 课程ID
-  id              String         @id @default(uuid())
-  /// 课程名称
-  name            String
-  /// 封面图ID
-  coverImageId    Int
-  /// 封面图OSS地址
-  coverImage      File           @relation(fields: [coverImageId], name: "coverImage", references: [id])
-  /// 课程简介
-  description     String?
-  /// 课程价格（元）
-  price           Float
-  /// 课程类型
-  type            CourseType     @default(PAID)
-  /// 视频ID
-  videoUrlId      Int
-  /// 完整视频OSS地址
-  videoUrl        File           @relation(fields: [videoUrlId], name: "videoUrl", references: [id])
-  /// 试看时长（秒），默认5分钟
-  previewDuration Int            @default(300)
-  /// 视频总时长（秒）
-  duration        Int?
-  /// 学习人数
-  studentCount    Int?           @default(0)
-  /// 是否上架
-  isPublished     Boolean        @default(false)
-  /// 分类ID
-  categoryId      String
-  /// 关联分类
-  category        CourseCategory @relation(fields: [categoryId], references: [id])
-  /// 创建时间
-  createdAt       DateTime       @default(now())
-  /// 更新时间
-  updatedAt       DateTime       @updatedAt
-  orderItems      OrderItem[]
-}
+
 
 /// 短信验证码表：登录/注册/重置密码等场景使用
 model VerificationCode {
@@ -258,17 +280,20 @@ enum OrderStatus {
 
 // 订单主表
 model Order {
-  id          String      @id @default(uuid())
+  // id          String      @id @default(uuid())
+  id          int         @id @default(autoincrement())
+  
   /// 订单编号（业务可展示的编号）
   orderNo     String      @unique
   /// 下单用户ID
   userId      String
   /// 关联用户
   user        User        @relation(fields: [userId], references: [id])
+
   /// 订单总金额
-  totalAmount Float
+  totalAmount Int
   /// 实付金额
-  payAmount   Float
+  payAmount   Int
   /// 订单状态
   status      OrderStatus @default(PENDING)
 
@@ -305,9 +330,10 @@ model Order {
 
 // 订单项表（一个订单包含多个商品）
 model OrderItem {
-  id      String @id @default(uuid())
+  // id      String @id @default(uuid())
+  id      int         @id @default(autoincrement())
   /// 订单ID
-  orderId String
+  orderId int
   /// 关联订单
   order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
@@ -317,8 +343,8 @@ model OrderItem {
   productId String?
   product   NormalProduct? @relation(fields: [productId], references: [id])
 
-  courseId String?
-  course   Course? @relation(fields: [courseId], references: [id])
+  // courseId String?
+  // course   Course? @relation(fields: [courseId], references: [id])
 
   /// 商品名称（下单时快照，防止商品后续改名；课程名称和普通商品名称统称名称）
   itemName  String
@@ -326,11 +352,11 @@ model OrderItem {
   itemImage String?
 
   /// 购买时单价
-  price    Float
+  price    int
   /// 购买数量
   quantity Int
   /// 该商品小计
-  subtotal Float
+  subtotal Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -370,3 +396,6 @@ model UserAddress {
 
   @@index([userId])
 }
+
+
+
