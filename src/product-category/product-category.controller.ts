@@ -11,7 +11,7 @@ import {
 import { ProductCategoryService } from './product-category.service';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
-import type { NormalProductCategory } from '../generated/prisma';
+import type { ProductCategory } from '../generated/prisma';
 import { Public } from '../auth/public.decorator';
 import { FilterProductCategoryDto } from './dto/filter-category.dto';
 
@@ -39,14 +39,14 @@ export class ProductCategoryController {
   @Public()
   findAllCategory(
     @Query('name') name: string,
-  ): Promise<NormalProductCategory[]> {
+  ): Promise<ProductCategory[]> {
     return this.productCategoryService.findSearchCategory(name);
   }
 
   @Get(':id')
   @Public()
   findOne(@Param('id') id: string) {
-    return this.productCategoryService.findOne(id);
+    return this.productCategoryService.findOne(+id);
   }
 
   // 更新商品分类
@@ -55,12 +55,12 @@ export class ProductCategoryController {
     @Param('id') id: string,
     @Body() updateProductCategoryDto: UpdateProductCategoryDto,
   ) {
-    return this.productCategoryService.update(id, updateProductCategoryDto);
+    return this.productCategoryService.update(+id, updateProductCategoryDto);
   }
 
   // 删除商品分类
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productCategoryService.remove(id);
+    return this.productCategoryService.remove(+id);
   }
 }

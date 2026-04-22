@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 // import { NormalProduct } from '@prisma/client';
-import type { NormalProduct } from '../generated/prisma';
+// import type { Product } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '../generated/prisma/client';
 import { ResponseHelper } from '../common/utils/response.helper';
@@ -18,35 +18,37 @@ export class ProductService {
     private readonly uploadService: UploadService,
   ) { }
 
-  create(createProductDto: CreateProductDto) {
-    // console.log(createProductDto);
-    // const { galleryImages, detailImage, categoryId, ...data } =
-    //   createProductDto;
-    // return this.prismaService.normalProduct.create({
-    //   data: {
-    //     ...data,
-    //     galleryImages: {
-    //       connect:
-    //         galleryImages?.map((file) => ({ id: file.id })) || [],
-    //     },
-    //     detailImage: {
-    //       connect: detailImage ? { id: detailImage.id } : undefined,
-    //     },
-    //     category: {
-    //       connect: { id: categoryId },
-    //     },
+  async create(createProductDto: CreateProductDto) {
+    // const type = this.prismaService.product.findUnique({
+    //   where: {
+    //     name: createProductDto.name,
     //   },
-    // });
+    // })
 
-    const { galleryImages, detailImage, categoryId } = createProductDto;
 
-    const data: Prisma.NormalProductCreateInput = {
+
+
+
+    const { galleryImages, detailImage, categoryId, courseDetail } = createProductDto;
+
+    // 判断新增商品是否为课程类型
+    const ItemType = await this.prismaService.productCategory.findUnique({
+      where: {
+        id: categoryId,
+      },
+      select: {
+        itemType: true,
+      },
+    });
+   
+
+    const data: Prisma.ProductCreateInput = {
       name: createProductDto.name,
       description: createProductDto.description,
       category: { connect: { id: categoryId } },
       price: createProductDto.price,
       discountPrice: createProductDto.discountPrice,
-      stock: createProductDto.stock,
+      stock: ItemType?.itemType === 'COURSE' ? 1 : createProductDto.stock,//未限制库存？类型为课程限制为最大1
     };
 
     if (detailImage) {
@@ -62,8 +64,27 @@ export class ProductService {
         })),
       };
     }
-    return this.prismaService.normalProduct.create({
+
+    if (courseDetail) {
+      data.courseDetail = {
+        create: {
+          type: courseDetail.type,
+          coverImage: courseDetail.coverImage.id
+            ? { connect: { id: courseDetail.coverImage.id } }
+            : { create: courseDetail.coverImage },
+          video: courseDetail.video.id
+            ? { connect: { id: courseDetail.video.id } }
+            : { create: courseDetail.video },
+          previewDuration: courseDetail.previewDuration,
+        },
+      };
+    }
+
+    return this.prismaService.product.create({
       data,
+      include: {
+        courseDetail: true,
+      },
     });
   }
 
@@ -72,7 +93,7 @@ export class ProductService {
     const { name, id, categoryId, current, pageSize, skip, take } =
       filterProductDto;
 
-    const where: Prisma.NormalProductWhereInput = {};
+    const where: Prisma.ProductWhereInput = {};
     if (name) {
       where.name = {
         contains: name, //模糊查询
@@ -90,7 +111,7 @@ export class ProductService {
     }
     console.log(where);
     const [list, total] = await Promise.all([
-      this.prismaService.normalProduct.findMany({
+      this.prismaService.product.findMany({
         where,
         skip,
         take,
@@ -101,22 +122,22 @@ export class ProductService {
         },
         orderBy: { createdAt: 'desc' },
       }),
-      this.prismaService.normalProduct.count({ where }),
+      this.prismaService.product.count({ where }),
     ]);
 
     const processedList = list.map((item) => ({
       ...item, // 保留原有的所有属性
       // 👇 覆盖 galleryImages，TS 不会报错
       galleryImages:
-        item.galleryImages?.map((file) => ({
+        (item.galleryImages || []).map((file) => ({
           // 也可以保留一些原有字段 + 新增 downloadUrl
           downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
-        })) || [],
+        })),
       // 详情图也一样处理
-      detailImage: item.detailImage
+      detailImage: (item.detailImage && item.detailImage.length > 0)
         ? {
           downloadUrl: this.uploadService.getSignedUrl(
-            item.detailImage.fileKey,
+            item.detailImage[0].fileKey,
           ),
         }
         : null,
@@ -131,8 +152,8 @@ export class ProductService {
   }
 
   findOne(id: number) {
-    return this.prismaService.normalProduct.findUnique({
-      where: { id: String(id) },
+    return this.prismaService.product.findUnique({
+      where: { id },
       include: {
         category: true,
         galleryImages: true,
@@ -141,10 +162,10 @@ export class ProductService {
     });
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
-    const product = await this.prismaService.normalProduct.findUnique({
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    const product = await this.prismaService.product.findUnique({
       where: {
-        id,
+        id: id,
       },
       include: {
         galleryImages: true,
@@ -156,7 +177,7 @@ export class ProductService {
 
     const { galleryImages, detailImage, categoryId } = updateProductDto;
 
-    const data: Prisma.NormalProductUpdateInput = {
+    const data: Prisma.ProductUpdateInput = {
       name: updateProductDto.name,
       description: updateProductDto.description,
       category: { connect: { id: categoryId } },
@@ -194,8 +215,8 @@ export class ProductService {
       };
     }
 
-    return this.prismaService.normalProduct.update({
-      where: { id },
+    return this.prismaService.product.update({
+      where: { id: id },
       data,
       include: {
         category: true,
@@ -205,10 +226,10 @@ export class ProductService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     // 1. 先检查是否存在
-    const exists = await this.prismaService.normalProduct.findUnique({
-      where: { id },
+    const exists = await this.prismaService.product.findUnique({
+      where: { id: id },
       select: { id: true },
     });
 
@@ -217,8 +238,8 @@ export class ProductService {
     }
 
     // 2. 存在才删除
-    return this.prismaService.normalProduct.delete({
-      where: { id },
+    return this.prismaService.product.delete({
+      where: { id: id },
     });
   }
 }

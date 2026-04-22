@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import type { NormalProductCategory } from '../generated/prisma';
+import type { ProductCategory } from '../generated/prisma';
 import { FilterProductCategoryDto } from './dto/filter-category.dto';
 import { Prisma } from '../generated/prisma/client';
 import { ResponseHelper } from '../common/utils/response.helper';
@@ -14,7 +14,7 @@ export class ProductCategoryService {
 
   // 创建商品分类
   create(createProductCategoryDto: CreateProductCategoryDto) {
-    return this.prismaService.normalProductCategory.create({
+    return this.prismaService.productCategory.create({
       data: createProductCategoryDto,
     });
   }
@@ -24,7 +24,7 @@ export class ProductCategoryService {
     const { name, isEnabled, current, pageSize, skip, take } = filterProductCategoryDto;
     // console.log(skip, take);
     // 构建查询条件
-    const where: Prisma.NormalProductCategoryWhereInput = {};
+    const where: Prisma.ProductCategoryWhereInput = {};
     if (name) {
       where.name = {
         contains: name,
@@ -35,45 +35,45 @@ export class ProductCategoryService {
     }
 
     const [list, total] = await Promise.all([
-      this.prismaService.normalProductCategory.findMany({
+      this.prismaService.productCategory.findMany({
         where,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prismaService.normalProductCategory.count({ where }),
+      this.prismaService.productCategory.count({ where }),
     ]);
     return ResponseHelper.buildListData(list, total, current!, pageSize!);
   }
 
-  findOne(id: string): Promise<NormalProductCategory> {
-    return this.prismaService.normalProductCategory.findUniqueOrThrow({
+  findOne(id: number): Promise<ProductCategory> {
+    return this.prismaService.productCategory.findUniqueOrThrow({
       where: { id },
     });
   }
 
   async update(
-    id: string,
+    id: number,
     updateProductCategoryDto: UpdateProductCategoryDto,
   ) {
-    await this.prismaService.normalProductCategory.update({
+    await this.prismaService.productCategory.update({
       where: { id },
       data: updateProductCategoryDto,
     });
   }
 
-  remove(id: string) {
-    return this.prismaService.normalProductCategory.delete({
+  remove(id: number) {
+    return this.prismaService.productCategory.delete({
       where: { id },
     });
   }
 
-  findSearchCategory(name: string): Promise<NormalProductCategory[]> {
+  findSearchCategory(name: string): Promise<ProductCategory[]> {
     const keyword = name?.trim();
     if (!keyword) {
       throw new BadRequestException('请输入分类名称');
     }
-    return this.prismaService.normalProductCategory.findMany({
+    return this.prismaService.productCategory.findMany({
       where: {
         name: {
           contains: keyword,

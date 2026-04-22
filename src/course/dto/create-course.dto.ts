@@ -41,7 +41,7 @@ export class CreateCourseDto {
 
   // 课程视频
   @IsNotEmpty({ message: '课程视频不能为空' })
-  videoUrl: FileDto;
+  video: FileDto;
 
   // 课程封面
   @IsNotEmpty({ message: '课程封面不能为空' })

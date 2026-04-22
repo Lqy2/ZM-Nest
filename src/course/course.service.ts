@@ -14,16 +14,16 @@ export class CourseService {
     private readonly prismaService: PrismaService,
   ) {}
   create(createCourseDto: CreateCourseDto) {
-    const { videoUrl, coverImage, categoryId } = createCourseDto;
+    const { video, coverImage, categoryId } = createCourseDto;
 
     // 课程数据
     const data: Prisma.CourseCreateInput = {
-      name: createCourseDto.name,
-      description: createCourseDto.description,
-      category: { connect: { id: categoryId } },
-      price: createCourseDto.price,
+      // name: createCourseDto.name,
+      // description: createCourseDto.description,
+      // category: { connect: { id: categoryId } },
+      // price: createCourseDto.price,
       type: createCourseDto.type,
-      isPublished: createCourseDto.isPublished,
+      // isPublished: createCourseDto.isPublished,
       previewDuration: createCourseDto.previewDuration,
       // coverImage: coverImage.id
       //   ? { connect: { id: coverImage.id } }
@@ -37,10 +37,10 @@ export class CourseService {
           create: coverImage,
         },
       },
-      videoUrl: {
+      video: {
         connectOrCreate: {
-          where: { fileKey: videoUrl.fileKey },
-          create: videoUrl,
+          where: { fileKey: video.fileKey },
+          create: video,
         },
       },
     };
@@ -51,16 +51,16 @@ export class CourseService {
   }
 
   async findAll(filterCourseDto: FilterCourseDto) {
-    const { name, categoryId, current, pageSize, skip, take } = filterCourseDto;
+    const { name, id, current, pageSize, skip, take } = filterCourseDto;
     const where: Prisma.CourseWhereInput = {};
-    if (name) {
-      where.name = {
-        contains: name, //模糊查询
-      };
-    }
-    if (categoryId) {
-      where.categoryId = {
-        equals: categoryId,
+    // if (name) {
+    //   where.name = {
+    //     contains: name, //模糊查询
+    //   };
+    // }
+    if (id) {
+      where.id = {
+        equals: id,
       };
     }
     const [list, total] = await Promise.all([
@@ -69,9 +69,8 @@ export class CourseService {
         skip,
         take,
         include: {
-          category: true,
           coverImage: true,
-          videoUrl: true,
+          video: true,
         },
         orderBy: { createdAt: 'desc' },
       }),
@@ -88,9 +87,9 @@ export class CourseService {
           }
         : null,
       // 详情图也一样处理
-      videoUrl: item.videoUrl
+      video: item.video
         ? {
-            downloadUrl: this.uploadService.getSignedUrl(item.videoUrl.fileKey),
+            downloadUrl: this.uploadService.getSignedUrl(item.video.fileKey),
           }
         : null,
     }));
@@ -102,13 +101,12 @@ export class CourseService {
     );
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const course = await this.prismaService.course.findUnique({
       where: { id },
       include: {
-        category: true,
         coverImage: true,
-        videoUrl: true,
+        video: true,
       },
     });
 
@@ -127,18 +125,18 @@ export class CourseService {
           }
         : null,
       // 视频处理
-      videoUrl: course.videoUrl
+      video: course.video
         ? {
             downloadUrl: this.uploadService.getSignedUrl(
-              course.videoUrl.fileKey,
+              course.video.fileKey,
             ),
           }
         : null,
     };
   }
 
-  async update(id: string, updateCourseDto: UpdateCourseDto) {
-    const { videoUrl, coverImage, categoryId } = updateCourseDto;
+  async update(id: number, updateCourseDto: UpdateCourseDto) {
+    const { video, coverImage, categoryId } = updateCourseDto;
 
     const course = await this.prismaService.course.findUnique({
       where: {
@@ -151,12 +149,12 @@ export class CourseService {
 
     // 课程数据
     const data: Prisma.CourseUpdateInput = {
-      name: updateCourseDto.name,
-      description: updateCourseDto.description,
-      category: { connect: { id: categoryId } },
-      price: updateCourseDto.price,
+      // name: updateCourseDto.name,
+      // description: updateCourseDto.description,
+      // category: { connect: { id: categoryId } },
+      // price: updateCourseDto.price,
       type: updateCourseDto.type,
-      isPublished: updateCourseDto.isPublished,
+      // isPublished: updateCourseDto.isPublished,
       previewDuration: updateCourseDto.previewDuration,
       coverImage: coverImage
         ? {
@@ -167,11 +165,11 @@ export class CourseService {
           }
         : undefined,
 
-      videoUrl: videoUrl
+      video: video
         ? {
             connectOrCreate: {
-              where: { fileKey: videoUrl.fileKey },
-              create: videoUrl,
+              where: { fileKey: video.fileKey },
+              create: video,
             },
           }
         : undefined,
@@ -184,7 +182,7 @@ export class CourseService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     return this.prismaService.course.delete({
       where: {
         id,

@@ -11,7 +11,7 @@ export class CourseCategoryService {
   constructor(private readonly prismaService: PrismaService) {}
   // 创建课程分类
   create(createCourseCategoryDto: CreateCourseCategoryDto) {
-    return this.prismaService.courseCategory.create({
+    return this.prismaService.productCategory.create({
       data: createCourseCategoryDto,
     });
   }
@@ -21,7 +21,7 @@ export class CourseCategoryService {
       filterCourseCategoryDto;
     // console.log(skip, take);
     // 构建查询条件
-    const where: Prisma.CourseCategoryWhereInput = {};
+    const where: Prisma.ProductCategoryWhereInput = {};
     if (name) {
       where.name = {
         contains: name,
@@ -32,27 +32,27 @@ export class CourseCategoryService {
     }
 
     const [list, total] = await Promise.all([
-      this.prismaService.courseCategory.findMany({
+      this.prismaService.productCategory.findMany({
         where,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prismaService.courseCategory.count({ where }),
+      this.prismaService.productCategory.count({ where }),
     ]);
     return ResponseHelper.buildListData(list, total, current!, pageSize!);
   }
   // 获取课程分类详情
-  findOne(id: string) {
-    return this.prismaService.courseCategory.findUnique({
+  findOne(id: number) {
+    return this.prismaService.productCategory.findUnique({
       where: {
         id,
       },
     });
   }
   // 更新课程分类
-  update(id: string, updateCourseCategoryDto: UpdateCourseCategoryDto) {
-    return this.prismaService.courseCategory.update({
+  update(id: number, updateCourseCategoryDto: UpdateCourseCategoryDto) {
+    return this.prismaService.productCategory.update({
       where: {
         id,
       },
@@ -60,8 +60,8 @@ export class CourseCategoryService {
     });
   }
 
-  remove(id: string) {
-    return this.prismaService.courseCategory.delete({
+  remove(id: number) {
+    return this.prismaService.productCategory.delete({
       where: {
         id,
       },

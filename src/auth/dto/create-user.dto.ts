@@ -11,7 +11,7 @@ export class CreateUserDto {
   // // 用户名
   @IsString()
   @IsOptional()
-  username?: string;
+  account?: string;
   // // 姓名
   @IsString()
   @IsOptional()
@@ -33,7 +33,7 @@ export class CreateUserDto {
   // // 头像
   @IsString()
   @IsOptional()
-  avatarUrl?: string;
+  avatar?: string;
   // // 邮箱
   @IsString()
   @IsOptional()

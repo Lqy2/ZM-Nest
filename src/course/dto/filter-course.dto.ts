@@ -8,13 +8,15 @@ import {
 import { PaginationDto } from '../../common/dto/pagination.dto';
 
 export class FilterCourseDto extends PaginationDto {
-  id: string;
+  id: number;
   @IsOptional()
   @IsString()
   name?: string;
   @IsOptional()
+
+  @IsOptional()
   @IsString()
-  categoryId?: string;
+  itemType?: string;
   createdAt: Date;
   updatedAt: Date;
 }

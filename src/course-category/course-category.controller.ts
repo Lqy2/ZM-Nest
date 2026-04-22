@@ -34,7 +34,7 @@ export class CourseCategoryController {
   // 获取课程分类详情
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.courseCategoryService.findOne(id);
+    return this.courseCategoryService.findOne(+id);
   }
 
   // 更新课程分类
@@ -43,12 +43,12 @@ export class CourseCategoryController {
     @Param('id') id: string,
     @Body() updateCourseCategoryDto: UpdateCourseCategoryDto,
   ) {
-    return this.courseCategoryService.update(id, updateCourseCategoryDto);
+    return this.courseCategoryService.update(+id, updateCourseCategoryDto);
   }
 
   // 删除课程分类
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.courseCategoryService.remove(id);
+    return this.courseCategoryService.remove(+id);
   }
 }

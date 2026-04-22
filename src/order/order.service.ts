@@ -34,24 +34,25 @@ export class OrderService {
     const orderItems: any[] = [];
     let totalAmount = 0;
     for (const item of items) {
-      if (!item.productId && !item.courseId) {
+      if (!item.productId) {
         throw new BadRequestException(
-          '每个订单项至少要有 productId 或 courseId',
+          '每个订单项必须要有 productId',
         );
       }
       // 商品默认数量是1
       if (!item.quantity) item.quantity = 1;
     }
-    // 1. 处理普通商品
-    const productItems = items.filter((i) => i.productId);
+
+    // 处理商品
+    const productItems = items;
     if (productItems.length > 0) {
-      const productIds = productItems.map((item) => item.productId);
-      const products = await this.prisma.normalProduct.findMany({
+      const productIds = productItems.map((item) => Number(item.productId));
+      const products = await this.prisma.product.findMany({
         where: { id: { in: productIds } },
       });
 
       for (const item of productItems) {
-        const product = products.find((p) => p.id === item.productId);
+        const product = products.find((p) => p.id === Number(item.productId));
         if (!product)
           throw new BadRequestException(`商品 ${item.productId} 不存在`);
         if (product.stock < item.quantity)
@@ -64,40 +65,11 @@ export class OrderService {
         orderItems.push({
           itemType: 'PRODUCT',
           productId: product.id,
-          courseId: null,
           itemName: product.name,
           itemImage: null,
           price,
           quantity: item.quantity,
           subtotal,
-        });
-      }
-    }
-
-    // 2. 处理课程
-    const courseItems = items.filter((i) => i.courseId);
-    if (courseItems.length > 0) {
-      const courseIds = courseItems.map((item) => item.courseId);
-      const courses = await this.prisma.course.findMany({
-        where: { id: { in: courseIds }, isPublished: true },
-      });
-
-      for (const item of courseItems) {
-        const course = courses.find((c) => c.id === item.courseId);
-        if (!course)
-          throw new BadRequestException(`课程 ${item.courseId} 不存在或未上架`);
-
-        totalAmount += course.price;
-
-        orderItems.push({
-          itemType: 'COURSE',
-          productId: null, // ✅ 你现在 schema 是必填String，先传空字符串
-          courseId: course.id,
-          itemName: course.name,
-          itemImage: null,
-          price: course.price,
-          quantity: 1,
-          subtotal: course.price,
         });
       }
     }
@@ -111,8 +83,8 @@ export class OrderService {
     return this.prisma.$transaction(async (tx) => {
       // 只有普通商品扣库存
       for (const item of productItems) {
-        await tx.normalProduct.update({
-          where: { id: item.productId },
+        await tx.product.update({
+          where: { id: Number(item.productId) },
           data: { stock: { decrement: item.quantity } },
         });
       }
@@ -149,7 +121,7 @@ export class OrderService {
   // 获取订单详情
   async findOne(id: string, userId: string) {
     const order = await this.prisma.order.findUnique({
-      where: { id },
+      where: { id: Number(id) },
       include: { items: true },
     });
 
@@ -173,14 +145,14 @@ export class OrderService {
 
     await this.prisma.$transaction(async (tx) => {
       for (const item of order.items) {
-        await tx.normalProduct.update({
-          where: { id: item.productId! },
+        await tx.product.update({
+          where: { id: Number(item.productId!) },
           data: { stock: { increment: item.quantity } },
         });
       }
 
       await tx.order.update({
-        where: { id },
+        where: { id: Number(id) },
         data: { status: 'CANCELLED' },
       });
     });
@@ -193,7 +165,7 @@ export class OrderService {
     return this.prisma.$transaction(async (tx) => {
       // 1. 更新订单状态为已支付
       const order = await tx.order.update({
-        where: { id: orderId },
+        where: { id: Number(orderId) },
         data: {
           status: 'PAID',
           paidAt: new Date(),
@@ -205,8 +177,8 @@ export class OrderService {
       // 2. 后面所有逻辑和真实支付完全一样！
       for (const item of order.items) {
         if (item.itemType === 'PRODUCT') {
-          await tx.normalProduct.update({
-            where: { id: item.productId! },
+          await tx.product.update({
+            where: { id: Number(item.productId!) },
             data: { stock: { decrement: item.quantity } },
           });
         }

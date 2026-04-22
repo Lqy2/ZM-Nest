@@ -10,13 +10,13 @@ import { PaginationDto } from '../../common/dto/pagination.dto';
 export class FilterProductDto extends PaginationDto {
   @IsOptional()
   @IsString()
-  id?: string;
+  id?: number;
   @IsOptional()
   @IsString()
   name?: string;
   @IsOptional()
   @IsString()
-  categoryId?: string;
+  categoryId?: number;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -24,6 +24,7 @@ export class UserController {
   async create(
     @Body()
     createUserDto: {
+      account: string;  
       username: string;
       name: string;
       phone: string;

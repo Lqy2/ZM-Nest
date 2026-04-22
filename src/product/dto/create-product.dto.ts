@@ -1,5 +1,7 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional, IsArray } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsOptional, IsArray, ValidateIf } from 'class-validator';
 import { FileDto } from '../../upload/dto/file.dto';
+import { CreateCourseDto } from './create-course.dto';
+
 
 export class CreateProductDto {
   // 商品名称
@@ -26,16 +28,22 @@ export class CreateProductDto {
   stock: number;
 
   // 商品图集（列表页/轮播）
+  @ValidateIf(o => o.courseDetail === undefined || o.courseDetail === null)//当 courseDetail 不存在 或 为 null 时，才验证下面的字段
   @IsArray()
   @IsNotEmpty({ message: '商品图集不能为空' })
-  galleryImages: FileDto[];
+  galleryImages?: FileDto[];
   // 商品详情图ID
   // @IsNumber()
   // detailImageId?: number;
+  @ValidateIf(o => o.courseDetail === undefined || o.courseDetail === null)
   @IsNotEmpty({ message: '商品详情图不能为空' })
-  detailImage: FileDto;
+  detailImage?: FileDto;
   // 商品类目ID
-  @IsString()
+  @IsNumber()
   @IsNotEmpty({ message: '商品类目ID不能为空' })
-  categoryId: string;
+  categoryId: number;
+
+  // 课程详情
+  @IsOptional()
+  courseDetail?: CreateCourseDto;
 }

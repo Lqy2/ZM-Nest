@@ -170,7 +170,7 @@ export class AuthService {
     const normalizedCode = (createUserDto.verificationCode ?? '').trim();
 
     // 验证用户信息
-    await this.usersService.findOne(createUserDto.username ?? '');
+    await this.usersService.findOne(createUserDto.account ?? '');
     if (await this.usersService.findOne(normalizedPhone)) {
       return {
         message: '手机号已存在',
@@ -224,22 +224,22 @@ export class AuthService {
 
     return await this.prismaService.user.create({
       data: {
-        username: createUserDto.username ?? '',
+        account: createUserDto.account ?? '',
         name: createUserDto.name ?? '',
         phone: normalizedPhone,
         roles: roles.length ? roles : [Role.USER],
-        avatarUrl: createUserDto.avatarUrl
-          ? { connect: { id: Number(createUserDto.avatarUrl) } }
+        avatar: createUserDto.avatar
+          ? { connect: { id: Number(createUserDto.avatar) } }
           : undefined,
         email: createUserDto.email ?? '',
         gender: createUserDto.gender ?? '',
-        idType: createUserDto.idType ?? '',
-        idNumber: createUserDto.idNumber ?? '',
-        entity: createUserDto.entity ?? '',
-        entityAddress: createUserDto.entityAddress ?? '',
+        // idType: createUserDto.idType ?? '',
+        // idNumber: createUserDto.idNumber ?? '',
+        // entity: createUserDto.entity ?? '',
+        // entityAddress: createUserDto.entityAddress ?? '',
         passwordHash: password,
-        status: mappedStatus,
-        powerOfAttorney: createUserDto.powerOfAttorney,
+        // status: mappedStatus,
+        // powerOfAttorney: createUserDto.powerOfAttorney,
       },
     });
   }
