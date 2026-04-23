@@ -21,6 +21,7 @@ export class CreateProductDto {
   @IsNumber()
   @IsNotEmpty({ message: '商品优惠价不能为空' })
   discountPrice?: number;
+
   // 商品库存
   @IsNotEmpty()
   @IsNumber()
@@ -32,12 +33,13 @@ export class CreateProductDto {
   @IsArray()
   @IsNotEmpty({ message: '商品图集不能为空' })
   galleryImages?: FileDto[];
-  // 商品详情图ID
-  // @IsNumber()
-  // detailImageId?: number;
+
+
   @ValidateIf(o => o.courseDetail === undefined || o.courseDetail === null)
+  @IsArray()
   @IsNotEmpty({ message: '商品详情图不能为空' })
-  detailImage?: FileDto;
+  detailImages?: FileDto[];
+
   // 商品类目ID
   @IsNumber()
   @IsNotEmpty({ message: '商品类目ID不能为空' })

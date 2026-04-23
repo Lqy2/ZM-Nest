@@ -104,7 +104,7 @@ model Product {
   /// 商品图集（列表页/轮播）
   galleryImages File[]  @relation("galleryImages")
   /// 详情图关联
-  detailImage   File[]  @relation(name: "detailImage")
+  detailImages   File[]  @relation(name: "detailImages")
   /// 是否上架
   isPublished   Boolean @default(false)
 
@@ -171,7 +171,7 @@ model File {
   // 关联
   avatar        User[]    @relation("avatar") //用户头像关联
   galleryImages Product[] @relation("galleryImages") //商品图集关联
-  detailImage   Product[] @relation(name: "detailImage") //详情图关联
+  detailImages   Product[] @relation(name: "detailImages") //详情图关联
   coverImage    Course[]  @relation("coverImage") //封面图片
   video         Course[]  @relation("video") //完整视频
 

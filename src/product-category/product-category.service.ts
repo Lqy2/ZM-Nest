@@ -21,7 +21,8 @@ export class ProductCategoryService {
 
   // 查询商品分类列表
   async findAll(filterProductCategoryDto: FilterProductCategoryDto) {
-    const { name, isEnabled, current, pageSize, skip, take } = filterProductCategoryDto;
+    const { name, isEnabled, itemType, current, pageSize, skip, take } =
+      filterProductCategoryDto;
     // console.log(skip, take);
     // 构建查询条件
     const where: Prisma.ProductCategoryWhereInput = {};
@@ -30,8 +31,15 @@ export class ProductCategoryService {
         contains: name,
       };
     }
-    if (isEnabled !== undefined ) {
+
+    //
+    if (isEnabled !== undefined) {
       where.isEnabled = isEnabled === 'true';
+    }
+
+    // 分类类型PRODUCT||COURSE
+    if (itemType !== undefined) {
+      where.itemType = itemType;
     }
 
     const [list, total] = await Promise.all([
@@ -52,10 +60,7 @@ export class ProductCategoryService {
     });
   }
 
-  async update(
-    id: number,
-    updateProductCategoryDto: UpdateProductCategoryDto,
-  ) {
+  async update(id: number, updateProductCategoryDto: UpdateProductCategoryDto) {
     await this.prismaService.productCategory.update({
       where: { id },
       data: updateProductCategoryDto,
@@ -68,17 +73,5 @@ export class ProductCategoryService {
     });
   }
 
-  findSearchCategory(name: string): Promise<ProductCategory[]> {
-    const keyword = name?.trim();
-    if (!keyword) {
-      throw new BadRequestException('请输入分类名称');
-    }
-    return this.prismaService.productCategory.findMany({
-      where: {
-        name: {
-          contains: keyword,
-        },
-      },
-    });
-  }
+  
 }

@@ -1,7 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsString, IsEnum } from 'class-validator';
 import { ItemType } from '../../generated/prisma';
 export class CreateProductCategoryDto  {
-  id: number;
 
   @IsNotEmpty({ message: '商品分类名称不能为空' })
   @IsString()
@@ -11,9 +10,8 @@ export class CreateProductCategoryDto  {
   isEnabled: boolean;
 
   @IsNotEmpty({ message: '商品分类类型不能为空' })
-   @IsEnum(ItemType)
+  @IsEnum(ItemType)
   itemType: ItemType;
   
-  createdAt: Date;
-  updatedAt: Date;
+
 }

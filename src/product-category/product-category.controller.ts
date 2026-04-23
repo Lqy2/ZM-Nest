@@ -34,14 +34,7 @@ export class ProductCategoryController {
     return this.productCategoryService.findAll(filterProductCategoryDto);
   }
 
-  // 搜索商品分类
-  @Get('search-category')
-  @Public()
-  findAllCategory(
-    @Query('name') name: string,
-  ): Promise<ProductCategory[]> {
-    return this.productCategoryService.findSearchCategory(name);
-  }
+
 
   @Get(':id')
   @Public()

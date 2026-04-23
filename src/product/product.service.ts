@@ -16,20 +16,11 @@ export class ProductService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly uploadService: UploadService,
-  ) { }
+  ) {}
 
   async create(createProductDto: CreateProductDto) {
-    // const type = this.prismaService.product.findUnique({
-    //   where: {
-    //     name: createProductDto.name,
-    //   },
-    // })
-
-
-
-
-
-    const { galleryImages, detailImage, categoryId, courseDetail } = createProductDto;
+    const { galleryImages, detailImages, categoryId, courseDetail } =
+      createProductDto;
 
     // 判断新增商品是否为课程类型
     const ItemType = await this.prismaService.productCategory.findUnique({
@@ -40,7 +31,6 @@ export class ProductService {
         itemType: true,
       },
     });
-   
 
     const data: Prisma.ProductCreateInput = {
       name: createProductDto.name,
@@ -48,13 +38,22 @@ export class ProductService {
       category: { connect: { id: categoryId } },
       price: createProductDto.price,
       discountPrice: createProductDto.discountPrice,
-      stock: ItemType?.itemType === 'COURSE' ? 1 : createProductDto.stock,//未限制库存？类型为课程限制为最大1
+      stock: ItemType?.itemType === 'COURSE' ? 1 : createProductDto.stock, //未限制库存？类型为课程限制为最大1
     };
 
-    if (detailImage) {
-      data.detailImage = detailImage.id
-        ? { connect: { id: detailImage.id } }
-        : { create: detailImage };
+    // if (detailImage) {
+    //   data.detailImage = detailImage.id
+    //     ? { connect: { id: detailImage.id } }
+    //     : { create: detailImage };
+    // }
+
+    if (detailImages) {
+      data.detailImages = {
+        connectOrCreate: detailImages.map((file) => ({
+          where: { fileKey: file.fileKey },
+          create: file,
+        })),
+      };
     }
     if (galleryImages) {
       data.galleryImages = {
@@ -118,7 +117,7 @@ export class ProductService {
         include: {
           category: true,
           galleryImages: true,
-          detailImage: true,
+          detailImages: true,
         },
         orderBy: { createdAt: 'desc' },
       }),
@@ -128,19 +127,19 @@ export class ProductService {
     const processedList = list.map((item) => ({
       ...item, // 保留原有的所有属性
       // 👇 覆盖 galleryImages，TS 不会报错
-      galleryImages:
-        (item.galleryImages || []).map((file) => ({
-          // 也可以保留一些原有字段 + 新增 downloadUrl
-          downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
-        })),
+      galleryImages: (item.galleryImages || []).map((file) => ({
+        // 也可以保留一些原有字段 + 新增 downloadUrl
+        downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
+      })),
       // 详情图也一样处理
-      detailImage: (item.detailImage && item.detailImage.length > 0)
-        ? {
-          downloadUrl: this.uploadService.getSignedUrl(
-            item.detailImage[0].fileKey,
-          ),
-        }
-        : null,
+      detailImages:
+        item.detailImages && item.detailImages.length > 0
+          ? {
+              downloadUrl: this.uploadService.getSignedUrl(
+                item.detailImages[0].fileKey,
+              ),
+            }
+          : null,
     }));
     // console.log(processedList);
     return ResponseHelper.buildListData(
@@ -157,7 +156,7 @@ export class ProductService {
       include: {
         category: true,
         galleryImages: true,
-        detailImage: true,
+        detailImages: true,
       },
     });
   }
@@ -175,7 +174,7 @@ export class ProductService {
       throw new Error('商品不存在');
     }
 
-    const { galleryImages, detailImage, categoryId } = updateProductDto;
+    const { galleryImages, detailImages, categoryId } = updateProductDto;
 
     const data: Prisma.ProductUpdateInput = {
       name: updateProductDto.name,
@@ -197,14 +196,25 @@ export class ProductService {
     //     }
     //   }
     // }
-    if (detailImage) {
-      data.detailImage = detailImage.id
-        ? { connect: { id: detailImage.id } }
-        : { create: detailImage };
+    // if (detailImage) {
+    //   data.detailImage = detailImage.id
+    //     ? { connect: { id: detailImage.id } }
+    //     : { create: detailImage };
+    // }
+
+    if (detailImages) {
+      data.detailImages = {
+        connectOrCreate: detailImages.map((file) => ({
+          where: { fileKey: file.fileKey },
+          create: file,
+        })),
+      };
     }
 
     if (galleryImages !== undefined) {
-      const oldImageIds = (product.galleryImages || []).map(img => ({ id: img.id }));
+      const oldImageIds = (product.galleryImages || []).map((img) => ({
+        id: img.id,
+      }));
 
       data.galleryImages = {
         disconnect: oldImageIds,
@@ -221,7 +231,7 @@ export class ProductService {
       include: {
         category: true,
         galleryImages: true,
-        detailImage: true,
+        detailImages: true,
       },
     });
   }
