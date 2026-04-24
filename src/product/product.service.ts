@@ -9,6 +9,7 @@ import { ResponseHelper } from '../common/utils/response.helper';
 import { FilterProductDto } from './dto/filter-product.dto';
 
 import { UploadService } from '../upload/upload.service';
+import { log } from 'console';
 
 @Injectable()
 export class ProductService {
@@ -16,7 +17,7 @@ export class ProductService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly uploadService: UploadService,
-  ) { }
+  ) {}
 
   async create(createProductDto: CreateProductDto) {
     const { galleryImages, detailImages, categoryId, courseDetail } =
@@ -129,19 +130,28 @@ export class ProductService {
     const processedList = list.map((item) => ({
       ...item, // 保留原有的所有属性
       galleryImages: (item.galleryImages || []).map((file) => ({
+        ...file,
         downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
       })),
-      detailImages:
-        (item.detailImages || []).map((file) => ({
-          downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
-        })),
+      detailImages: (item.detailImages || []).map((file) => ({
+        ...file,
+        downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
+      })),
       // 课程封面图
       coverImage: item.courseDetail?.coverImage
-        ? { downloadUrl: this.uploadService.getSignedUrl(item.courseDetail.coverImage.fileKey) }
+        ? {
+            downloadUrl: this.uploadService.getSignedUrl(
+              item.courseDetail.coverImage.fileKey,
+            ),
+          }
         : null,
       // 课程视频
       video: item.courseDetail?.video
-        ? { downloadUrl: this.uploadService.getSignedUrl(item.courseDetail.video.fileKey) }
+        ? {
+            downloadUrl: this.uploadService.getSignedUrl(
+              item.courseDetail.video.fileKey,
+            ),
+          }
         : null,
     }));
     // console.log(processedList);
@@ -187,10 +197,11 @@ export class ProductService {
     const ItemType = await this.getProductType(product.categoryId);
     console.log('商品类型:', updateProductDto);
 
-    const { galleryImages, detailImages, categoryId, courseDetail } = updateProductDto;
+    const { galleryImages, detailImages, categoryId, courseDetail } =
+      updateProductDto;
 
     const data: Prisma.ProductUpdateInput = {};
-    
+
     // 只在用户明确提交时才更新字段
     if (updateProductDto.name !== undefined) {
       data.name = updateProductDto.name;
@@ -210,30 +221,37 @@ export class ProductService {
     if (updateProductDto.stock !== undefined) {
       data.stock = ItemType?.itemType === 'COURSE' ? 1 : updateProductDto.stock;
     }
+    if (updateProductDto.isPublished !== undefined) {
+      data.isPublished = updateProductDto.isPublished;
+    }
 
     if (ItemType?.itemType === 'COURSE') {
       // ========== 课程类商品 ==========
-      // 更新课程详情（封面图和视频）
+      // 更新课程详情（增量更新模式：只修改用户改动的字段）
       if (courseDetail) {
-        // 删除旧的课程详情关联
-        if (product.courseDetail) {
-          await this.prismaService.course.delete({
-            where: { id: product.courseDetail.id },
-          });
+        const courseData: Prisma.CourseUpdateInput = {};
+
+        if (courseDetail.type !== undefined) {
+          courseData.type = courseDetail.type;
+        }
+        if (courseDetail.previewDuration !== undefined) {
+          courseData.previewDuration = courseDetail.previewDuration;
         }
 
-        // 创建新的课程详情
+        if (courseDetail.coverImage != null) {
+          courseData.coverImage = courseDetail.coverImage.id
+            ? { connect: { id: courseDetail.coverImage.id } }
+            : { create: courseDetail.coverImage };
+        }
+
+        if (courseDetail.video != null) {
+          courseData.video = courseDetail.video.id
+            ? { connect: { id: courseDetail.video.id } }
+            : { create: courseDetail.video };
+        }
+
         data.courseDetail = {
-          create: {
-            type: courseDetail.type,
-            coverImage: courseDetail.coverImage.id
-              ? { connect: { id: courseDetail.coverImage.id } }
-              : { create: courseDetail.coverImage },
-            video: courseDetail.video.id
-              ? { connect: { id: courseDetail.video.id } }
-              : { create: courseDetail.video },
-            previewDuration: courseDetail.previewDuration,
-          },
+          update: courseData,
         };
       }
 
@@ -257,44 +275,46 @@ export class ProductService {
       }
     } else {
       // ========== 普通商品 ==========
-      // 更新主图集
-      // ✅ 修复：从 product.galleryImages 获取旧图片来断开
-      if (galleryImages !== undefined) {
-        const oldImageIds = (product.galleryImages || []).map((img) => ({
-          id: img.id,
-        }));
+      // 更新主图集（叠加模式：只加不减）
+      // ✅ 只添加新图片，原有图片永远保留，删图需要单独操作
+      if (galleryImages !== undefined && galleryImages.length > 0) {
+        const oldFileKeys = new Set(
+          (product.galleryImages || []).map((img) => img.fileKey),
+        );
 
-        data.galleryImages = {
-          disconnect: oldImageIds,
-          ...(galleryImages.length > 0
-            ? {
-              connectOrCreate: galleryImages.map((file) => ({
-                where: { fileKey: file.fileKey },
-                create: file,
-              })),
-            }
-            : {}),
-        };
+        const needAdd = galleryImages.filter(
+          (newImg) => !oldFileKeys.has(newImg.fileKey),
+        );
+
+        if (needAdd.length > 0) {
+          data.galleryImages = {
+            connectOrCreate: needAdd.map((file) => ({
+              where: { fileKey: file.fileKey },
+              create: file,
+            })),
+          };
+        }
       }
 
-      // 更新详情图集
-      // ✅ 修复：从 product.detailImages 获取旧图片来断开
-      if (detailImages !== undefined) {
-        const oldDetailIds = (product.detailImages || []).map((img) => ({
-          id: img.id,
-        }));
+      // 更新详情图集（叠加模式：只加不减）
+      // ✅ 只添加新图片，原有图片永远保留，删图需要单独操作
+      if (detailImages !== undefined && detailImages.length > 0) {
+        const oldFileKeys = new Set(
+          (product.detailImages || []).map((img) => img.fileKey),
+        );
 
-        data.detailImages = {
-          disconnect: oldDetailIds,
-          ...(detailImages.length > 0
-            ? {
-              connectOrCreate: detailImages.map((file) => ({
-                where: { fileKey: file.fileKey },
-                create: file,
-              })),
-            }
-            : {}),
-        };
+        const needAdd = detailImages.filter(
+          (newImg) => !oldFileKeys.has(newImg.fileKey),
+        );
+
+        if (needAdd.length > 0) {
+          data.detailImages = {
+            connectOrCreate: needAdd.map((file) => ({
+              where: { fileKey: file.fileKey },
+              create: file,
+            })),
+          };
+        }
       }
 
       // 普通商品清空课程详情
@@ -331,6 +351,48 @@ export class ProductService {
     // 2. 存在才删除
     return this.prismaService.product.delete({
       where: { id: id },
+    });
+  }
+
+  // 删除主图集中的单张图片
+  async removeGalleryImage(productId: number, imageId: number) {
+    const product = await this.prismaService.product.findUnique({
+      where: { id: productId },
+      select: { id: true },
+    });
+
+    if (!product) {
+      throw new NotFoundException('商品不存在');
+    }
+
+    return this.prismaService.product.update({
+      where: { id: productId },
+      data: {
+        galleryImages: {
+          disconnect: { id: imageId },
+        },
+      },
+    });
+  }
+
+  // 删除详情图集中的单张图片
+  async removeDetailImage(productId: number, imageId: number) {
+    const product = await this.prismaService.product.findUnique({
+      where: { id: productId },
+      select: { id: true },
+    });
+
+    if (!product) {
+      throw new NotFoundException('商品不存在');
+    }
+
+    return this.prismaService.product.update({
+      where: { id: productId },
+      data: {
+        detailImages: {
+          disconnect: { id: imageId },
+        },
+      },
     });
   }
 

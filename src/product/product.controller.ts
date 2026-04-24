@@ -45,4 +45,22 @@ export class ProductController {
   remove(@Param('id') id: number) {
     return this.productService.remove(id);
   }
+
+  // 删除主图集中的单张图片
+  @Delete(':id/gallery-images/:imageId')
+  removeGalleryImage(
+    @Param('id') productId: number,
+    @Param('imageId') imageId: number,
+  ) {
+    return this.productService.removeGalleryImage(productId, imageId);
+  }
+
+  // 删除详情图集中的单张图片
+  @Delete(':id/detail-images/:imageId')
+  removeDetailImage(
+    @Param('id') productId: number,
+    @Param('imageId') imageId: number,
+  ) {
+    return this.productService.removeDetailImage(productId, imageId);
+  }
 }

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional, IsArray, ValidateIf } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsOptional, IsArray, ValidateIf, IsBoolean } from 'class-validator';
 import { FileDto } from '../../upload/dto/file.dto';
 import { CreateCourseDto } from './create-course.dto';
 
@@ -44,6 +44,11 @@ export class CreateProductDto {
   @IsNumber()
   @IsNotEmpty({ message: '商品类目ID不能为空' })
   categoryId: number;
+
+  // 商品是否发布
+  @IsBoolean()
+  @IsNotEmpty({ message: '商品是否发布不能为空' })
+  isPublished: boolean;
 
   // 课程详情
   @IsOptional()
