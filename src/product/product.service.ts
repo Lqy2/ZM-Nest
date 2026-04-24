@@ -17,7 +17,7 @@ export class ProductService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly uploadService: UploadService,
-  ) {}
+  ) { }
 
   async create(createProductDto: CreateProductDto) {
     const { galleryImages, detailImages, categoryId, courseDetail } =
@@ -86,9 +86,9 @@ export class ProductService {
 
   // 查询所有产品
   async findAll(filterProductDto: FilterProductDto) {
-    const { name, id, categoryId, current, pageSize, skip, take } =
+    const { name, id, categoryId, current, pageSize, skip, take, itemType, isPublished } =
       filterProductDto;
-
+    console.log('查询参数:', filterProductDto);
     const where: Prisma.ProductWhereInput = {};
     if (name) {
       where.name = {
@@ -100,9 +100,25 @@ export class ProductService {
         equals: id,
       };
     }
+    // 分类查询
     if (categoryId) {
       where.categoryId = {
-        equals: categoryId,
+        equals: Number(categoryId),
+      };
+    }
+    // 发布状态查询
+    if (isPublished !== undefined) {
+      where.isPublished = {
+        equals: isPublished === 'true',
+      };
+    }
+
+    // 商品类型查询
+    if (itemType) {
+      where.category = {
+        itemType: {
+          equals: itemType,
+        },
       };
     }
     // console.log(where);
@@ -140,18 +156,18 @@ export class ProductService {
       // 课程封面图
       coverImage: item.courseDetail?.coverImage
         ? {
-            downloadUrl: this.uploadService.getSignedUrl(
-              item.courseDetail.coverImage.fileKey,
-            ),
-          }
+          downloadUrl: this.uploadService.getSignedUrl(
+            item.courseDetail.coverImage.fileKey,
+          ),
+        }
         : null,
       // 课程视频
       video: item.courseDetail?.video
         ? {
-            downloadUrl: this.uploadService.getSignedUrl(
-              item.courseDetail.video.fileKey,
-            ),
-          }
+          downloadUrl: this.uploadService.getSignedUrl(
+            item.courseDetail.video.fileKey,
+          ),
+        }
         : null,
     }));
     // console.log(processedList);
@@ -163,15 +179,53 @@ export class ProductService {
     );
   }
 
-  findOne(id: number) {
-    return this.prismaService.product.findUnique({
+  async findOne(id: number) {
+    const product = await this.prismaService.product.findUnique({
       where: { id },
       include: {
         category: true,
         galleryImages: true,
         detailImages: true,
+        courseDetail: {
+          include: {
+            coverImage: true,
+            video: true,
+          },
+        },
       },
     });
+    if (!product) {
+      throw new NotFoundException('商品不存在');
+    }
+    const processedList = {
+      ...product,
+      galleryImages: (product.galleryImages || []).map((file) => ({
+        ...file,
+        downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
+      })),
+      detailImages: (product.detailImages || []).map((file) => ({
+        ...file,
+        downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
+      })),
+      // 课程封面图
+      coverImage: product.courseDetail?.coverImage
+        ? {
+          downloadUrl: this.uploadService.getSignedUrl(
+            product.courseDetail.coverImage.fileKey,
+          ),
+        }
+        : null,
+      // 课程视频
+      video: product.courseDetail?.video
+        ? {
+          downloadUrl: this.uploadService.getSignedUrl(
+            product.courseDetail.video.fileKey,
+          ),
+        }
+        : null,
+    }
+
+    return processedList;
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
@@ -339,18 +393,38 @@ export class ProductService {
 
   async remove(id: number) {
     // 1. 先检查是否存在
-    const exists = await this.prismaService.product.findUnique({
-      where: { id: id },
-      select: { id: true },
+    const product = await this.prismaService.product.findUnique({
+      where: { id },
+      include: {
+        galleryImages: true,
+        detailImages: true,
+        courseDetail: true,
+      },
     });
 
-    if (!exists) {
+    if (!product) {
       throw new NotFoundException(`商品不存在或已删除`);
     }
 
-    // 2. 存在才删除
-    return this.prismaService.product.delete({
-      where: { id: id },
+    // 2. 记录删除前的信息（用于审计）
+    // console.log(`用户 ${userId} 删除商品 ${id} - ${product.name}`);
+
+    // 3. 开始事务
+    return this.prismaService.$transaction(async (prisma) => {
+      // 3.1 删除关联的课程详情
+      if (product.courseDetail) {
+        await prisma.course.delete({
+          where: { id: product.courseDetail.id },
+        });
+      }
+
+      // 3.2 断开图片关联（如果需要）
+      // 注意：这里可能需要根据实际业务逻辑决定是否删除图片文件
+
+      // 3.3 删除商品
+      return prisma.product.delete({
+        where: { id },
+      });
     });
   }
 
