@@ -23,16 +23,6 @@ export class ProductService {
     const { galleryImages, detailImages, categoryId, courseDetail } =
       createProductDto;
 
-    // 判断新增商品是否为课程类型
-    // const ItemType = await this.prismaService.productCategory.findUnique({
-    //   where: {
-    //     id: categoryId,
-    //   },
-    //   select: {
-    //     itemType: true,
-    //   },
-    // });
-
     const ItemType = await this.getProductType(categoryId);
     console.log('添加商品类型:', ItemType);
     const data: Prisma.ProductCreateInput = {
