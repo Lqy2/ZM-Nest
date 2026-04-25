@@ -17,7 +17,7 @@ import type { JwtPayload } from '@/common/interfaces/jwt-payload.interface';
 
 @Controller('shopping-cart')
 export class ShoppingCartController {
-  constructor(private readonly shoppingCartService: ShoppingCartService) {}
+  constructor(private readonly shoppingCartService: ShoppingCartService) { }
 
   @Post('add')
   addToCart(@CurrentUser() user: JwtPayload, @Body() addToCartDto: AddToCartDto) {
@@ -40,6 +40,7 @@ export class ShoppingCartController {
     );
   }
 
+  // 切换商品选中状态
   @Patch('toggle-select/:productId')
   toggleSelect(
     @CurrentUser() user: JwtPayload,
@@ -48,6 +49,7 @@ export class ShoppingCartController {
     return this.shoppingCartService.toggleSelect(user.userId, Number(productId));
   }
 
+  // 删除商品
   @Delete('remove/:productId')
   removeFromCart(
     @CurrentUser() user: JwtPayload,
@@ -55,9 +57,9 @@ export class ShoppingCartController {
   ) {
     return this.shoppingCartService.removeFromCart(user.userId, Number(productId));
   }
-  
 
 
+  // 批量删除商品
   @Delete('batch-remove')
   batchRemove(
     @CurrentUser() user: JwtPayload,
@@ -68,7 +70,18 @@ export class ShoppingCartController {
       batchRemoveDto.productIds,
     );
   }
+  
+// 一键全选/取消全选
+@Patch('toggle-all-select')
+toggleAllSelect(
+  @CurrentUser() user: JwtPayload,
+  @Body() body: { isSelected: boolean },
+) {
+  return this.shoppingCartService.toggleAllSelect(user.userId, body.isSelected);
+}
 
+
+  // 清空购物车
   @Delete('clear')
   clearCart(@CurrentUser() user: JwtPayload) {
     return this.shoppingCartService.clearCart(user.userId);

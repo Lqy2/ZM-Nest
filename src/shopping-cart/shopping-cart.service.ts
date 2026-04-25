@@ -11,7 +11,7 @@ export class ShoppingCartService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly uploadService: UploadService,
-  ) {}
+  ) { }
 
   async addToCart(userId: string, addToCartDto: AddToCartDto) {
     const { productId, quantity = 1 } = addToCartDto;
@@ -25,10 +25,34 @@ export class ShoppingCartService {
 
     const product = await this.prismaService.product.findUnique({
       where: { id: productId },
+      include: {
+        category: true,
+      },
     });
 
     if (!product) {
       throw new NotFoundException(`商品ID:${productId} 不存在`);
+    }
+
+    if (product.category.itemType === 'COURSE') {
+      // 检查购物车中是否已存在该课程
+      const existingItem = await this.prismaService.shoppingCartItem.findUnique({
+        where: {
+          userId_productId: {
+            userId,
+            productId,
+          },
+        },
+      });
+
+      if (existingItem) {
+        throw new NotFoundException('该课程已在购物车中，无法重复添加');
+      }
+
+      // 课程类型商品，数量只能为1
+      if (quantity > 1) {
+        throw new NotFoundException('课程类商品只能购买1份');
+      }
     }
 
     return this.prismaService.shoppingCartItem.upsert({
@@ -71,6 +95,7 @@ export class ShoppingCartService {
                 coverImage: true,
               },
             },
+            category: true,
           },
         },
       },
@@ -78,27 +103,26 @@ export class ShoppingCartService {
 
     const processedItems = items.map((item) => ({
       ...item,
-      product: {
-        ...item.product,
-        galleryImages: (item.product.galleryImages || []).map((file) => ({
-          ...file,
-          downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
-        })),
-        coverImage: item.product.courseDetail?.coverImage
-          ? {
-              downloadUrl: this.uploadService.getSignedUrl(
-                item.product.courseDetail.coverImage.fileKey,
-              ),
-            }
-          : null,
-      },
+      ...item.product,
+      galleryImages: (item.product.galleryImages || []).map((file) => ({
+        ...file,
+        downloadUrl: this.uploadService.getSignedUrl(file.fileKey),
+      })),
+      coverImage: item.product.courseDetail?.coverImage
+        ? {
+          downloadUrl: this.uploadService.getSignedUrl(
+            item.product.courseDetail.coverImage.fileKey,
+          ),
+        }
+        : null,
+
     }));
 
-    const totalQuantity = processedItems.reduce(
+    const totalQuantity = processedItems.filter(item => item.isSelected).reduce(
       (sum, item) => sum + item.quantity,
       0,
     );
-    const totalPrice = processedItems.reduce(
+    const totalPrice = processedItems.filter(item => item.isSelected).reduce(
       (sum, item) =>
         sum +
         item.quantity * (item.product.discountPrice || item.product.price),
@@ -106,7 +130,7 @@ export class ShoppingCartService {
     );
 
     return {
-      items: processedItems,
+      list: processedItems,
       totalQuantity,
       totalPrice,
     };
@@ -154,6 +178,14 @@ export class ShoppingCartService {
         },
       },
       data: { isSelected: !item.isSelected },
+    });
+  }
+
+
+  async toggleAllSelect(userId: string, isSelected: boolean) {
+    return this.prismaService.shoppingCartItem.updateMany({
+      where: { userId },
+      data: { isSelected },
     });
   }
 
