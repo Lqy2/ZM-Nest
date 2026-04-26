@@ -16,10 +16,22 @@ export class ShoppingCartService {
   async addToCart(userId: string, addToCartDto: AddToCartDto) {
     const { productId, quantity = 1 } = addToCartDto;
 
+    if (!userId) {
+      throw new NotFoundException('用户未登录或Token无效！');
+    }
+
+    const user = await this.prismaService.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`用户ID:${userId} 不存在！请检查Token是否正确`);
+    }
+
     if (!productId) {
       throw new NotFoundException('productId 参数不能为空！前端传参有问题');
     }
-    if (isNaN(productId)) {
+    if (isNaN(Number(productId))) {
       throw new NotFoundException('productId 必须是数字！');
     }
 

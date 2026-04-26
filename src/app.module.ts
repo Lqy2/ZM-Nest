@@ -27,6 +27,7 @@ import { OrderModule } from './order/order.module';
 import { CourseCategoryModule } from './course-category/course-category.module';
 import { CourseModule } from './course/course.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { AddressesModule } from './addresses/addresses.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -50,6 +51,7 @@ import configuration from './config/configuration';
     CourseCategoryModule,
     CourseModule,
     ShoppingCartModule,
+    AddressesModule,
   ],
   controllers: [AppController],
   providers: [

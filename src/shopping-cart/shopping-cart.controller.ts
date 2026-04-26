@@ -21,6 +21,8 @@ export class ShoppingCartController {
 
   @Post('add')
   addToCart(@CurrentUser() user: JwtPayload, @Body() addToCartDto: AddToCartDto) {
+    console.log('从 Token 解码出来的用户信息:', user);
+    console.log('userId:', user?.userId);
     return this.shoppingCartService.addToCart(user.userId, addToCartDto);
   }
 
