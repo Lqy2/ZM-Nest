@@ -30,6 +30,7 @@ export class ProductService {
       description: createProductDto.description,
       category: { connect: { id: categoryId } },
       price: createProductDto.price,
+      isPublished: createProductDto.isPublished,
       discountPrice: createProductDto.discountPrice,
       stock: ItemType?.itemType === 'COURSE' ? 1 : createProductDto.stock, //未限制库存？类型为课程限制为最大1
     };

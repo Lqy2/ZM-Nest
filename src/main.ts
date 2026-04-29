@@ -18,7 +18,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('apis');
   // 启用全局参数验证
   app.useGlobalPipes(
     new ValidationPipe({
